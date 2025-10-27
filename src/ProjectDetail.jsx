@@ -466,117 +466,125 @@ const PROJECT_DATA = {
   },
 
   "turbine-maintenance": {
-    title: "Turbine Maintenance ETL Pipeline (in progress)",
+    title: "NASA Turbofan CMAPSS - Predictive Maintenance ETL",
     date: "2025-10",
     duration: "4+ Wochen (ongoing)",
-    status: "In Bearbeitung",
+    status: "In Bearbeitung - n8n Integration next",
     
     problem: {
       title: "Problem",
-      content: "Industrielle Windturbinen-Wartung erfolgt oft reaktiv statt prädiktiv. Ohne automatisierte ETL-Pipelines und ML-basierte Maintenance-Forecasts entstehen ungeplante Ausfälle und hohe Reparaturkosten.",
+      content: "Industrielle Turbofan-Engines (Flugzeuge, Energieanlagen) benötigen prädiktive Wartung basierend auf multi-sensor Zeitreihen. NASA CMAPSS Dataset simuliert 4 Operating Conditions mit 26 Sensoren - idealer Testfall für reproduzierbare ETL-zu-ML Pipelines.",
       challenges: [
-        "Manuelle Datenverarbeitung: Keine automatisierte Pipeline für Sensor-Daten",
-        "Siemens-Relevanz: Lösungsansatz muss für Industrie 4.0 Szenarien skalierbar sein", 
-        "Multi-Source Integration: Wartungsdaten, Sensordaten, Wettereinflüsse kombinieren",
-        "ML-Pipeline: Von Raw Data bis zu Maintenance-Predictions automatisieren",
-        "Orchestrierung: n8n/Prefect für robuste, wiederholbare Workflows",
-        "GPU-Beschleunigung: PyTorch CUDA-Setup für größere Modell-Training"
+        "Multi-Dataset Consistency: 4 CMAPSS-Datensätze (FD001-FD004) mit unterschiedlichen Sensor-Verfügbarkeiten",
+        "Sensor Data Engineering: 21+ Sensoren, Rolling Windows, RUL-Berechnung, Z-Score Normalization",
+        "Cross-Dataset ML: Modelle müssen über verschiedene Operating Conditions generalisieren",
+        "Production-Ready Pipeline: Reproduzierbare ETL mit dbt, SQLite → PostgreSQL Migration",
+        "Model Comparison: Linear Regression, Random Forest, XGBoost mit Hyperparameter-Tuning",
+        "Next: n8n Orchestrierung für automatisierte Pipeline-Ausführung"
       ]
     },
 
     approach: {
       title: "Daten & Ansatz",
-      dataset: "Simulierte Turbinen-Wartungsdaten + Sensor-Zeitreihen",
+      dataset: "NASA Turbofan Engine Degradation (CMAPSS) - 4 Datasets, 100+ Engines, 21 Sensors",
       methodology: [
-        "Data Architecture: Design modularer ETL-Pipeline mit Feature Store",
-        "n8n/Prefect Evaluation: Workflow-Orchestrierung für Production-Readiness",
-        "dbt-Integration: SQL-basierte Transformationen mit Dokumentation",
-        "Feature Engineering: Rolling Statistics, Maintenance Windows, Failure Patterns",
-        "PyTorch Pipeline: GPU-beschleunigte ML-Models für Predictive Maintenance",
-        "Power BI Automation: Automatisierte Report-Generierung und -Verteilung"
+        "Consistent Sensor Selection: Identifikation von Sensoren die über alle 4 Datasets verfügbar sind",
+        "Feature Engineering Pipeline: Rolling Means (5/20 Zyklen), Sensor-Differences, Z-Score Normalization",
+        "dbt Data Modeling: SQL-basierte Transformationen mit dynamischen Sensor-Detection",
+        "Multi-Algorithm ML: Linear Regression (Baseline), Random Forest, XGBoost mit GridSearchCV",
+        "Cross-Dataset Evaluation: Training auf combined data, Testing auf original splits",
+        "Database Design: SQLite für Development, prepared for PostgreSQL Production"
       ],
-      tools: ["Python", "n8n/Prefect", "dbt", "PyTorch (CUDA)", "Power BI", "Docker"]
+      tools: ["Python", "pandas", "SQLite", "dbt", "scikit-learn", "XGBoost", "SQLAlchemy", "YAML-Config"]
     },
 
     solution: {
-      title: "Lösung (Work in Progress)",
-      content: "Vollständig automatisierte ETL → Feature Store → ML Training → Reporting Pipeline mit Industrie 4.0 Standards.",
+      title: "Implementierte Lösung",
+      content: "Vollständig reproduzierbare ETL-zu-ML Pipeline mit Multi-Dataset Support, Feature Engineering und Model Comparison für Remaining Useful Life (RUL) Predictions.",
       features: [
-        "Modulare ETL-Architecture mit containerisierten Services",
-        "n8n Workflow-Orchestrierung für robuste Production-Deployments",
-        "dbt-basierte SQL-Transformationen mit Data Lineage",
-        "Feature Store für wiederverwendbare ML-Features",
-        "PyTorch GPU-Pipeline für skalierbare Model-Training",
-        "Power BI Auto-Refresh mit dynamischen Maintenance-Dashboards"
+        "Multi-Dataset ETL Pipeline: Automatische Verarbeitung aller 4 CMAPSS-Datasets mit konsistenter Sensor-Auswahl",
+        "Smart Feature Engineering: Rolling Windows (5/20), Differenzen, Z-Score Normalization by Unit",
+        "dbt SQL Transformations: Dynamische Sensor-Detection, Type-Safe Casting, Dokumentierte Modelle",
+        "Comprehensive ML Pipeline: 3 Algorithmen mit Hyperparameter-Tuning und Cross-Validation",
+        "Production Database Design: SQLite Development, Index-Optimierung, Prepared für PostgreSQL",
+        "Results & Model Persistence: Pickle-Serialization, Prediction Storage, Performance Visualization"
       ]
     },
 
     results: {
-      title: "Ergebnisse (Zwischenstand)",
+      title: "Ergebnisse & Performance",
       metrics: [
-        { label: "ETL-Pipeline Status", value: "70%", change: "Core Complete" },
-        { label: "n8n Workflows", value: "3", change: "Funktional" },
-        { label: "GPU Performance", value: "5x", change: "vs CPU" },
-        { label: "dbt Models", value: "8", change: "Dokumentiert" }
+        { label: "Datasets Processed", value: "4/4", change: "FD001-FD004" },
+        { label: "ML Models Trained", value: "3", change: "Tuned" },
+        { label: "Best RMSE", value: "~15-25", change: "XGBoost" },
+        { label: "dbt Models", value: "3", change: "Production-Ready" }
       ],
       insights: [
-        "n8n visueller Workflow-Editor deutlich produktiver als Pure-Code-Ansätze",
-        "CUDA-Setup komplex aber 5x Performance-Boost für PyTorch-Training",
-        "dbt-Dokumentation essentiell für Team-Collaboration bei SQL-Transformationen",
-        "Docker-Containerisierung ermöglicht reproduzierbare Entwicklungsumgebungen",
-        "Power BI REST API Integration für automatisierte Report-Distribution"
+        "Consistent Sensor Strategy: Nur 8-12 Sensoren sind über alle 4 Datasets konstant verfügbar",
+        "XGBoost outperforms: Beste Generalisierung über verschiedene Operating Conditions",
+        "Rolling Features Critical: Mean20 Features deutlich wichtiger als Mean5 für RUL Prediction",
+        "dbt Dynamic SQL: Template-based Sensor-Detection ermöglicht flexibles Schema",
+        "Feature Importance: Sensor 11 (Bleed Pressure) und Sensor 2 (LPC Speed) dominieren",
+        "Cross-Dataset Challenge: FD003/FD004 (High Altitude) schwerer zu predicten als Sea Level"
       ]
     },
 
     learnings: {
-      title: "Learnings & Reflexion (Zwischenstand)",
+      title: "Learnings & Next Steps",
       positives: [
-        "n8n Low-Code-Approach beschleunigt Workflow-Entwicklung erheblich",
-        "GPU-Setup zahlt sich aus bei größeren Datasets und komplexeren Modellen",
-        "dbt bringt Software Engineering Practices in Data Engineering",
-        "Containerisierung vereinfacht Deployment und Dependency Management"
+        "YAML-basierte Konfiguration: Extrem flexibel für Multi-Dataset Processing",
+        "dbt + SQLAlchemy Combo: SQL Transformations mit Python ML Pipeline nahtlos integriert",
+        "Pandas + SQLite Performance: Überraschend schnell für 100k+ Sensor-Readings",
+        "Pickle Model Persistence: Einfache aber effektive Lösung für Model Deployment",
+        "Cross-Validation Strategy: Critical für realistische Performance-Einschätzung"
       ],
       improvements: [
-        "Kafka/Streaming für Real-time Data Ingestion implementieren",
-        "MLflow für Model Versioning und Experiment Tracking hinzufügen",
-        "Monitoring & Alerting für Production Pipeline-Health einrichten",
-        "CI/CD Pipeline für automatisierte Tests und Deployments",
-        "Data Quality Tests mit Great Expectations integrieren",
-        "Kubernetes für Container-Orchestrierung in Production-Umgebung"
+        "n8n Orchestrierung: Automatisierte ETL-Ausführung mit visuellen Workflows (current focus)",
+        "PostgreSQL Migration: Skalierbarkeit für größere Industrial Datasets",
+        "MLflow Integration: Model Versioning und Experiment Tracking für Team-Collaboration",
+        "Docker Containerization: Reproduzierbare Entwicklungs- und Production-Environments",
+        "Streaming Pipeline: Kafka für Real-time Sensor Data Processing",
+        "Deep Learning Experiments: LSTM/Transformer für Sequential Sensor Data"
       ]
     },
 
     resources: {
-      repo: "https://github.com/SW-oasen/turbine-maintenance-etl",
-      notebook: "/notebooks/ml_pipeline_development.ipynb",
-      report: "/docs/architecture_overview.md",
-      presentation: "/dashboards/maintenance_forecast_dashboard.pbix"
+      repo: "Local Workspace (Yuchuan-Portfolio/Workspace/)",
+      demo: "/scripts/etl_turbofan.py",
+      code: "/scripts/ml_pipeline.py", 
+      config: "/scripts/etl_config.yaml"
     },
 
     visuals: [
       {
-        title: "ETL Pipeline Architecture",
+        title: "CMAPSS Dataset Architecture",
         type: "diagram",
-        src: "/img/turbine-maintenance/etl-architecture.png",
-        description: "End-to-End Datenfluss von Raw Sensors bis ML Predictions"
+        src: "/img/turbine-maintenance-etl/dataset-overview.png",
+        description: "4 Datasets (FD001-FD004) mit Operating Conditions und Sensor-Verfügbarkeit"
       },
       {
-        title: "n8n Workflow Orchestration",
-        type: "screenshot",
-        src: "/img/turbine-maintenance/n8n-workflow.png",
-        description: "Visueller Workflow-Editor für automatisierte ETL-Prozesse"
+        title: "ETL Pipeline Flow",
+        type: "diagram", 
+        src: "/img/turbine-maintenance-etl/etl-pipeline.png",
+        description: "Multi-Dataset Processing mit konsistenter Sensor-Auswahl und Feature Engineering"
       },
       {
-        title: "PyTorch GPU Performance",
+        title: "ML Model Performance",
         type: "chart",
-        src: "/img/turbine-maintenance/gpu-performance.png",
-        description: "5x Training-Speedup durch CUDA-Beschleunigung vs CPU"
+        src: "/img/turbine-maintenance-etl/model-comparison.png",
+        description: "Cross-Dataset RMSE/MAE Comparison: Linear Regression vs Random Forest vs XGBoost"
       },
       {
-        title: "Predictive Maintenance Dashboard",
-        type: "dashboard",
-        src: "/img/turbine-maintenance/maintenance-dashboard.png",
-        description: "Power BI Dashboard mit Failure Predictions und Maintenance Scheduling"
+        title: "dbt Data Lineage",
+        type: "screenshot",
+        src: "/img/turbine-maintenance-etl/dbt-lineage.png",
+        description: "SQL Transformation Graph mit Feature Engineering Dependencies"
+      },
+      {
+        title: "Feature Importance Analysis",
+        type: "chart",
+        src: "/img/turbine-maintenance-etl/feature-importance.png",
+        description: "Top 15 Features für RUL Prediction - Sensor 2/11 dominieren"
       }
     ]
   }

@@ -34,3 +34,6 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.temp
+
+# Project workspace - will be in separate repository
+/Workspace/
