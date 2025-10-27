@@ -642,6 +642,11 @@ function VisualCard({ visual }) {
 export default function ProjectDetail({ projectId = "airbnb-berlin" }) {
   const project = PROJECT_DATA[projectId];
   
+  // Scroll to top when component mounts or projectId changes
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [projectId]);
+  
   if (!project) {
     return <div>Projekt nicht gefunden</div>;
   }
