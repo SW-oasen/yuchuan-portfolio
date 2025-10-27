@@ -102,20 +102,32 @@ const PROJECT_DATA = {
       {
         title: "Preis-Heatmap nach Bezirken",
         type: "image",
-        src: "/img/airbnb-price-heatmap.png",
-        description: "Interaktive Folium-Karte zeigt Preisverteilung across Berlin"
+        src: "/img/airbnb-eda-berlin/price-neighborhood-heatmap.png",
+        description: "Interaktive Folium-Karte zeigt Preisverteilung je nach Bezirk"
+      },
+      {
+        title: "Übernachtung nach Bezirken",
+        type: "image",
+        src: "/img/airbnb-eda-berlin/listing-neighborhood-heatmap.png",
+        description: "Interaktive Folium-Karte zeigt Übernachtungen je nach Bezirk"
       },
       {
         title: "Listing-Typ Distribution",
-        type: "chart",
-        src: "/img/airbnb-listing-types.png", 
+        type: "image",
+        src: "/img/airbnb-eda-berlin/listing-types-heatmap.png", 
         description: "Verteilung verschiedener Unterkunftstypen mit Preisvergleich"
       },
       {
-        title: "Verfügbarkeit vs. Bewertungen",
-        type: "scatter",
-        src: "/img/airbnb-availability-ratings.png",
-        description: "Korrelationsanalyse zwischen Verfügbarkeit und Gästebewertungen"
+        title: "Preise und Übernachtungen nach Unterkunftstyp",
+        type: "image",
+        src: "/img/airbnb-eda-berlin/price-listing-by-type.png",
+        description: "Korrelationsanalyse zwischen Preis und Übernachtungen nach Unterkunftstyp"
+      },
+      {
+        title: "Übernachtungen und Reviews Korelation",
+        type: "image",
+        src: "/img/airbnb-eda-berlin/listing-review.png",
+        description: "Korrelationsanalyse zwischen Übernachtungen und Reviews-Anzahl"
       }
     ]
   },
@@ -353,7 +365,7 @@ const PROJECT_DATA = {
   "telco-customer-churn": {
     title: "Telco Customer Churn — Classification",
     date: "2025-10",
-    duration: "3 Wochen",
+    duration: "2 Wochen",
     status: "Abgeschlossen",
     
     problem: {
@@ -468,7 +480,7 @@ const PROJECT_DATA = {
   "turbine-maintenance": {
     title: "NASA Turbofan CMAPSS - Predictive Maintenance ETL",
     date: "2025-10",
-    duration: "4+ Wochen (ongoing)",
+    duration: "3+ Wochen (ongoing)",
     status: "In Bearbeitung - n8n Integration next",
     
     problem: {
@@ -525,7 +537,7 @@ const PROJECT_DATA = {
         "Rolling Features Critical: Mean20 Features deutlich wichtiger als Mean5 für RUL Prediction",
         "dbt Dynamic SQL: Template-based Sensor-Detection ermöglicht flexibles Schema",
         "Feature Importance: Sensor 11 (Bleed Pressure) und Sensor 2 (LPC Speed) dominieren",
-        "Cross-Dataset Challenge: FD003/FD004 (High Altitude) schwerer zu predicten als Sea Level"
+        "Cross-Dataset Challenge: FD003/FD004 (High Altitude) schwerer vorherzusagen als Sea Level"
       ]
     },
 
@@ -627,9 +639,19 @@ function VisualCard({ visual }) {
   return (
     <Card className="overflow-hidden">
       <div className="aspect-video bg-muted flex items-center justify-center">
-        <BarChart3 className="h-12 w-12 text-muted-foreground" />
-        {/* In real implementation, replace with actual image */}
-        {/* <img src={visual.src} alt={visual.title} className="w-full h-full object-cover" /> */}
+        <img 
+          src={visual.src} 
+          alt={visual.title} 
+          className="w-full h-full object-contain" 
+          onError={(e) => {
+            console.error(`Failed to load image: ${visual.src}`);
+            e.target.style.display = 'none';
+            e.target.nextSibling.style.display = 'flex';
+          }}
+        />
+        <div className="hidden">
+          <BarChart3 className="h-12 w-12 text-muted-foreground" />
+        </div>
       </div>
       <CardContent className="p-4">
         <h4 className="font-semibold mb-2">{visual.title}</h4>
