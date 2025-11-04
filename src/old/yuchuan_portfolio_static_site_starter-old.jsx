@@ -89,20 +89,17 @@ const PROJECTS = [
   },
   {
     id: "turbine-maintenance", // Changed from 'key' to 'id'
-    title: "GPU-Accelerated Turbine ML Pipeline (NASA CMAPSS)",
+    title: "Turbine Maintenance ETL Pipeline (in progress)",
     date: "2025-10",
     summary:
-      "Complete MLOps pipeline with GPU acceleration, n8n orchestration, and Streamlit real-time dashboard for predictive maintenance.",
+      "ETL → feature store → model training → report. Currently finalizing orchestration with n8n.",
     highlights: [
-      "GPU-accelerated PyTorch NN + XGBoost (5x speedup)",
-      "n8n workflow orchestration (ETL → ML → Dashboard)",
-      "Streamlit real-time monitoring dashboard",
-      "dbt transformations with data quality tests",
-      "Cross-dataset validation (FD001-FD004)",
-      "Docker containerization for production deployment",
+      "Prefect/n8n orchestration (WIP)",
+      "dbt-style transformations (WIP)",
+      "Power BI refresh automation (planned)",
     ],
-    stack: ["PyTorch (CUDA)", "XGBoost GPU", "n8n", "Streamlit", "dbt", "Docker", "CuPy", "SQLite"],
-    repo: "https://github.com/SW-oasen/turbine-maintenance-etl",
+    stack: ["Python", "Pandas", "Prefect or n8n", "Power BI", "PyTorch (CUDA)"],
+    repo: "",
     live: null,
     video: null,
   },
@@ -141,9 +138,9 @@ const LEARNING = [
   },
   {
     date: "2025-10",
-    title: "MLOps Pipeline mit n8n Orchestration und Streamlit Dashboard",
+    title: "Automatische Workflows mit n8n für ETL und Reporting",
     details:
-      "Complete MLOps Stack implementiert: n8n Workflow Automation, Streamlit Real-time Dashboard, Docker Containerization für Production-ready Predictive Maintenance Pipeline.",
+      "n8n via Docker Compose installiert; erste Workflows geplant (ETL orchestration, Reporting).",
   }
 ];
 
@@ -297,7 +294,7 @@ export default function Portfolio() {
           <div>
             <h3 className="font-semibold mb-2">Tech‑Stack (Auswahl)</h3>
             <div className="flex flex-wrap gap-2">
-              {["Python","Pandas","scikit-learn","XGBoost","PyTorch (CUDA)","SQL","Power BI","Docker","n8n","Streamlit","dbt","CuPy","Git","MLOps"].map((t, i)=> (
+              {["Python","Pandas","scikit-learn","XGBoost","PyTorch","SQL","Power BI","Docker","n8n","Prefect","dbt (Basics)","Git"].map((t, i)=> (
                 <Badge key={i} variant="secondary" className="px-3 py-1 rounded-full">{t}</Badge>
               ))}
             </div>

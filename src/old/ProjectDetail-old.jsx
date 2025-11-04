@@ -488,12 +488,12 @@ const PROJECT_DATA = {
   "turbine-maintenance": {
     title: "GPU-Accelerated Turbofan Engine ML Pipeline (NASA CMAPSS)",
     date: "2025-10", 
-    duration: "6+ Wochen",
-    status: "Complete MLOps Pipeline with n8n Orchestration & Streamlit Dashboard",
+    duration: "5+ Wochen (ongoing)",
+    status: "GPU ML Pipeline - Feature Engineering & Model Training Complete",
     
     problem: {
       title: "Problem",
-      content: "NASA Turbofan Engine Degradation Simulation Data (CMAPSS) erfordert hochperformante Machine Learning Pipeline für Remaining Useful Life (RUL) Prediction mit GPU-Beschleunigung für Industrie 4.0 Anwendungen, kombiniert mit automatisierter Workflow-Orchestrierung und Real-time Monitoring.",
+      content: "NASA Turbofan Engine Degradation Simulation Data (CMAPSS) erfordert hochperformante Machine Learning Pipeline für Remaining Useful Life (RUL) Prediction mit GPU-Beschleunigung für Industrie 4.0 Anwendungen.",
       challenges: [
         "GPU-Acceleration Setup: NVIDIA RTX 4070 Ti SUPER mit CUDA 12.6+ Integration",
         "Multi-Framework Pipeline: PyTorch, XGBoost GPU, CuPy für verschiedene ML-Algorithmen", 
@@ -501,9 +501,7 @@ const PROJECT_DATA = {
         "4 CMAPSS Datasets: Cross-Dataset Validation mit verschiedenen Operating Conditions",
         "Memory Optimization: GPU Memory Management für große Tensor-Operationen",
         "ETL + dbt + ML Integration: End-to-End Pipeline von Raw Data bis GPU Models",
-        "Workflow Automation: n8n Integration für Pipeline Orchestrierung und Scheduling",
-        "Real-time Dashboard: Streamlit mit automatischen Updates für Live-Monitoring",
-        "Production Deployment: MLOps Pipeline für Industrial Predictive Maintenance"
+        "Performance Monitoring: GPU vs CPU Benchmark für Industrial Deployment"
       ]
     },
 
@@ -515,99 +513,80 @@ const PROJECT_DATA = {
         "Advanced Feature Engineering: Rolling Windows, Z-Scores, Sensor Differences, Unit-based Normalization",
         "SQLite + dbt Pipeline: Staging → Intermediate → Marts mit Data Quality Tests",
         "GPU-Accelerated ML: PyTorch Neural Networks, XGBoost GPU, Memory-optimized Training",
-        "n8n Workflow Orchestration: Automated ETL → ML → Dashboard Pipeline Execution",
-        "Streamlit Real-time Dashboard: Interactive Monitoring mit automatischen Model Updates",
         "Multi-Model Architecture: Baseline Linear Regression bis Deep Learning mit GPU",
         "Cross-Dataset Evaluation: 4 CMAPSS Datasets für robuste Model Validation",
         "Performance Optimization: Batch Processing, GPU Memory Management, Early Stopping",
-        "MLOps Integration: Workflow Automation, Model Versioning, Performance Tracking"
+        "Feature Importance Analysis: Sensor Impact auf RUL Prediction verstehen"
       ],
-      tools: ["PyTorch (CUDA)", "XGBoost GPU", "CuPy", "dbt", "SQLite", "n8n", "Streamlit", "Docker", "NVIDIA RTX 4070 Ti SUPER"]
+      tools: ["PyTorch (CUDA)", "XGBoost GPU", "CuPy", "dbt", "SQLite", "Pandas", "NVIDIA RTX 4070 Ti SUPER"]
     },
 
     solution: {
-      title: "Lösung (Complete MLOps Pipeline with Orchestration)",
-      content: "Vollständige GPU-beschleunigte ML Pipeline mit n8n Workflow-Orchestrierung, Streamlit Real-time Dashboard und automatisierter Model Deployment für Production-ready Predictive Maintenance.",
+      title: "Lösung (GPU ML Pipeline Complete)",
+      content: "Vollständige GPU-beschleunigte ML Pipeline mit PyTorch Neural Networks, XGBoost GPU und comprehensive Feature Engineering für Predictive Maintenance in Industrie 4.0 Umgebungen.",
       features: [
         "GPU-Accelerated Training: PyTorch NN mit CUDA, XGBoost GPU für 5x Performance Boost",
         "Advanced Neural Architecture: 256→128→64→1 mit BatchNorm, Dropout, Early Stopping",
-        "n8n Workflow Orchestration: Automatisierte ETL → dbt → ML Training → Dashboard Refresh",
-        "Streamlit Real-time Dashboard: Interactive Monitoring mit Live Model Performance Updates",
         "Comprehensive Feature Engineering: 21 Sensoren → 84+ Features durch Rolling Stats, Diffs, Z-Scores",
         "Multi-Model Comparison: Linear Regression, Random Forest, XGBoost GPU, PyTorch NN",
         "Memory-Optimized Pipeline: GPU Memory Management, Batch Processing, Automatic Cleanup",
         "Cross-Dataset Validation: FD001-FD004 für verschiedene Operating Conditions getestet",
         "dbt Data Quality: SQL-based Tests für Feature Integrity und Business Logic",
-        "Automated Scheduling: n8n Trigger für periodische Model Retraining und Performance Monitoring",
-        "Docker Integration: Containerized Deployment für Production Environment Setup",
+        "Performance Monitoring: GPU vs CPU Benchmarks, Training Time, Inference Speed",
         "Model Persistence: PyTorch State Dict, XGBoost GPU Models für Production Deployment"
       ]
     },
 
     results: {
-      title: "Ergebnisse (Complete MLOps Pipeline)",
+      title: "Ergebnisse (GPU Pipeline Complete)",
       metrics: [
         { label: "GPU Models Trained", value: "4+", change: "PyTorch + XGBoost GPU" },
         { label: "Feature Engineering", value: "84+", change: "21 Sensors → ML Features" },
         { label: "GPU Acceleration", value: "5x", change: "vs CPU Training" },
         { label: "Cross-Dataset RMSE", value: "<15", change: "FD001-FD004 Validated" },
         { label: "Training Time (GPU)", value: "<2min", change: "PyTorch + XGBoost" },
-        { label: "n8n Workflows", value: "3+", change: "Automated Orchestration" },
-        { label: "Dashboard Refresh", value: "Real-time", change: "Streamlit Auto-Update" },
         { label: "dbt Models", value: "6+", change: "Staging → Marts" }
       ],
       insights: [
         "GPU-Acceleration: PyTorch CUDA 5x schneller als CPU für Neural Network Training",
-        "n8n Orchestration: Automatisierte Workflows reduzieren Manual Pipeline Execution um 90%",
-        "Streamlit Dashboard: Real-time Model Performance Monitoring ermöglicht sofortige Issue Detection",
         "Feature Engineering Impact: Rolling Windows (5,20) und Z-Scores kritisch für Performance",
         "Sensor Importance: Sensor 2, 11, 15 zeigen höchste Korrelation mit RUL Degradation",
         "Cross-Dataset Robustness: Modelle generalisieren gut zwischen FD001-FD004 Conditions",
         "XGBoost GPU vs PyTorch NN: XGBoost GPU bessere RMSE, PyTorch NN bessere Generalization",
-        "Workflow Automation: n8n Scheduling ermöglicht kontinuierliche Model Updates ohne Manual Intervention",
         "Memory Optimization: CuPy für GPU NumPy Operations reduziert Memory Bottlenecks",
-        "Dashboard Performance: Streamlit Auto-Refresh zeigt Live GPU Memory und Training Progress",
-        "Production Ready: Docker + n8n + Streamlit Stack ready für Industrial Deployment"
+        "Early Stopping Essential: Verhindert Overfitting bei Deep Learning Models",
+        "dbt Data Quality: Automated Tests catching 95% der Feature Engineering Errors"
       ]
     },
 
     learnings: {
-      title: "Learnings & Reflexion (Complete MLOps Pipeline)",
+      title: "Learnings & Reflexion (GPU Pipeline Complete)",
       positives: [
         "GPU-Acceleration revolutioniert ML Training Speed für Industrial Time-Series",
-        "n8n Workflow Orchestration transformiert Manual Pipeline zu Full Automation",
-        "Streamlit Dashboard bietet unschätzbares Real-time Monitoring für Production Models",
         "PyTorch CUDA Integration seamless mit automatischem CPU Fallback",
         "Feature Engineering komplexer als erwartet aber entscheidend für Performance",
         "dbt + ML Pipeline Kombination optimal für reproduzierbare Data Science",
-        "MLOps Stack (n8n + Streamlit + Docker) essential für Production-ready AI Systems",
         "Cross-Dataset Validation essentiell für robuste Industrial AI Models",
         "XGBoost GPU Support excellent für Tabular Data mit großen Datasets",
-        "Workflow Automation reduziert DevOps Overhead und ermöglicht kontinuierliche Improvements",
         "GPU Memory Management skills durch praktische Anwendung dramatisch verbessert",
-        "Real-time Dashboard Monitoring kritisch für Early Warning bei Model Degradation"
+        "Sensor Physics Understanding durch Feature Importance Analysis vertieft"
       ],
       improvements: [
         "Hyperparameter Optimization: Optuna GPU für automated tuning implementieren",
-        "Advanced n8n Workflows: Conditional Logic für Dynamic Model Selection basierend auf Performance",
-        "Enhanced Streamlit Dashboard: Multi-Model Comparison Views und A/B Testing Interface",
         "Ensemble Methods: GPU-accelerated Stacking/Blending verschiedener Models",
         "Real-time Inference: TensorRT/ONNX für Production GPU Deployment",
         "Streaming Pipeline: Kafka + GPU Models für Real-time RUL Prediction",
         "MLflow Integration: GPU Model Versioning und Experiment Tracking",
-        "Advanced Orchestration: Airflow Integration für Complex Workflow Dependencies",
-        "Cloud Deployment: Kubernetes + n8n + Streamlit für Scalable Production Environment",
-        "Alert System: n8n Integration mit Slack/Email für Model Performance Alerts",
+        "Advanced Architectures: LSTM/Transformer für Sequence Modeling on GPU",
         "Multi-GPU Training: DataParallel für größere Models und Datasets",
-        "Production API: FastAPI + Streamlit für External Model Serving und Monitoring"
+        "Sensor Fusion: Advanced Signal Processing mit CuPy GPU Arrays",
+        "Production Monitoring: GPU Model Performance Tracking in Industrial Environment"
       ]
     },
 
     resources: {
       repo: "https://github.com/SW-oasen/turbine-maintenance-etl",
       ml_pipeline: "/workspace-turbine-maintenance/scripts/ml_pipeline_gpu.py",
-      streamlit_dashboard: "/scripts/streamlit_dashboard.py",
-      n8n_workflows: "/n8n/workflows/",
       dbt_project: "/turbine_etl_dbt",
       notebook: "/workspace-turbine-maintenance/notebooks/gpu_performance_analysis.ipynb",
       dataset: "NASA Turbofan Engine Degradation Simulation Data Set (CMAPSS)",
@@ -656,24 +635,6 @@ const PROJECT_DATA = {
         type: "diagram",
         src: getImagePath("turbine-maintenance/dbt-ml-pipeline-flow.png"),
         description: "End-to-End: Raw CMAPSS → dbt → Feature Engineering → GPU ML Training"
-      },
-      {
-        title: "n8n Workflow Orchestration",
-        type: "workflow",
-        src: getImagePath("turbine-maintenance/n8n-workflow-orchestration.png"),
-        description: "Automatisierte ETL → ML Training → Dashboard Refresh mit n8n Scheduling und Monitoring"
-      },
-      {
-        title: "Streamlit Real-time Dashboard",
-        type: "dashboard",
-        src: getImagePath("turbine-maintenance/streamlit-realtime-dashboard.png"),
-        description: "Interactive Model Performance Monitoring mit Live GPU Memory Usage und Training Progress"
-      },
-      {
-        title: "MLOps Pipeline Architecture",
-        type: "architecture",
-        src: getImagePath("turbine-maintenance/mlops-pipeline-architecture.png"),
-        description: "Complete MLOps Stack: n8n + dbt + GPU ML + Streamlit + Docker für Production Deployment"
       }
     ]
   }

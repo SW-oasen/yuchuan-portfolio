@@ -63,6 +63,9 @@ npm run build
 
 # Preview production build locally
 npm run preview
+
+# Deploy to GitHub
+npm run deploy
 ```
 
 ## 📊 Featured Projects
