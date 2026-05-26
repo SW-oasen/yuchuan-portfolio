@@ -2,107 +2,91 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Github, ExternalLink, Mail, PlayCircle, FileText, Eye, ChevronRight } from "lucide-react";
+import { Github, ExternalLink, Mail, FileText, ChevronRight, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 
 // ======== DATA: Edit this to update your site ========
 const PROFILE = {
   name: "Yuchuan",
-  title: "Software Engineer → Data/ML Engineer in progress",
-  subtitle: "Portfolio, learning journey, and project highlights",
+  title: "Software Engineer → Data/ML Engineer",
+  subtitle: "Portfolio, Lernreise und Projektübersicht",
   tagline:
-    "Von Engineering zu Data Science — praxisorientiert, dokumentiert, stetig lernend.",
-  email: "mailto:see.wind@gmx.de", 
-  location: "Berlin, Germany",
+    "Von Software Entwicklung zu Data Scientist",
+  email: "mailto:see.wind@gmx.de",
+  location: "Berlin",
   links: {
     github: "https://github.com/SW-oasen",
-    medium: "https://medium.com/",
     linkedin: "https://de.linkedin.com/in/yuchuan-liu-58309a274",
   },
 };
 
 const PROJECTS = [
   {
-    id: "airbnb-berlin", // Changed from 'key' to 'id'
-    title: "Berlin Airbnb Marktanalyse 2025 — Business Intelligence & Compliance",
-    date: "2025-11",
+    id: "energy-demand-forecast",
+    title: "Stromverbrauchsprognose — Zeitreihenanalyse",
+    date: "2026-05",
     summary:
-      "Business Intelligence Pipeline mit Revenue Proxy Modelling und einzigartiger Berliner Compliance-Analyse für Stakeholder in Real Estate und Urban Planning.",
+      "Kurzfristige Strombedarfsprognose mit Feature Engineering und ML-Modellvergleich.",
     highlights: [
-      "Active Market Filtering (Ghost vs. echte Listings)", 
-      "San Francisco Revenue Model (Upper/Lower Bounds)",
-      "Berliner Lizenz-Compliance Analysis (Zweckentfremungsverbot)",
-      "Power BI Dashboard mit deutscher Lokalisierung",
-      "Regulatory Paradox: Invalid Licenses outperform Valid ones"
+      "Prognose- und Realer Verbrauch-Vergleich: ML Vorhersage vs SMARD realer Daten und Prognose",
+      "Feature Engineering: Kalender-Features",
+      "Wetterdatenintegration",
+      "ETL Pipeline mit SQLite",
+      "Asymmetrische Verlust Funktion für Über- vs Unterschätzung",
+      "Interaktive Applikationanwendung mit Streamlit und interaktivem Notebook",
     ],
-    stack: ["Python", "Pandas", "Seaborn", "Violin Plots", "Regex", "Power BI"],
-    repo: "https://github.com/SW-oasen/airbnb-eda-berlin",
+    stack: ["Pandas", "scikit-learn", 'sklearn-optimizer', "XGBoost", "LghtGBM", "SQLite", "Matplotlib", "Streamlit", "Jupyter"],
+    repo: "https://github.com/SW-oasen/electricity_demand_forecast",
     live: null,
     video: null,
   },
   {
-    id: "telco-customer-churn", // Changed from 'key' to 'id'
-    title: "Telco Customer Churn — Classification",
+    id: "turbine-maintenance",
+    title: "Turbinen-ML-Pipeline — Predictive Maintenance (NASA CMAPSS)",
     date: "2025-10",
     summary:
-      "End-to-end churn modeling with feature engineering, evaluation, and reporting.",
+      "GPU-beschleunigtes ML-Modell zur Vorhersage der verbleibenden Nutzungsdauer von Turbinentriebwerken.",
     highlights: [
-      "Data preprocessing & imputation",
-      "Model evaluation & ROC/AUC",
-      "Explainability with SHAP/Permutation",
+      "GPU-Training mit PyTorch und XGBoost",
+      "Feature Engineering für 21 Sensorzeitreihen",
+      "n8n-Workflow-Orchestrierung",
+      "Streamlit-Dashboard zur Ergebnisüberwachung",
+      "dbt-Datenpipeline mit SQLite",
     ],
-    stack: ["Python", "scikit-learn", "Pandas", "Matplotlib"],
+    stack: ["PyTorch (CUDA)", "XGBoost GPU", "n8n", "Streamlit", "dbt", "Docker", "CuPy", "SQLite"],
+    repo: "https://github.com/SW-oasen/turbine-maintenance-etl",
+    live: null,
+    video: null,
+  },
+  {
+    id: "telco-customer-churn",
+    title: "Telco Customer Churn — Klassifikation",
+    date: "2025-10",
+    summary:
+      "Kundenabwanderungsprognose mit Klassifikationsmodellen.",
+    highlights: [
+      "Datenvorverarbeitung und Imputation",
+      "Modellauswertung mit ROC/AUC",
+      "Erklärbarkeit mit SHAP und Permutation Importance",
+    ],
+    stack: ["scikit-learn", "Pandas", "Optuna", "SHAP"],
     repo: "https://github.com/SW-oasen/telco-customer-churn",
     live: null,
     video: null,
   },
   {
-    id: "store-sales-forecast", // Changed from 'key' to 'id'
-    title: "Store Sales Forecast — Time Series Modeling",
-    date: "2025-09",
+    id: "airbnb-berlin",
+    title: "Airbnb Berlin — Explorative Datenanalyse",
+    date: "2025-08",
     summary:
-      "Forecasting weekly sales; model comparison and error analysis with permutation importance.",
+      "EDA der Airbnb-Listings in Berlin mit Preisanalysen, geografischen Visualisierungen und ML-Modellen.",
     highlights: [
-      "Baseline vs. advanced models",
-      "Permutation importance",
-      "Cross-validation & diagnostics",
+      "Datenbereinigung und Feature Engineering",
+      "Preisanalyse nach Bezirk und Unterkunftstyp",
+      "AutoML-Preisvorhersage mit FLAML und H2O",
     ],
-    stack: ["Python", "scikit-learn", "XGBoost", "MLflow (local)", "Pandas"],
-    repo: "https://github.com/SW-oasen/store-sales-forecast",
-    live: null,
-    video: null,
-  },
-  {
-    id: "global-power-plants", // Changed from 'key' to 'id'
-    title: "Global Power Plants — Data Pipeline & Dashboard",
-    date: "2025-09",
-    summary:
-      "ETL on global power plant datasets with a cleaned dataset and analytics-ready schema.",
-    highlights: [
-      "Schema normalization",
-      "Data validation & profiling",
-      "Reusable pipeline components",
-    ],
-    stack: ["Python", "Pandas", "Data visualization", "SQL"],
-    repo: "https://github.com/SW-oasen/global-power-plants",
-    live: null,
-    video: null,
-  },
-  {
-    id: "turbine-maintenance", // Changed from 'key' to 'id'
-    title: "GPU-Accelerated Turbine ML Pipeline (NASA CMAPSS)",
-    date: "2025-10",
-    summary:
-      "Complete MLOps pipeline with n8n and Streamlit for predictive maintenance.",
-    highlights: [
-      "GPU acceleration",
-      "n8n workflow orchestration",
-      "Streamlit real-time dashboard",
-      "dbt transformations",
-      "Docker containerization"
-    ],
-    stack: ["PyTorch (CUDA)", "XGBoost GPU", "n8n", "Streamlit", "dbt", "Docker", "CuPy", "SQLite"],
-    repo: "https://github.com/SW-oasen/turbine-maintenance-etl",
+    stack: ["Python", "Pandas", "Jupyter", "Power BI"],
+    repo: "https://github.com/SW-oasen/airbnb-eda-berlin",
     live: null,
     video: null,
   },
@@ -110,70 +94,73 @@ const PROJECTS = [
 
 const LEARNING = [
   {
-    date: "2024",
-    title: "Lokale RAG Experimente mit ollama und n8n",
+    date: "2026-05",
+    title: "Stromverbrauchsprognose mit ML",
     details:
-      "Mit Docker Compose lokale n8n Instanz mit ollama/mistral aufgesetzt, mit lokalen Datenquellen zu verbinden.",
+      "Portfolio-Projekt zur kurzfristigen Strombedarfsprognose mit Feature Engineering, ML, Vergleich mit SMARD realer Daten und Prognose.",
   },
   {
-    date: "2025-07",
-    title: "Kaggle Onlinekurse - Python, Datenanalyse, ML, Deep Learning",
+    date: "2026-05",
+    title: "Abschluss der Ausbildung zum Data/ML Engineer bei Stackfuel",
     details:
-      "Data Science und ML Grundlagen via Kaggle Kurse erlernt, inkl. praktischer Übungen.",
+      "Erfolgreiche Abschlussprüfung des dritten/letzten Fachs Data Science bei Stackfuel - Projekt: Wartezeitprognose im Taxi.",
   },
-    {
-    date: "2025-08",
-    title: "Portfolio-Projekte Anfang",
+  {
+    date: "2026-02",
+    title: "Abschlussprüfung des zweiten Fachs Data Analyse bei Stackfuel",
     details:
-      "EDA, Data Cleaning, Modellierung und Visualisierung und Dokumentation.",
+      "Erfolgreiche Abschlussprüfung des Fach Data Analyse bei Stackfuel - Projekt: Kundenabwanderungsanalyse.",
+  },
+  {
+    date: "2025-12",
+    title: "Abschlussprüfung des ersten Fachs Business Intelligence / Power BI bei Stackfuel",
+    details:
+      "Erfolgreiche Abschlussprüfung Business Intelligence / Power BI - Projekt: Flugverspätungsanalyse.",
+  },
+  {
+    date: "2025-10",
+    title: "MLOps-Pipeline mit n8n und Streamlit Dashboard",
+    details:
+      "n8n-Workflow-Automatisierung, Streamlit-Dashboard und Docker für das Turbinen-Maintenance-Projekt implementiert.",
+  },
+  {
+    date: "2025-10",
+    title: "GPU-Setup für PyTorch",
+    details:
+      "CUDA-Installation für schnellere Trainingsläufe — GPU-Training deutlich schneller als CPU-Baseline.",
   },
   {
     date: "2025-09",
     title: "Deep Learning, Microsoft Power BI und Datenvisualisierung",
     details:
-      "Image Classification Projekt. Portable Dashboards erstellt, Datenmodelle optimiert, Berichte automatisiert.",
+      "Image-Classification-Projekt durchgeführt. Power-BI-Dashboards erstellt, Datenmodelle optimiert, Berichte automatisiert.",
   },
   {
-    date: "2025-10",
-    title: "GPU Setup for PyTorch",
+    date: "2025-08",
+    title: "Portfolio-Projekte gestartet",
     details:
-      "CUDA-Installation für schnellere Trainingsläufe — Ziel erreicht: Faktor x~10 Speedup gegenüber CPU.",
+      "EDA, Datenbereinigung, Modellierung, Visualisierung und Dokumentation.",
   },
   {
-    date: "2025-10",
-    title: "MLOps Pipeline mit n8n Orchestration und Streamlit Dashboard",
+    date: "2025-07",
+    title: "Kaggle-Kurse: Python, Datenanalyse, ML, Deep Learning",
     details:
-      "Complete MLOps Stack implementiert: n8n Workflow Automation, Streamlit Real-time Dashboard, Docker Containerization für Production-ready Predictive Maintenance Pipeline.",
-  },
-    {
-    date: "2025-12",
-    title: "Stackfuel Fortbildung - Business Intelligence mit Power BI",
-    details:
-      "Erfolgreich abgeschlossen.",
-  },
-    {
-    date: "2026-01",
-    title: "Stackfuel Fortbildung - Data Analyst mit Python",
-    details:
-      "Erfolgreich abgeschlossen.",
+      "Data-Science- und ML-Grundlagen über Kaggle-Kurse erlernt, inkl. praktischer Übungen.",
   },
   {
-    date: "2026-02",
-    title: "Business Intelligence Evolution: Von EDA zu Stakeholder-orientierten Insights",
+    date: "2024",
+    title: "Lokale RAG-Experimente mit ollama und n8n",
     details:
-      "Airbnb-Projekt v2: Revenue Proxy Modelling mit San Francisco Model, regulatorische Compliance-Analyse (Zweckentfremungsverbot), Active Market Filtering. Übergang von reiner EDA zu actionable Business Intelligence für Investor Relations und Urban Planning.",
-  }
+      "Mit Docker Compose lokale n8n-Instanz mit ollama/mistral aufgesetzt und mit lokalen Datenquellen verbunden.",
+  },
 ];
 
 const EXPERIENCE = [
-  {
-    period: "Dipl.-Wirt.-Ing. (Informatik)",
-    place: "TU Berlin",
-  },
-  { period: "Order Manager", place: "Nokia Siemens" },
-  { period: "Senior Support Engineer", place: "Spirent" },
-  { period: "Support Engineer", place: "macmon" },
-  { period: "Software Engineer → Data/ML (self-directed)", place: "2024–2025" },
+  { period: "AZAV Ausbildung zu Data Scientist bei Stackfuel", place: "online", date: "2025.11–2026.05"},
+  { period: "Support Engineer für Computernetzsicherheit ", place: "macmon", date: "2023-2025" },
+  { period: "Senior Support Engineer", place: "Spirent", date: "2010-2023" },
+  { period: "Order Manager", place: "Nokia Siemens", date: "2008-2010" },
+  {period: "Dipl.-Wirt.-Ing. (Informatik)", place: "TU Berlin", date: "2000-2007"},
 ];
 
 // ======== UI ========
@@ -230,6 +217,8 @@ function ProjectCard({ project }) {
 }
 
 export default function Portfolio() {
+  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
       {/* Header */}
@@ -242,7 +231,24 @@ export default function Portfolio() {
             <a href="#about" className="hover:underline">Werdegang</a>
             <a href="#contact" className="hover:underline">Kontakt</a>
           </nav>
+          <button
+            className="md:hidden p-2 rounded-md hover:bg-muted"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Navigation öffnen"
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
+        {mobileMenuOpen && (
+          <div className="md:hidden border-t bg-background">
+            <nav className="flex flex-col px-4 py-3 gap-1 text-sm">
+              <a href="#projects" onClick={() => setMobileMenuOpen(false)} className="hover:underline py-2">Projekte</a>
+              <a href="#learning" onClick={() => setMobileMenuOpen(false)} className="hover:underline py-2">Lernfortschritte</a>
+              <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:underline py-2">Werdegang</a>
+              <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="hover:underline py-2">Kontakt</a>
+            </nav>
+          </div>
+        )}
       </header>
 
       {/* Hero */}
@@ -259,7 +265,7 @@ export default function Portfolio() {
           </p>
           <div className="mt-6 flex flex-wrap gap-3">
             <Button asChild>
-              <a href="#projects"><FileText className="h-4 w-4 mr-2"/>Case Studies</a>
+              <a href="#projects"><FileText className="h-4 w-4 mr-2"/>Projekte ansehen</a>
             </Button>
             <Button variant="outline" asChild>
               <a href={PROFILE.links.github} target="_blank" rel="noreferrer"><Github className="h-4 w-4 mr-2"/>GitHub</a>
@@ -313,10 +319,16 @@ export default function Portfolio() {
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold mb-2">Tech‑Stack (Auswahl)</h3>
-            <div className="flex flex-wrap gap-2">
-              {["Python","Pandas","scikit-learn","XGBoost","PyTorch (CUDA)","SQL","Power BI","Docker","n8n","Streamlit","dbt","CuPy","Git","MLOps"].map((t, i)=> (
+            <h3 className="font-semibold mb-2">Kernkompetenzen</h3>
+            <div className="flex flex-wrap gap-2 mb-4">
+              {["Python","Pandas","scikit-learn","XGBoost","SQL","Power BI","Git","Matplotlib"].map((t, i)=> (
                 <Badge key={i} variant="secondary" className="px-3 py-1 rounded-full">{t}</Badge>
+              ))}
+            </div>
+            <h3 className="font-semibold mb-2">Aktuell vertiefend</h3>
+            <div className="flex flex-wrap gap-2">
+              {["PyTorch (CUDA)","Docker","n8n","Streamlit","dbt","MLOps"].map((t, i)=> (
+                <Badge key={i} variant="outline" className="px-3 py-1 rounded-full">{t}</Badge>
               ))}
             </div>
             <p className="text-sm text-muted-foreground mt-3">
@@ -330,13 +342,10 @@ export default function Portfolio() {
       <Section id="contact" title="Kontakt">
         <div className="flex flex-wrap items-center gap-3">
           <Button asChild variant="outline">
-            <a href={PROFILE.email}><Mail className="h-4 w-4 mr-2"/>Email</a>
+            <a href={PROFILE.email}><Mail className="h-4 w-4 mr-2"/>E-Mail</a>
           </Button>
           <Button asChild variant="outline">
             <a href={PROFILE.links.github} target="_blank" rel="noreferrer"><Github className="h-4 w-4 mr-2"/>GitHub</a>
-          </Button>
-          <Button asChild variant="outline">
-            <a href={PROFILE.links.medium} target="_blank" rel="noreferrer"><ExternalLink className="h-4 w-4 mr-2"/>Blog</a>
           </Button>
           <Button asChild variant="outline">
             <a href={PROFILE.links.linkedin} target="_blank" rel="noreferrer"><ExternalLink className="h-4 w-4 mr-2"/>LinkedIn</a>

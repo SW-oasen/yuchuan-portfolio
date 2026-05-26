@@ -5,7 +5,7 @@
 ### Method 1: Vite + React (Recommended for development)
 ```powershell
 # Navigate to your project directory
-cd "c:\Projects\DataScience\Portfolio\Yuchuan-Portfolio"
+cd "D:\Projects\DataScience\Portfolio\Yuchuan-Portfolio"
 
 # Initialize npm project
 npm init -y
