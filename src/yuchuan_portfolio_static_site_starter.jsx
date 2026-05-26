@@ -24,17 +24,18 @@ const PROFILE = {
 const PROJECTS = [
   {
     id: "airbnb-berlin", // Changed from 'key' to 'id'
-    title: "Airbnb Berlin — Exploratory Data Analysis",
-    date: "2025-08",
+    title: "Berlin Airbnb Marktanalyse 2025 — Business Intelligence & Compliance",
+    date: "2025-11",
     summary:
-      "EDA of Airbnb listings in Berlin with visual insights and data cleaning pipeline.",
+      "Business Intelligence Pipeline mit Revenue Proxy Modelling und einzigartiger Berliner Compliance-Analyse für Stakeholder in Real Estate und Urban Planning.",
     highlights: [
-      "Data cleaning & feature engineering",
-      "Interactive visuals (matplotlib/Plotly)",
-      "Actionable insights for pricing & demand",
-      "Price prediction with traditional ML, and AutoML FLAML and H2O"
+      "Active Market Filtering (Ghost vs. echte Listings)", 
+      "San Francisco Revenue Model (Upper/Lower Bounds)",
+      "Berliner Lizenz-Compliance Analysis (Zweckentfremungsverbot)",
+      "Power BI Dashboard mit deutscher Lokalisierung",
+      "Regulatory Paradox: Invalid Licenses outperform Valid ones"
     ],
-    stack: ["Python", "Pandas", "Plotly", "Jupyter", "AutoML"],
+    stack: ["Python", "Pandas", "Seaborn", "Violin Plots", "Regex", "Power BI"],
     repo: "https://github.com/SW-oasen/airbnb-eda-berlin",
     live: null,
     video: null,
@@ -92,14 +93,13 @@ const PROJECTS = [
     title: "GPU-Accelerated Turbine ML Pipeline (NASA CMAPSS)",
     date: "2025-10",
     summary:
-      "Complete MLOps pipeline with GPU acceleration, n8n orchestration, and Streamlit real-time dashboard for predictive maintenance.",
+      "Complete MLOps pipeline with n8n and Streamlit for predictive maintenance.",
     highlights: [
-      "GPU-accelerated PyTorch NN + XGBoost (5x speedup)",
-      "n8n workflow orchestration (ETL → ML → Dashboard)",
-      "Streamlit real-time monitoring dashboard",
-      "dbt transformations with data quality tests",
-      "Cross-dataset validation (FD001-FD004)",
-      "Docker containerization for production deployment",
+      "GPU acceleration",
+      "n8n workflow orchestration",
+      "Streamlit real-time dashboard",
+      "dbt transformations",
+      "Docker containerization"
     ],
     stack: ["PyTorch (CUDA)", "XGBoost GPU", "n8n", "Streamlit", "dbt", "Docker", "CuPy", "SQLite"],
     repo: "https://github.com/SW-oasen/turbine-maintenance-etl",
@@ -144,6 +144,24 @@ const LEARNING = [
     title: "MLOps Pipeline mit n8n Orchestration und Streamlit Dashboard",
     details:
       "Complete MLOps Stack implementiert: n8n Workflow Automation, Streamlit Real-time Dashboard, Docker Containerization für Production-ready Predictive Maintenance Pipeline.",
+  },
+    {
+    date: "2025-12",
+    title: "Stackfuel Fortbildung - Business Intelligence mit Power BI",
+    details:
+      "Erfolgreich abgeschlossen.",
+  },
+    {
+    date: "2026-01",
+    title: "Stackfuel Fortbildung - Data Analyst mit Python",
+    details:
+      "Erfolgreich abgeschlossen.",
+  },
+  {
+    date: "2026-02",
+    title: "Business Intelligence Evolution: Von EDA zu Stakeholder-orientierten Insights",
+    details:
+      "Airbnb-Projekt v2: Revenue Proxy Modelling mit San Francisco Model, regulatorische Compliance-Analyse (Zweckentfremungsverbot), Active Market Filtering. Übergang von reiner EDA zu actionable Business Intelligence für Investor Relations und Urban Planning.",
   }
 ];
 

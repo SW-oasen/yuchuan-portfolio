@@ -23,119 +23,116 @@ const getImagePath = (path) => {
 // ======== PROJECT DATA ========
 const PROJECT_DATA = {
   "airbnb-berlin": {
-    title: "Airbnb Berlin — Exploratory Data Analysis",
-    date: "2025-08",
-    duration: "2 Wochen",
-    status: "Abgeschlossen",
+    title: "Berlin Airbnb Marktanalyse 2025 — Business Intelligence & Compliance",
+    date: "2025-11, erneuert in 2026-02", 
+    duration: "3 Wochen",
+    status: "Abgeschlossen (v2: Revenue Modelling & Regulatory Analysis)",
     
     problem: {
       title: "Problem",
-      content: "Berlin ist ein beliebtes Reiseziel mit einem komplexen Airbnb-Markt. Vermieter und Gäste benötigen datenbasierte Einblicke in Preisgestaltung, Nachfragemuster und optimale Standorte.",
+      content: "Der Berliner Kurzzeitvermietungsmarkt unterliegt dem Zweckentfremungsverbot, doch die Effektivität städtischer Regulierungen und echte Umsatzpotenziale bleiben intransparent. Investoren und Stadtplaner benötigen evidenzbasierte Insights über aktiveLIstings, Compliance-Patterns und Revenue-Potenziale.",
       challenges: [
-        "Unstrukturierte Rohdaten mit inkonsistenten Formaten", 
-        "Zahlumbrüche im 'name' Feld führen zu Transformationsproblemen bei Power BI",
-        "Fehlende Werte und Ausreißer in Preisdaten",
-        "Komplexe geografische Verteilung der Listings",
-        "Saisonale Schwankungen nicht ersichtlich"
+        "95% der Listings sind 'Ghost-Einträge' ohne echte Marktaktivität", 
+        "Berliner Lizenz-Compliance nur oberflächlich überprüfbar (Regex-Sanitization nötig)",
+        "Revenue-Schätzungen: Inside Airbnb nutzt veraltete SF-Model-Annahmen",
+        "Power BI Import: Deutsche Trennzeichen-Standards erforderlich (CSV-Export-Pipeline)",
+        "Business Intelligence: Welche Listings sind echter 'Active Market'?"
       ]
     },
 
     approach: {
       title: "Daten & Ansatz",
-      dataset: "Inside Airbnb Berlin Dataset (~22k Listings)",
+      dataset: "Inside Airbnb Berlin Dataset Sept. 2025 (~13k Listings) → Active Market (~2.4k)",
       methodology: [
-        "Explorative Datenanalyse (EDA) mit statistischen Kennzahlen",
-        "Datenbereinigung und Feature Engineering",
-        "Geografische Analyse mit Folium-Karten",
-        "Preis-Nachfrage-Korrelationsanalyse",
-        "Interactive Visualisierungen mit Power BI"
+        "Active Market Filtering: Reviews >2/Monat als echter Marktindikator",
+        "Revenue Proxy Modelling: Upper/Lower Bounds mit San Francisco Model",
+        "Berliner Lizenz-Klassifizierung: Regex-basierte Kategorisierung (Gültig/Befreit/Invalid/Dirty)",
+        "Compliance-Performance Analysis: Boxplot Revenue vs. License Status", 
+        "Power BI Export: Deutsche Lokalisierung (Semikolon/Komma-Standards)",
+        "Regulatory Paradox: Performance vs. Legal Compliance Correlation"
       ],
-      tools: ["Python", "Pandas", "Plotly", "Folium", "Seaborn", "Jupyter", "Power BI"]
+      tools: ["Python", "Pandas", "Seaborn", "Violin Plots", "Regex", "Jupyter", "Power BI"]
     },
 
     solution: {
-      title: "Lösung",
-      content: "Entwicklung einer umfassenden EDA-Pipeline mit automatisierter Datenbereinigung und interaktiven Dashboards.",
+      title: "Lösung", 
+      content: "Business Intelligence Pipeline mit Revenue Proxy Modelling und einzigartiger Berliner Compliance-Analyse für Stakeholder in Investor Relations und Urban Planning.",
       features: [
-        "Automatisierte Datenvalidierung und -bereinigung",
-        "Interaktives Dashboard nach Bezirken",
-        "Preis und Nachfrage nach Bezirk und Unterkunftstyp",
-        "Geografische Hotspot-Identifikation"
+        "San Francisco Model Implementation: Upper (30% Review Rate) vs Lower (70%) Revenue Proxy",
+        "Active Market Definition: Filtering auf >2 Reviews/Monat (reale vs Ghost Listings)",
+        "4-Kategorien Lizenz-Klassifizierung: Gültig, Befreit, Invalid/Dirty, Missing",
+        "Power BI Dashboard: Pareto-Analyse für Commercial Hosts (80/20 Rule)",
+        "Geografische Revenue Heatmaps: Mitte vs Kreuzberg Performance-Cluster",
+        "Host-Profiling: Commercial (3+ Units) vs Private Segmentation"
       ]
     },
 
     results: {
       title: "Ergebnisse",
       metrics: [
-        { label: "Datensätze bereinigt", value: "22.247", change: "100%" },
-        { label: "Bezirke analysiert", value: "12", change: "Alle" },
-        { label: "Durchschnittspreis/Nacht", value: "€89", change: "±€45" },
-        { label: "Visualisierungen erstellt", value: "15+", change: "Interaktiv" }
+        { label: "Active Market Listings", value: "2.395", change: "~35% real market" },
+        { label: "Median Revenue (Active)", value: "€1.074", change: "€800-€1.500" },
+        { label: "Top 5% Property Performance", value: "€6.000+", change: "Apartment/Loft" },
+        { label: "License Compliance Rate", value: "44%", change: "Valid + Exempt" }
       ],
       insights: [
-        "Mitte und Prenzlauer Berg haben höchste Preise (€120-150/Nacht)",
-        "Ganze Wohnungen sind 2.3x teurer als private Zimmer",
-        "Verfügbarkeit korreliert negativ mit Bewertungsanzahl (-0.34)",
-        "Zentrale Lagen haben 40% höhere Buchungsraten"
+        "REGULATORY PARADOX: Invalid/Dirty Lizenzen zeigen höhere Median-Revenue als konforme",
+        "Professionalisierung: Commercielle Hosts (3+ Units) dominieren Umsatz-Pareto",
+        "Active Market: 95% aller Listings sind ƒGhosts' - nur 35% echte Marktteilnehmer", 
+        "Geographic Premium: Mitte (€150+ avg) vs Pankow Private Room Density",
+        "Survival Bias: Missing License = 0% in Active Market (Algorithmus-Filtereffekt)"
       ]
     },
 
     learnings: {
       title: "Learnings & Reflexion",
       positives: [
-        "Das erste Portfolio-Projekt mit initialen Installationen und Konfigurationen",
-        "Notebooks durch KI generieren lassen, aber selbst getestet und validiert",
-        "Das durch Onlinekurse angelernten EDA-Methodik und Datenvisualisierung durch Anwendung vertieft",
-        "Nach KI Empfehlung AutoML wie FLAML und H2O AutoML ausprobiert",
-        "Power BI Anwendung durch Onlinekurse erlernt",
-        "Interaktive Visualisierungen erhöhen Verständnis deutlich",
-        "Geografische Analyse liefert wertvolle Business-Insights"
+        "Business Intelligence statt EDA: Fokus auf actionable Stakeholder-Insights",
+        "Revenue Proxy Modelling liefert realistische Umsatz-Estimates vs naive Preisanalysen",
+        "Berliner Lizenz-Regex ermöglicht einzigartige Compliance-vs-Performance-Analyse",
+        "Power BI deutsche Lokalisierung: Semikolon-CSV erhöht Dashboard-Workflow um 80%",
+        "Active Market Filtering: Echte Marktdynamik vs 'Ghost Listing'-Verzerrung"
       ],
       improvements: [
-        "Selbständigere Datenbereinigung und Feature Engineering ohne KI-Unterstützung durchführen",
-        "Zeitreihenanalyse für saisonale Muster hinzufügen (nach Datenverfügbarkeit)",
-        "Übernachtungsprognosen basierend auf historischen Daten - Listing statt Preis als Target",
-        "Mehr externe Datenquellen (Events, ÖPNV) integrieren"
+        "Zeitreihen-Vergleich: Q3/Q4 2025 vs Q1 2026 für Regulierungs-Impact",
+        "External Data: Events-Kalender, ÖPNV-Index für Revenue-Korrelationen",
+        "Host Churn Analysis: Lizenz-Verlust führt zu Market-Exit-Rate?",
+        "Advanced Power BI: DAX-Measures für dynamische Host-Kategorisierung implementieren",
+        "Neighborhood-Level: BezirksAMT-Daten für micro-lokale Enforcement-Patterns"  
       ]
     },
 
     resources: {
       repo: "https://github.com/SW-oasen/airbnb-eda-berlin",
-      notebook: "https://github.com/SW-oasen/airbnb-eda-berlin/blob/main/notebooks/Airbnb_EDA_Berlin.ipynb",
-      report: "https://github.com/SW-oasen/airbnb-eda-berlin/blob/main/dashboards/aribnb_cleandata_report.pbix",
-      presentation: "/dashboards/aribnb_cleandata_report.pdf"
+      notebook: "/notebooks/v2/AirBnB_Berlin_EDA.ipynb",
+      report: "/reports/v2/airbnb_berlin_20250923_eda.pbix",
+      presentation: "/reports/v2/airbnb_berlin_20250923_eda.pdf"
     },
 
     visuals: [
       {
-        title: "Preis-Heatmap nach Bezirken",
-        type: "image",
-        src: getImagePath("airbnb-eda-berlin/price-neighborhood-heatmap.png"),
-        description: "Interaktive Folium-Karte zeigt Preisverteilung je nach Bezirk"
+        title: "Revenue Distribution by Property Type",
+        type: "violin",
+        src: getImagePath("airbnb-eda-berlin/violinplot-revenue-property-type.png"),
+        description: "Violin Plot: Serviced Apartments €6K vs Private Rooms €800 median revenue"
       },
       {
-        title: "Übernachtung nach Bezirken",
-        type: "image",
-        src: getImagePath("airbnb-eda-berlin/listing-neighborhood-heatmap.png"),
-        description: "Interaktive Folium-Karte zeigt Übernachtungen je nach Bezirk"
+        title: "License Compliance vs Performance",
+        type: "boxplot", 
+        src: getImagePath("airbnb-eda-berlin/boxplot-revenue-license-status.png"),
+        description: "Paradox: Invalid/Dirty Licenses outperform Valid ones in revenue metrics"
       },
       {
-        title: "Listing-Typ Distribution",
-        type: "image",
-        src: getImagePath("airbnb-eda-berlin/listing-types-heatmap.png"), 
-        description: "Verteilung verschiedener Unterkunftstypen mit Preisvergleich"
+        title: "Active Market Geographic Heatmap",
+        type: "heatmap",
+        src: getImagePath("airbnb-eda-berlin/geo-heatmap-revenue.png"),
+        description: "Mitte + Kreuzberg als Revenue-Cluster"
       },
       {
-        title: "Preise und Übernachtungen nach Unterkunftstyp",
-        type: "image",
-        src: getImagePath("airbnb-eda-berlin/price-listing-by-type.png"),
-        description: "Korrelationsanalyse zwischen Preis und Übernachtungen nach Unterkunftstyp"
-      },
-      {
-        title: "Übernachtungen und Reviews Korelation",
-        type: "image",
-        src: getImagePath("airbnb-eda-berlin/listing-review.png"),
-        description: "Korrelationsanalyse zwischen Übernachtungen und Reviews-Anzahl"
+        title: "Commercial Host Analysis",
+        type: "dashboard",
+        src: getImagePath("airbnb-eda-berlin/barplot-renenue-host.png"),
+        description: "Wenige Commercial Hosts kontrollieren Großteil des Marktumsatzes"
       }
     ]
   },
@@ -488,7 +485,7 @@ const PROJECT_DATA = {
   "turbine-maintenance": {
     title: "GPU-Accelerated Turbofan Engine ML Pipeline (NASA CMAPSS)",
     date: "2025-10", 
-    duration: "6+ Wochen",
+    duration: "4 Wochen",
     status: "Complete MLOps Pipeline with n8n Orchestration & Streamlit Dashboard",
     
     problem: {
@@ -533,12 +530,12 @@ const PROJECT_DATA = {
         "Advanced Neural Architecture: 256→128→64→1 mit BatchNorm, Dropout, Early Stopping",
         "n8n Workflow Orchestration: Automatisierte ETL → dbt → ML Training → Dashboard Refresh",
         "Streamlit Real-time Dashboard: Interactive Monitoring mit Live Model Performance Updates",
-        "Comprehensive Feature Engineering: 21 Sensoren → 84+ Features durch Rolling Stats, Diffs, Z-Scores",
+        "Feature Engineering: 21 Sensoren → 84+ Features durch Rolling Stats, Diffs, Z-Scores",
         "Multi-Model Comparison: Linear Regression, Random Forest, XGBoost GPU, PyTorch NN",
         "Memory-Optimized Pipeline: GPU Memory Management, Batch Processing, Automatic Cleanup",
         "Cross-Dataset Validation: FD001-FD004 für verschiedene Operating Conditions getestet",
         "dbt Data Quality: SQL-based Tests für Feature Integrity und Business Logic",
-        "Automated Scheduling: n8n Trigger für periodische Model Retraining und Performance Monitoring",
+        "n8n Trigger: periodische Model Retraining und Performance Monitoring",
         "Docker Integration: Containerized Deployment für Production Environment Setup",
         "Model Persistence: PyTorch State Dict, XGBoost GPU Models für Production Deployment"
       ]
@@ -552,9 +549,9 @@ const PROJECT_DATA = {
         { label: "GPU Acceleration", value: "5x", change: "vs CPU Training" },
         { label: "Cross-Dataset RMSE", value: "<15", change: "FD001-FD004 Validated" },
         { label: "Training Time (GPU)", value: "<2min", change: "PyTorch + XGBoost" },
-        { label: "n8n Workflows", value: "3+", change: "Automated Orchestration" },
+        { label: "n8n Workflows", value: "1", change: "Automated Orchestration" },
         { label: "Dashboard Refresh", value: "Real-time", change: "Streamlit Auto-Update" },
-        { label: "dbt Models", value: "6+", change: "Staging → Marts" }
+        { label: "dbt Models", value: "1", change: "Staging → Marts" }
       ],
       insights: [
         "GPU-Acceleration: PyTorch CUDA 5x schneller als CPU für Neural Network Training",
@@ -575,23 +572,22 @@ const PROJECT_DATA = {
       title: "Learnings & Reflexion (Complete MLOps Pipeline)",
       positives: [
         "GPU-Acceleration revolutioniert ML Training Speed für Industrial Time-Series",
-        "n8n Workflow Orchestration transformiert Manual Pipeline zu Full Automation",
-        "Streamlit Dashboard bietet unschätzbares Real-time Monitoring für Production Models",
+        "GPU Memory Management skills durch praktische Anwendung dramatisch verbessert",
         "PyTorch CUDA Integration seamless mit automatischem CPU Fallback",
+        "n8n Workflow Orchestration transformiert Manual Pipeline zu Full Automation",
+        "n8n SSH CMD spezielle Systembefehle für Remote Execution",
+        "Streamlit Dashboard bietet Real-time Monitoring für Production Models",
+        "Streamlit selektive Metrics Anzeige für sinnvolle Insights",
         "Feature Engineering komplexer als erwartet aber entscheidend für Performance",
         "dbt + ML Pipeline Kombination optimal für reproduzierbare Data Science",
-        "MLOps Stack (n8n + Streamlit + Docker) essential für Production-ready AI Systems",
-        "Cross-Dataset Validation essentiell für robuste Industrial AI Models",
-        "XGBoost GPU Support excellent für Tabular Data mit großen Datasets",
         "Workflow Automation reduziert DevOps Overhead und ermöglicht kontinuierliche Improvements",
-        "GPU Memory Management skills durch praktische Anwendung dramatisch verbessert",
-        "Real-time Dashboard Monitoring kritisch für Early Warning bei Model Degradation"
+        "MLOps Stack (n8n + Streamlit + Docker) vorbereitet für nächste AI gestützte Orchestratierung",
+        "Cross-Dataset Validation essentiell für robuste Industrial AI Models",
+        "XGBoost GPU Support excellent für Tabular Data mit großen Datasets"
       ],
       improvements: [
-        "Hyperparameter Optimization: Optuna GPU für automated tuning implementieren",
-        "Advanced n8n Workflows: Conditional Logic für Dynamic Model Selection basierend auf Performance",
+        "n8n Workflows mit AI: Erweiterung mit AI Models für intelligente Entscheidungen",
         "Enhanced Streamlit Dashboard: Multi-Model Comparison Views und A/B Testing Interface",
-        "Ensemble Methods: GPU-accelerated Stacking/Blending verschiedener Models",
         "Real-time Inference: TensorRT/ONNX für Production GPU Deployment",
         "Streaming Pipeline: Kafka + GPU Models für Real-time RUL Prediction",
         "MLflow Integration: GPU Model Versioning und Experiment Tracking",
@@ -605,11 +601,11 @@ const PROJECT_DATA = {
 
     resources: {
       repo: "https://github.com/SW-oasen/turbine-maintenance-etl",
-      ml_pipeline: "/workspace-turbine-maintenance/scripts/ml_pipeline_gpu.py",
-      streamlit_dashboard: "/scripts/streamlit_dashboard.py",
-      n8n_workflows: "/n8n/workflows/",
-      dbt_project: "/turbine_etl_dbt",
-      notebook: "/workspace-turbine-maintenance/notebooks/gpu_performance_analysis.ipynb",
+      ml_pipeline: "/blob/master/scripts/ml_pipeline_gpu.py",
+      streamlit_dashboard: "https://github.com/SW-oasen/turbine-maintenance-etl/blob/master/scripts/streamlit_dashboard.py",
+      n8n_workflows: "https://github.com/SW-oasen/turbine-maintenance-etl/blob/master/n8n/turbine-maintenance-workflow.json",
+      dbt_project: "https://github.com/SW-oasen/turbine-maintenance-etl/tree/master/turbine_etl_dbt",
+      notebook: "https://github.com/SW-oasen/turbine-maintenance-etl/blob/master/notebooks/turbine_maintenance_etl.ipynb",
       dataset: "NASA Turbofan Engine Degradation Simulation Data Set (CMAPSS)",
       models: "/workspace-turbine-maintenance/results/ml_models/"
     },
@@ -677,7 +673,7 @@ const PROJECT_DATA = {
       }
     ]
   }
-  // Weitere Projekte können hier hinzugefügt werden
+  // Weitere Projekte 
 };
 
 // ======== COMPONENTS ========
