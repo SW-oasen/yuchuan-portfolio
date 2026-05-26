@@ -22,6 +22,87 @@ const getImagePath = (path) => {
 
 // ======== PROJECT DATA ========
 const PROJECT_DATA = {
+  "energy-demand-forecast": {
+    title: "Stromverbrauchsprognose — Zeitreihenanalyse",
+    date: "2025-11",
+    duration: "3 Wochen",
+    status: "Abgeschlossen",
+
+    problem: {
+      title: "Problem",
+      content: "Kurzfristige Prognosen des Stromverbrauchs sind ein Kernproblem im Energiesektor. Genaue Vorhersagen helfen bei der Netzsteuerung und der Einsatzplanung von Kraftwerken.",
+      challenges: [
+        "Starke Saisonalität: täglich, wöchentlich und jährlich überlagerte Muster",
+        "Externe Einflussfaktoren: Temperatur, Feiertage, Wochentage",
+        "Auswahl geeigneter Lag-Features ohne Data Leakage",
+        "Robuste Evaluierung durch zeitbasierte Kreuzvalidierung",
+      ]
+    },
+
+    approach: {
+      title: "Daten & Ansatz",
+      dataset: "Öffentliche Stromverbrauchsdaten für Deutschland (stündliche Auflösung)",
+      methodology: [
+        "Explorative Datenanalyse: saisonale Dekompositionen und Autokorrelationen",
+        "Feature Engineering: Kalender-Features, Lag-Features, Rolling-Window-Statistiken",
+        "Baseline-Modelle: Seasonal Naive und Moving Average als Referenz",
+        "ML-Modelle: Random Forest und XGBoost mit zeitbasierter Kreuzvalidierung",
+        "Fehleranalyse: MAE, RMSE und visuelle Residuendiagnostik",
+      ],
+      tools: ["Python", "Pandas", "scikit-learn", "XGBoost", "Plotly", "Jupyter"]
+    },
+
+    solution: {
+      title: "Lösung",
+      content: "ML-Pipeline mit Feature Engineering und Kreuzvalidierung für kurzfristige Strombedarfsprognosen.",
+      features: [
+        "Automatisiertes Feature Engineering für Zeitreihen",
+        "Zeitbasierte Kreuzvalidierung zur Vermeidung von Data Leakage",
+        "Modellvergleich und Fehleranalyse",
+        "Interaktive Visualisierungen der Prognoseergebnisse",
+      ]
+    },
+
+    results: {
+      title: "Ergebnisse",
+      metrics: [
+        { label: "Bestes Modell", value: "XGBoost", change: "vs. Baseline" },
+        { label: "Prognosehorizont", value: "24h", change: "stündlich" },
+        { label: "Evaluierungsmethode", value: "Time-CV", change: "5 Folds" },
+        { label: "Wichtigste Features", value: "Lag + Kalender", change: "Top-Features" },
+      ],
+      insights: [
+        "Kalender-Features (Wochentag, Feiertag) sind entscheidend für die Prognosegenauigkeit",
+        "Lag-Features des Vortages und der Vorwoche liefern den höchsten Informationsgehalt",
+        "XGBoost übertrifft die Baseline-Modelle auf dem Testset",
+        "Residuenanalyse zeigt keine systematischen Abweichungen",
+      ]
+    },
+
+    learnings: {
+      title: "Learnings & Reflexion",
+      positives: [
+        "Zeitbasierte Kreuzvalidierung verhindert zuverlässig Data Leakage",
+        "Feature Engineering bei Zeitreihen erfordert sorgfältige Planung der Lag-Fenster",
+        "Baseline-Modelle sind wichtig als Referenzpunkt für ML-Modelle",
+        "Explorative Datenanalyse deckte wichtige saisonale Muster auf",
+      ],
+      improvements: [
+        "Wetterdaten als externe Kovariable integrieren",
+        "Langfristige Prognosen (mehrere Tage) testen",
+        "Spezialisierte Zeitreihenmodelle wie Prophet oder ARIMA vergleichen",
+        "Fehleranalyse nach Tageszeit und Jahreszeit vertiefen",
+      ]
+    },
+
+    resources: {
+      repo: "https://github.com/SW-oasen/electricity_demand_forecast",
+      presentation: "/yuchuan-portfolio/Stromverbrauch_Vorhersagen.pdf",
+    },
+
+    visuals: []
+  },
+
   "airbnb-berlin": {
     title: "Airbnb Berlin — Exploratory Data Analysis",
     date: "2025-08",
@@ -102,8 +183,6 @@ const PROJECT_DATA = {
     resources: {
       repo: "https://github.com/SW-oasen/airbnb-eda-berlin",
       notebook: "https://github.com/SW-oasen/airbnb-eda-berlin/blob/main/notebooks/Airbnb_EDA_Berlin.ipynb",
-      report: "https://github.com/SW-oasen/airbnb-eda-berlin/blob/main/dashboards/aribnb_cleandata_report.pbix",
-      presentation: "/dashboards/aribnb_cleandata_report.pdf"
     },
 
     visuals: [
@@ -136,236 +215,6 @@ const PROJECT_DATA = {
         type: "image",
         src: getImagePath("airbnb-eda-berlin/listing-review.png"),
         description: "Korrelationsanalyse zwischen Übernachtungen und Reviews-Anzahl"
-      }
-    ]
-  },
-
-  "store-sales-forecast": {
-    title: "Store Sales Forecast — Time Series Modeling",
-    date: "2025-09",
-    duration: "3 Wochen",
-    status: "Abgeschlossen",
-    
-    problem: {
-      title: "Problem",
-      content: "Corporation Favorita benötigt präzise Verkaufsprognosen für tausende Produktfamilien in 54 Filialen in Ecuador. Ohne verlässliche Vorhersagen entstehen Überbestände oder Fehlmengen, was zu Umsatzverlusten führt.",
-      challenges: [
-        "Hohe Komplexität: 33 Produktfamilien × 54 Filialen = 1.782 Zeitreihen",
-        "Externe Faktoren: Ölpreise, Feiertage, Promotionen beeinflussen Verkäufe",
-        "Saisonalität: Starke wöchentliche Muster (Sonntag-Peak, Freitag-Tief)",
-        "Datenqualität: 4+ Jahre historische Daten mit inkonsistenten Formaten",
-        "Performance-Varianz: Extreme Unterschiede zwischen Filialen ($95K - $2.5M)"
-      ]
-    },
-
-    approach: {
-      title: "Daten & Ansatz",
-      dataset: "Kaggle Store Sales Dataset - 4+ Jahre Verkaufsdaten (2013-2017)",
-      methodology: [
-        "Explorative Datenanalyse: Trends, Saisonalität, Verteilungen identifizieren",
-        "Feature Engineering: Lag-Features, Rolling Windows, Kalender-Features",
-        "Baseline-Modelle: Seasonal Naive, Moving Average für Benchmarking", 
-        "Advanced ML: XGBoost, Random Forest mit Hyperparameter-Tuning",
-        "AutoML-Vergleich: FLAML für automatisierte Feature-Selektion",
-        "Cross-Validation: Time-based splits für robuste Evaluierung"
-      ],
-      tools: ["Python", "scikit-learn", "XGBoost", "FLAML AutoML", "Power BI", "Pandas", "Plotly"]
-    },
-
-    solution: {
-      title: "Lösung",
-      content: "End-to-End ML-Pipeline mit FLAML AutoML als bestem Modell, kombiniert mit umfassendem Power BI Dashboard für Business Intelligence.",
-      features: [
-        "Automatisierte Feature-Selektion durch FLAML AutoML",
-        "Rolling Averages (61.3% Feature Importance) für Trend-Erfassung",
-        "Lag-Features (34.7% Importance) für historische Muster",
-        "6-seitiges Power BI Dashboard mit Geschäftseinblicken",
-        "Store- und Kategorie-spezifische Performance-Analyse",
-        "Promotion-Impact-Tracking und Korrelationsanalyse"
-      ]
-    },
-
-    results: {
-      title: "Ergebnisse",
-      metrics: [
-        { label: "MAE (Mean Absolute Error)", value: "$69.17", change: "44.5% Accuracy" },
-        { label: "RMSE", value: "237.8", change: "Robust" },
-        { label: "Gesamtumsatz analysiert", value: "$48.03M", change: "54 Stores" },
-        { label: "Produktfamilien", value: "33", change: "Vollständig" }
-      ],
-      insights: [
-        "Store 44: Höchster Umsatz ($2.5M) aber auch höchste Prognosefehler ($133 MAE)",
-        "Store 26: Beste Performance mit niedrigster MAE von $31.29",
-        "GROCERY I dominiert mit $14.8M (31% des Gesamtumsatzes)",
-        "Wochenmuster: Sonntag-Peaks (~$9M), Freitag-Tiefs (~$6M)",
-        "Rolling Averages und Lag-Features machen 95% der Model-Importance aus"
-      ]
-    },
-
-    learnings: {
-      title: "Learnings & Reflexion",
-      positives: [
-        "FLAML AutoML übertrifft manuelle Feature Engineering deutlich",
-        "Power BI Dashboard macht ML-Ergebnisse für Business-Stakeholder zugänglich",
-        "Time-based CV verhindert erfolgreich Data Leakage bei Zeitreihen",
-        "Feature Importance Analysis bestätigt Domain-Knowledge (Saisonalität)"
-      ],
-      improvements: [
-        "Store-Clustering für spezialisierte Modelle pro Store-Typ implementieren",
-        "Externe Datenquellen integrieren (Wetter, Events, Konkurrenz)",
-        "Real-time Forecasting mit dynamischen Updates entwickeln",
-        "PRODUCE-Kategorie (höchste MAE: 199.49) gezielt optimieren",
-        "Promotion-Kalender direkt in Feature Engineering einbauen",
-        "Ensemble-Methoden für robustere Predictions testen"
-      ]
-    },
-
-    resources: {
-      repo: "https://github.com/SW-oasen/store-sales-forecast",
-      notebook: "/notebooks/06_automl_comparison.ipynb",
-      report: "/dashboards/README.md",
-      presentation: "/dashboards/guide/report_1.png"
-    },
-
-    visuals: [
-      {
-        title: "FLAML Model Performance",
-        type: "chart",
-        src: "/img/store-sales/flaml-performance.png",
-        description: "Vergleich Actual vs Predicted Sales über Holdout-Periode"
-      },
-      {
-        title: "Feature Importance Analysis", 
-        type: "image",
-        src: "/img/store-sales/feature-importance.png",
-        description: "Rolling Averages (61.3%) und Lag Features (34.7%) dominieren"
-      },
-      {
-        title: "Store Performance Ranking",
-        type: "dashboard",
-        src: "/img/store-sales/store-ranking.png",
-        description: "Power BI: Store 44 ($2.5M) vs Store 26 (beste MAE $31.29)"
-      },
-      {
-        title: "Weekly Sales Patterns",
-        type: "chart", 
-        src: "/img/store-sales/weekly-patterns.png",
-        description: "Sonntag-Peaks und Freitag-Tiefs für optimierte Personalplanung"
-      },
-      {
-        title: "Category Revenue Analysis",
-        type: "treemap",
-        src: "/img/store-sales/category-revenue.png", 
-        description: "GROCERY I ($14.8M, 31%) dominiert Umsatzverteilung"
-      }
-    ]
-  },
-
-  "global-power-plants": {
-    title: "Global Power Plants — Data Pipeline & Dashboard",
-    date: "2025-09",
-    duration: "2 Wochen", 
-    status: "Abgeschlossen",
-    
-    problem: {
-      title: "Problem",
-      content: "Die globale Energiewende erfordert datengetriebene Einblicke in die weltweite Kraftwerkslandschaft. Ohne strukturierte Analyse der Kapazitäten, Brennstoffmixe und CO₂-Emissionen können keine fundierten Energiestrategien entwickelt werden.",
-      challenges: [
-        "Fragmentierte Datenquellen: Keine einheitliche globale Kraftwerksdatenbank",
-        "Fehlende CO₂-Schätzungen: Keine standardisierten Emissionsfaktoren verfügbar",
-        "Komplexe Geographie: 30.000+ Kraftwerke in 164 Ländern zu strukturieren",
-        "Business Intelligence Gap: Keine interaktiven Dashboards für Stakeholder",
-        "Skalierbarkeit: System muss für verschiedene Analysezwecke erweiterbar sein"
-      ]
-    },
-
-    approach: {
-      title: "Daten & Ansatz",
-      dataset: "Global Power Plant Database (World Resources Institute) - 30.000+ Kraftwerke",
-      methodology: [
-        "Datenschema-Design: SQLite-Datenbank mit normalisierten Tabellen",
-        "ETL-Pipeline: CSV-Import mit Datenvalidierung und -bereinigung",
-        "Feature Engineering: CO₂-Intensität pro Brennstoff, Inbetriebnahme-Trends",
-        "Aggregation Views: Kapazität nach Brennstoff/Land, Jahres-Trends",
-        "Power BI Integration: ODBC-Verbindung mit interaktiven Dashboards",
-        "What-If-Parameter: Kapazitätsfaktor-Simulationen für CO₂-Schätzungen"
-      ],
-      tools: ["SQLite", "Power BI", "Python", "SQL", "ODBC"]
-    },
-
-    solution: {
-      title: "Lösung",
-      content: "Vollständige SQL + Power BI Pipeline mit normalisierter Datenbankstruktur und interaktiven Dashboards für globale Energieanalysen.",
-      features: [
-        "SQLite-Datenbank mit 4 optimierten Views für verschiedene Analysen",
-        "Automatisierte ETL-Pipeline für CSV-Import und Datenvalidierung",
-        "3-seitiges Power BI Dashboard mit KPIs und geografischen Visualisierungen",
-        "What-If-Parameter für dynamische CO₂-Emissions-Szenarien",
-        "Länder-Ranking und Brennstoffmix-Analysen",
-        "Interaktive Karten mit Kraftwerks-Standorten und Kapazitäten"
-      ]
-    },
-
-    results: {
-      title: "Ergebnisse", 
-      metrics: [
-        { label: "Kraftwerke analysiert", value: "30.000+", change: "164 Länder" },
-        { label: "Gesamtkapazität", value: "6.5 TW", change: "Global" },
-        { label: "Dashboard-Seiten", value: "3", change: "Interaktiv" },
-        { label: "SQL Views", value: "4", change: "Optimiert" }
-      ],
-      insights: [
-        "China dominiert mit 30% der globalen Kraftwerkskapazität",
-        "Kohle-Kraftwerke stellen noch 38% der installierten Leistung",
-        "Erneuerbare Energien zeigen starke Wachstumstrends seit 2010",
-        "USA und Indien folgen als zweit- und drittgrößte Kraftwerksbetreiber",
-        "Durchschnittliche CO₂-Intensität variiert um Faktor 100 zwischen Brennstoffen"
-      ]
-    },
-
-    learnings: {
-      title: "Learnings & Reflexion",
-      positives: [
-        "SQLite als lokale Datenbank ideal für mittelgroße Datasets (30K Rows)",
-        "Power BI ODBC-Integration funktioniert nahtlos mit SQLite",
-        "What-If-Parameter erhöhen erheblich die Dashboard-Interaktivität",
-        "Normalisierte Views beschleunigen komplexe Aggregations-Queries"
-      ],
-      improvements: [
-        "Zeitreihen-Daten integrieren für historische Entwicklung der Kapazitäten",
-        "Automatisierte Data-Refresh-Pipeline für regelmäßige Updates implementieren",
-        "PostgreSQL/BigQuery für bessere Skalierbarkeit bei größeren Datasets",
-        "REST API entwickeln für programmatischen Datenzugriff",
-        "Machine Learning für Kapazitäts-Forecasting und Brennstoffmix-Prognosen",
-        "Externe Datenquellen hinzufügen (CO₂-Preise, Energiemarkt-Daten)"
-      ]
-    },
-
-    resources: {
-      repo: "https://github.com/SW-oasen/global-power-plants",
-      notebook: "/sql/sample_queries_sqlite.sql",
-      report: "/README.md",
-      presentation: "/powerbi/dashboard_screenshots.png"
-    },
-
-    visuals: [
-      {
-        title: "Global Power Plant Map",
-        type: "map",
-        src: "/img/power-plants/global-map.png", 
-        description: "Interaktive Weltkarte mit 30.000+ Kraftwerken nach Kapazität und Brennstoff"
-      },
-      {
-        title: "Fuel Mix by Country",
-        type: "chart",
-        src: "/img/power-plants/fuel-mix.png",
-        description: "Top 10 Länder nach installierter Kapazität mit Brennstoffmix-Breakdown"
-      },
-      {
-        title: "CO₂ Intensity Analysis",
-        type: "dashboard",
-        src: "/img/power-plants/co2-analysis.png",
-        description: "What-If-Simulation für CO₂-Emissionen mit Kapazitätsfaktor-Parameter"
       }
     ]
   },
@@ -452,232 +301,99 @@ const PROJECT_DATA = {
 
     resources: {
       repo: "https://github.com/SW-oasen/telco-customer-churn",
-      notebook: "/notebooks/04_feature_engineering_and_tuning.ipynb",
-      report: "/dashboards/README_Dashboard_Analysis.md",
-      presentation: "/dashboards/telco-customer-churn.pbix"
     },
 
-    visuals: [
-      {
-        title: "Feature Importance Analysis",
-        type: "chart",
-        src: "/img/telco-churn/feature-importance.png",
-        description: "Customer Tenure (13.4%) und Monthly Charges (9.5%) als Top-Prädiktoren"
-      },
-      {
-        title: "Risk Segmentation Matrix",
-        type: "heatmap",
-        src: "/img/telco-churn/risk-matrix.png",
-        description: "Contract Type vs Payment Method Churn-Risiko-Heatmap"
-      },
-      {
-        title: "Business Intelligence Dashboard",
-        type: "dashboard",
-        src: "/img/telco-churn/power-bi-dashboard.png",
-        description: "3-seitiges Power BI Dashboard mit Retention Campaign Strategies"
-      },
-      {
-        title: "Model Performance Comparison",
-        type: "chart",
-        src: "/img/telco-churn/model-comparison.png", 
-        description: "ROC Curves und Performance-Metriken für 3 optimierte ML-Algorithmen"
-      }
-    ]
+    visuals: []
   },
 
   "turbine-maintenance": {
-    title: "GPU-Accelerated Turbofan Engine ML Pipeline (NASA CMAPSS)",
-    date: "2025-10", 
-    duration: "6+ Wochen",
-    status: "Complete MLOps Pipeline with n8n Orchestration & Streamlit Dashboard",
-    
+    title: "Turbinen-ML-Pipeline — Predictive Maintenance (NASA CMAPSS)",
+    date: "2025-10",
+    duration: "4 Wochen",
+    status: "Abgeschlossen",
+
     problem: {
       title: "Problem",
-      content: "NASA Turbofan Engine Degradation Simulation Data (CMAPSS) erfordert hochperformante Machine Learning Pipeline für Remaining Useful Life (RUL) Prediction mit GPU-Beschleunigung für Industrie 4.0 Anwendungen, kombiniert mit automatisierter Workflow-Orchestrierung und Real-time Monitoring.",
+      content: "Die NASA CMAPSS-Datensätze enthalten Sensordaten von Turbinentriebwerken bis zum Ausfall. Ziel war die Vorhersage der verbleibenden Nutzungsdauer (RUL) mithilfe einer GPU-beschleunigten ML-Pipeline mit Workflow-Automatisierung und Dashboard.",
       challenges: [
-        "GPU-Acceleration Setup: NVIDIA RTX 4070 Ti SUPER mit CUDA 12.6+ Integration",
-        "Multi-Framework Pipeline: PyTorch, XGBoost GPU, CuPy für verschiedene ML-Algorithmen", 
-        "21 Sensor Time-Series: Feature Engineering für komplexe Sensor-Korrelationen",
-        "4 CMAPSS Datasets: Cross-Dataset Validation mit verschiedenen Operating Conditions",
-        "Memory Optimization: GPU Memory Management für große Tensor-Operationen",
-        "ETL + dbt + ML Integration: End-to-End Pipeline von Raw Data bis GPU Models",
-        "Workflow Automation: n8n Integration für Pipeline Orchestrierung und Scheduling",
-        "Real-time Dashboard: Streamlit mit automatischen Updates für Live-Monitoring",
-        "Production Deployment: MLOps Pipeline für Industrial Predictive Maintenance"
+        "GPU-Einrichtung: PyTorch CUDA und XGBoost GPU korrekt konfigurieren",
+        "Feature Engineering für 21 Sensorzeitreihen mit Rolling Windows und Z-Scores",
+        "Cross-Dataset-Validierung über 4 CMAPSS-Subsets mit unterschiedlichen Betriebsbedingungen",
+        "GPU Memory Management bei größeren Tensoren und Batch-Größen",
+        "Integration von dbt, n8n und Streamlit in eine zusammenhängende Pipeline",
       ]
     },
 
     approach: {
       title: "Daten & Ansatz",
-      dataset: "NASA Turbofan Engine Degradation Simulation (CMAPSS) - 4 Sub-Datasets (FD001-FD004) mit Run-to-Failure Cycles",
+      dataset: "NASA Turbofan Engine Degradation Simulation (CMAPSS) — 4 Sub-Datensätze (FD001–FD004)",
       methodology: [
-        "GPU Environment Setup: PyTorch CUDA, XGBoost GPU, CuPy für beschleunigte Operationen",
-        "Advanced Feature Engineering: Rolling Windows, Z-Scores, Sensor Differences, Unit-based Normalization",
-        "SQLite + dbt Pipeline: Staging → Intermediate → Marts mit Data Quality Tests",
-        "GPU-Accelerated ML: PyTorch Neural Networks, XGBoost GPU, Memory-optimized Training",
-        "n8n Workflow Orchestration: Automated ETL → ML → Dashboard Pipeline Execution",
-        "Streamlit Real-time Dashboard: Interactive Monitoring mit automatischen Model Updates",
-        "Multi-Model Architecture: Baseline Linear Regression bis Deep Learning mit GPU",
-        "Cross-Dataset Evaluation: 4 CMAPSS Datasets für robuste Model Validation",
-        "Performance Optimization: Batch Processing, GPU Memory Management, Early Stopping",
-        "MLOps Integration: Workflow Automation, Model Versioning, Performance Tracking"
+        "Feature Engineering: Rolling Windows, Z-Scores und Sensor-Differenzen für 21 Signale",
+        "dbt-Pipeline: Staging → Intermediate → Marts mit Qualitätstests",
+        "GPU-Training: PyTorch Neural Networks und XGBoost GPU mit Memory Management",
+        "Multi-Modell-Vergleich: Baseline bis Deep Learning mit systematischer Evaluierung",
+        "n8n-Automatisierung: Pipeline-Orchestrierung von ETL bis Dashboard-Aktualisierung",
+        "Cross-Dataset-Validierung: FD001–FD004 für Robustheitsprüfung",
       ],
-      tools: ["PyTorch (CUDA)", "XGBoost GPU", "CuPy", "dbt", "SQLite", "n8n", "Streamlit", "Docker", "NVIDIA RTX 4070 Ti SUPER"]
+      tools: ["PyTorch (CUDA)", "XGBoost GPU", "CuPy", "dbt", "SQLite", "n8n", "Streamlit", "Docker"]
     },
 
     solution: {
-      title: "Lösung (Complete MLOps Pipeline with Orchestration)",
-      content: "Vollständige GPU-beschleunigte ML Pipeline mit n8n Workflow-Orchestrierung, Streamlit Real-time Dashboard und automatisierter Model Deployment für Production-ready Predictive Maintenance.",
+      title: "Lösung",
+      content: "GPU-beschleunigte ML-Pipeline mit n8n-Workflow-Automatisierung, Streamlit-Dashboard und dbt-Datenpipeline für Predictive Maintenance auf NASA CMAPSS-Daten.",
       features: [
-        "GPU-Accelerated Training: PyTorch NN mit CUDA, XGBoost GPU für 5x Performance Boost",
-        "Advanced Neural Architecture: 256→128→64→1 mit BatchNorm, Dropout, Early Stopping",
-        "n8n Workflow Orchestration: Automatisierte ETL → dbt → ML Training → Dashboard Refresh",
-        "Streamlit Real-time Dashboard: Interactive Monitoring mit Live Model Performance Updates",
-        "Comprehensive Feature Engineering: 21 Sensoren → 84+ Features durch Rolling Stats, Diffs, Z-Scores",
-        "Multi-Model Comparison: Linear Regression, Random Forest, XGBoost GPU, PyTorch NN",
-        "Memory-Optimized Pipeline: GPU Memory Management, Batch Processing, Automatic Cleanup",
-        "Cross-Dataset Validation: FD001-FD004 für verschiedene Operating Conditions getestet",
-        "dbt Data Quality: SQL-based Tests für Feature Integrity und Business Logic",
-        "Automated Scheduling: n8n Trigger für periodische Model Retraining und Performance Monitoring",
-        "Docker Integration: Containerized Deployment für Production Environment Setup",
-        "Model Persistence: PyTorch State Dict, XGBoost GPU Models für Production Deployment"
+        "GPU-Training: PyTorch NN und XGBoost GPU für beschleunigtes Modelltraining",
+        "Neuronale Netzarchitektur: 256→128→64→1 mit BatchNorm, Dropout und Early Stopping",
+        "Feature Engineering: 21 Sensorsignale → 84+ Features (Rolling Stats, Z-Scores, Diffs)",
+        "Multi-Modell-Vergleich: Lineare Regression, Random Forest, XGBoost GPU, PyTorch NN",
+        "n8n-Workflow: automatisierte ETL → dbt → ML-Training → Dashboard-Aktualisierung",
+        "Cross-Dataset-Validierung: FD001–FD004 mit verschiedenen Betriebsbedingungen",
       ]
     },
 
     results: {
-      title: "Ergebnisse (Complete MLOps Pipeline)",
+      title: "Ergebnisse",
       metrics: [
-        { label: "GPU Models Trained", value: "4+", change: "PyTorch + XGBoost GPU" },
-        { label: "Feature Engineering", value: "84+", change: "21 Sensors → ML Features" },
-        { label: "GPU Acceleration", value: "5x", change: "vs CPU Training" },
-        { label: "Cross-Dataset RMSE", value: "<15", change: "FD001-FD004 Validated" },
-        { label: "Training Time (GPU)", value: "<2min", change: "PyTorch + XGBoost" },
-        { label: "n8n Workflows", value: "3+", change: "Automated Orchestration" },
-        { label: "Dashboard Refresh", value: "Real-time", change: "Streamlit Auto-Update" },
-        { label: "dbt Models", value: "6+", change: "Staging → Marts" }
+        { label: "Trainierte Modelle", value: "4", change: "inkl. PyTorch NN + XGBoost" },
+        { label: "Engineered Features", value: "84+", change: "aus 21 Sensoren" },
+        { label: "GPU-Speedup", value: "~5x", change: "gegenüber CPU-Baseline" },
+        { label: "RMSE (Cross-Dataset)", value: "<15", change: "FD001–FD004" },
       ],
       insights: [
-        "GPU-Acceleration: PyTorch CUDA 5x schneller als CPU für Neural Network Training",
-        "n8n Orchestration: Automatisierte Workflows reduzieren Manual Pipeline Execution um 90%",
-        "Streamlit Dashboard: Real-time Model Performance Monitoring ermöglicht sofortige Issue Detection",
-        "Feature Engineering Impact: Rolling Windows (5,20) und Z-Scores kritisch für Performance",
-        "Sensor Importance: Sensor 2, 11, 15 zeigen höchste Korrelation mit RUL Degradation",
-        "Cross-Dataset Robustness: Modelle generalisieren gut zwischen FD001-FD004 Conditions",
-        "XGBoost GPU vs PyTorch NN: XGBoost GPU bessere RMSE, PyTorch NN bessere Generalization",
-        "Workflow Automation: n8n Scheduling ermöglicht kontinuierliche Model Updates ohne Manual Intervention",
-        "Memory Optimization: CuPy für GPU NumPy Operations reduziert Memory Bottlenecks",
-        "Dashboard Performance: Streamlit Auto-Refresh zeigt Live GPU Memory und Training Progress",
-        "Production Ready: Docker + n8n + Streamlit Stack ready für Industrial Deployment"
+        "GPU-Training mit PyTorch CUDA deutlich schneller als CPU-Baseline (gemessener Speedup ~5x)",
+        "Feature Engineering mit Rolling Windows und Z-Scores entscheidend für Modellperformance",
+        "Sensor 2, 11 und 15 zeigen die stärkste Korrelation mit der RUL-Degradation",
+        "XGBoost GPU erzielt niedrigere RMSE-Werte, PyTorch NN generalisiert besser auf neuen Datensätzen",
+        "Cross-Dataset-Validierung zeigt robuste Ergebnisse über unterschiedliche Betriebsbedingungen",
       ]
     },
 
     learnings: {
-      title: "Learnings & Reflexion (Complete MLOps Pipeline)",
+      title: "Learnings & Reflexion",
       positives: [
-        "GPU-Acceleration revolutioniert ML Training Speed für Industrial Time-Series",
-        "n8n Workflow Orchestration transformiert Manual Pipeline zu Full Automation",
-        "Streamlit Dashboard bietet unschätzbares Real-time Monitoring für Production Models",
-        "PyTorch CUDA Integration seamless mit automatischem CPU Fallback",
-        "Feature Engineering komplexer als erwartet aber entscheidend für Performance",
-        "dbt + ML Pipeline Kombination optimal für reproduzierbare Data Science",
-        "MLOps Stack (n8n + Streamlit + Docker) essential für Production-ready AI Systems",
-        "Cross-Dataset Validation essentiell für robuste Industrial AI Models",
-        "XGBoost GPU Support excellent für Tabular Data mit großen Datasets",
-        "Workflow Automation reduziert DevOps Overhead und ermöglicht kontinuierliche Improvements",
-        "GPU Memory Management skills durch praktische Anwendung dramatisch verbessert",
-        "Real-time Dashboard Monitoring kritisch für Early Warning bei Model Degradation"
+        "GPU-Training mit PyTorch CUDA ist deutlich schneller als CPU-basierte Alternativen",
+        "GPU Memory Management erfordert sorgfältige Planung bei größeren Tensoren",
+        "n8n-Workflows vereinfachen die Automatisierung der Pipeline erheblich",
+        "Streamlit eignet sich gut für einfache Monitoring-Dashboards während der Entwicklung",
+        "Feature Engineering für Sensorzeitreihen ist aufwändig, aber entscheidend für die Performance",
+        "Cross-Dataset-Validierung zeigt, wie gut Modelle auf neuen Betriebsbedingungen generalisieren",
       ],
       improvements: [
-        "Hyperparameter Optimization: Optuna GPU für automated tuning implementieren",
-        "Advanced n8n Workflows: Conditional Logic für Dynamic Model Selection basierend auf Performance",
-        "Enhanced Streamlit Dashboard: Multi-Model Comparison Views und A/B Testing Interface",
-        "Ensemble Methods: GPU-accelerated Stacking/Blending verschiedener Models",
-        "Real-time Inference: TensorRT/ONNX für Production GPU Deployment",
-        "Streaming Pipeline: Kafka + GPU Models für Real-time RUL Prediction",
-        "MLflow Integration: GPU Model Versioning und Experiment Tracking",
-        "Advanced Orchestration: Airflow Integration für Complex Workflow Dependencies",
-        "Cloud Deployment: Kubernetes + n8n + Streamlit für Scalable Production Environment",
-        "Alert System: n8n Integration mit Slack/Email für Model Performance Alerts",
-        "Multi-GPU Training: DataParallel für größere Models und Datasets",
-        "Production API: FastAPI + Streamlit für External Model Serving und Monitoring"
+        "MLflow für Experiment-Tracking und Modellversionierung integrieren",
+        "Hyperparameter-Tuning mit Optuna für GPU-Modelle ergänzen",
+        "Streamlit-Dashboard um Modellvergleichs-Visualisierungen erweitern",
+        "Robustheit durch weitere Cross-Dataset-Szenarien prüfen",
       ]
     },
 
     resources: {
       repo: "https://github.com/SW-oasen/turbine-maintenance-etl",
-      ml_pipeline: "/workspace-turbine-maintenance/scripts/ml_pipeline_gpu.py",
-      streamlit_dashboard: "/scripts/streamlit_dashboard.py",
-      n8n_workflows: "/n8n/workflows/",
-      dbt_project: "/turbine_etl_dbt",
-      notebook: "/workspace-turbine-maintenance/notebooks/gpu_performance_analysis.ipynb",
-      dataset: "NASA Turbofan Engine Degradation Simulation Data Set (CMAPSS)",
-      models: "/workspace-turbine-maintenance/results/ml_models/"
+      notebook: "https://github.com/SW-oasen/turbine-maintenance-etl/blob/master/notebooks/turbine_maintenance_etl.ipynb",
     },
 
-    visuals: [
-      {
-        title: "GPU vs CPU Performance Comparison",
-        type: "chart",
-        src: getImagePath("turbine-maintenance/gpu-cpu-performance.png"),
-        description: "Training Time und Model Performance: PyTorch GPU vs CPU Baseline"
-      },
-      {
-        title: "Feature Importance Heatmap", 
-        type: "heatmap",
-        src: getImagePath("turbine-maintenance/feature-importance-sensors.png"),
-        description: "21 Sensor Features → RUL Impact Analysis mit XGBoost Feature Importance"
-      },
-      {
-        title: "PyTorch Neural Network Architecture",
-        type: "diagram",
-        src: getImagePath("turbine-maintenance/pytorch-nn-architecture.png"),
-        description: "GPU-beschleunigtes NN: 84 Features → 256→128→64→1 mit CUDA Optimization"
-      },
-      {
-        title: "Cross-Dataset Model Validation",
-        type: "chart", 
-        src: getImagePath("turbine-maintenance/cross-dataset-rmse.png"),
-        description: "RMSE Performance über FD001-FD004 Datasets für Model Robustness"
-      },
-      {
-        title: "GPU Memory Usage Monitoring",
-        type: "dashboard",
-        src: getImagePath("turbine-maintenance/gpu-memory-monitoring.png"),
-        description: "NVIDIA RTX 4070 Ti SUPER Memory Usage während ML Training"
-      },
-      {
-        title: "RUL Prediction vs Ground Truth",
-        type: "scatter",
-        src: getImagePath("turbine-maintenance/rul-prediction-accuracy.png"),
-        description: "GPU Model Predictions vs NASA CMAPSS Ground Truth für alle Test Units"
-      },
-      {
-        title: "dbt + ML Pipeline Flow",
-        type: "diagram",
-        src: getImagePath("turbine-maintenance/dbt-ml-pipeline-flow.png"),
-        description: "End-to-End: Raw CMAPSS → dbt → Feature Engineering → GPU ML Training"
-      },
-      {
-        title: "n8n Workflow Orchestration",
-        type: "workflow",
-        src: getImagePath("turbine-maintenance/n8n-workflow-orchestration.png"),
-        description: "Automatisierte ETL → ML Training → Dashboard Refresh mit n8n Scheduling und Monitoring"
-      },
-      {
-        title: "Streamlit Real-time Dashboard",
-        type: "dashboard",
-        src: getImagePath("turbine-maintenance/streamlit-realtime-dashboard.png"),
-        description: "Interactive Model Performance Monitoring mit Live GPU Memory Usage und Training Progress"
-      },
-      {
-        title: "MLOps Pipeline Architecture",
-        type: "architecture",
-        src: getImagePath("turbine-maintenance/mlops-pipeline-architecture.png"),
-        description: "Complete MLOps Stack: n8n + dbt + GPU ML + Streamlit + Docker für Production Deployment"
-      }
-    ]
+    visuals: []
   }
-  // Weitere Projekte können hier hinzugefügt werden
+  // Weitere Projekte 
 };
 
 // ======== COMPONENTS ========
@@ -766,21 +482,6 @@ function ProjectCard({ project, onViewDetails }) {
     </Card>
   );
 }
-
-// In the main Portfolio component, update the project cards:
-const projects = [
-  {
-    id: "airbnb-berlin", // Make sure this matches your PROJECT_DATA keys
-    title: "Airbnb Berlin — Exploratory Data Analysis",
-    // ...other project data...
-  },
-  {
-    id: "store-sales-forecast",
-    title: "Store Sales Forecast — Time Series Modeling",
-    // ...other project data...
-  },
-  // ...other projects with correct IDs...
-];
 
 export default function ProjectDetail({ projectId }) {
   const project = PROJECT_DATA[projectId];
@@ -925,6 +626,7 @@ export default function ProjectDetail({ projectId }) {
         </ProjectSection>
 
         {/* Visuals */}
+        {project.visuals && project.visuals.length > 0 && (
         <ProjectSection icon={BarChart3} title="Visualisierungen">
           <div className="grid md:grid-cols-3 gap-6">
             {project.visuals.map((visual, i) => (
@@ -932,6 +634,7 @@ export default function ProjectDetail({ projectId }) {
             ))}
           </div>
         </ProjectSection>
+        )}
 
         {/* Learnings */}
         <ProjectSection icon={BookOpen} title="Learnings & Reflexion">
@@ -966,26 +669,40 @@ export default function ProjectDetail({ projectId }) {
         </ProjectSection>
 
         {/* Resources */}
-        <ProjectSection icon={Code2} title="Code & Resources">
+        <ProjectSection icon={Code2} title="Code & Ressourcen">
           <div className="flex flex-wrap gap-4">
+            {project.resources.repo && (
             <Button asChild>
               <a href={project.resources.repo} target="_blank" rel="noreferrer">
                 <Github className="h-4 w-4 mr-2" />
                 GitHub Repository
               </a>
             </Button>
+            )}
+            {project.resources.notebook && (
             <Button variant="outline" asChild>
               <a href={project.resources.notebook} target="_blank" rel="noreferrer">
                 <BookOpen className="h-4 w-4 mr-2" />
                 Jupyter Notebook
               </a>
             </Button>
+            )}
+            {project.resources.report && (
             <Button variant="outline" asChild>
               <a href={project.resources.report} target="_blank" rel="noreferrer">
                 <ExternalLink className="h-4 w-4 mr-2" />
-                Final Report
+                Abschlussbericht
               </a>
             </Button>
+            )}
+            {project.resources.presentation && (
+            <Button variant="outline" asChild>
+              <a href={project.resources.presentation} target="_blank" rel="noreferrer">
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Präsentation (PDF)
+              </a>
+            </Button>
+            )}
           </div>
         </ProjectSection>
       </div>
