@@ -26,16 +26,14 @@ const PROJECTS = [
     title: "Stromverbrauchsprognose — Zeitreihenanalyse",
     date: "2026-05",
     summary:
-      "Kurzfristige Strombedarfsprognose mit Feature Engineering und ML-Modellvergleich.",
+      "Kurzfristige Strombedarfsprognose anhand der realen Verbrauchsdaten von SMARD und Wetterdaten.",
     highlights: [
-      "Prognose- und Realer Verbrauch-Vergleich: ML Vorhersage vs SMARD realer Daten und Prognose",
-      "Feature Engineering: Kalender-Features",
-      "Wetterdatenintegration",
-      "ETL Pipeline mit SQLite",
-      "Asymmetrische Verlust Funktion für Über- vs Unterschätzung",
+      "ML Vorhersage vs realer Daten und Prognose von SMARD",
+      "Modulare Datenpipeline mit wiederverwendbare Komponenten",
+      "Asymmetrische Verlust Funktion für Unterschätzung",
       "Interaktive Applikationanwendung mit Streamlit und interaktivem Notebook",
     ],
-    stack: ["Pandas", "scikit-learn", 'sklearn-optimizer', "XGBoost", "LghtGBM", "SQLite", "Matplotlib", "Streamlit", "Jupyter"],
+    stack: ["Pandas", "scikit-learn", 'sklearn-optimizer', "XGBoost", "LghtGBM", "SQLite", "Matplotlib", "Streamlit"],
     repo: "https://github.com/SW-oasen/electricity_demand_forecast",
     live: null,
     video: null,
@@ -95,7 +93,7 @@ const PROJECTS = [
 const LEARNING = [
   {
     date: "2026-05",
-    title: "Stromverbrauchsprognose mit ML",
+    title: "Stromverbrauchsprognose mit Zeitreihenanalyse",
     details:
       "Portfolio-Projekt zur kurzfristigen Strombedarfsprognose mit Feature Engineering, ML, Vergleich mit SMARD realer Daten und Prognose.",
   },
@@ -156,7 +154,7 @@ const LEARNING = [
 ];
 
 const EXPERIENCE = [
-  { period: "AZAV Ausbildung zu Data Scientist bei Stackfuel", place: "online", date: "2025.11–2026.05"},
+  { period: "AZAV Ausbildung zu Data Scientist", place: "Stackfuel", date: "2025–2026"},
   { period: "Support Engineer für Computernetzsicherheit ", place: "macmon", date: "2023-2025" },
   { period: "Senior Support Engineer", place: "Spirent", date: "2010-2023" },
   { period: "Order Manager", place: "Nokia Siemens", date: "2008-2010" },
@@ -314,6 +312,7 @@ export default function Portfolio() {
                   <span className="w-2 h-2 rounded-full bg-primary"></span>
                   <span className="font-medium">{e.period}</span>
                   <span className="text-muted-foreground">— {e.place}</span>
+                  {e.date && <span className="text-muted-foreground text-xs">({e.date})</span>}
                 </li>
               ))}
             </ul>
@@ -321,13 +320,14 @@ export default function Portfolio() {
           <div>
             <h3 className="font-semibold mb-2">Kernkompetenzen</h3>
             <div className="flex flex-wrap gap-2 mb-4">
-              {["Python","Pandas","scikit-learn","XGBoost","SQL","Power BI","Git","Matplotlib"].map((t, i)=> (
+              {["Python","EDA","Daten-Visualisierung","Feature Engineering", "Machine Learning Modellselektion",
+              "ML Modell-Evaluierung","Deep Learning","ETL Pipelines","Big Data"].map((t, i)=> (
                 <Badge key={i} variant="secondary" className="px-3 py-1 rounded-full">{t}</Badge>
               ))}
             </div>
             <h3 className="font-semibold mb-2">Aktuell vertiefend</h3>
             <div className="flex flex-wrap gap-2">
-              {["PyTorch (CUDA)","Docker","n8n","Streamlit","dbt","MLOps"].map((t, i)=> (
+              {["NLP","Docker","MLOps","GenAI"].map((t, i)=> (
                 <Badge key={i} variant="outline" className="px-3 py-1 rounded-full">{t}</Badge>
               ))}
             </div>

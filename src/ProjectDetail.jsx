@@ -24,7 +24,7 @@ const getImagePath = (path) => {
 const PROJECT_DATA = {
   "energy-demand-forecast": {
     title: "Stromverbrauchsprognose — Zeitreihenanalyse",
-    date: "2025-11",
+    date: "2026-05",
     duration: "3 Wochen",
     status: "Abgeschlossen",
 
@@ -32,10 +32,13 @@ const PROJECT_DATA = {
       title: "Problem",
       content: "Kurzfristige Prognosen des Stromverbrauchs sind ein Kernproblem im Energiesektor. Genaue Vorhersagen helfen bei der Netzsteuerung und der Einsatzplanung von Kraftwerken.",
       challenges: [
+        "Unterschiedliche Zeitformate aus verschiedenen Quellen (SMARD, Wetterdaten)",
         "Starke Saisonalität: täglich, wöchentlich und jährlich überlagerte Muster",
-        "Externe Einflussfaktoren: Temperatur, Feiertage, Wochentage",
+        "Kalendarische Einflüsse: Feiertage, Wochentage und Brückentage",
+        "Wettereinflüsse: empfundene Temperatur, Sonneneinstrahlung und Windstärke",
+        "Wetterdatenaggregation mit der Population der ausgewählten Städten als Gewichtung", 
         "Auswahl geeigneter Lag-Features ohne Data Leakage",
-        "Robuste Evaluierung durch zeitbasierte Kreuzvalidierung",
+        "Robuste Evaluierung durch zeitbasierte Train-Test Split und Kreuzvalidierung",
       ]
     },
 
@@ -45,36 +48,40 @@ const PROJECT_DATA = {
       methodology: [
         "Explorative Datenanalyse: saisonale Dekompositionen und Autokorrelationen",
         "Feature Engineering: Kalender-Features, Lag-Features, Rolling-Window-Statistiken",
-        "Baseline-Modelle: Seasonal Naive und Moving Average als Referenz",
-        "ML-Modelle: Random Forest und XGBoost mit zeitbasierter Kreuzvalidierung",
+        "Saisonell Naive und Moving Average der Stromverbrauchsdaten und Wetterdaten als Referenz", 
+        "Baseline-Modelle: Linear Regression, Random Forest, XGBoost, LightGBM, SVR",
+        "Vergleich der ML Vorhersage gegen SMARD realer Daten und Prognose", 
         "Fehleranalyse: MAE, RMSE und visuelle Residuendiagnostik",
       ],
-      tools: ["Python", "Pandas", "scikit-learn", "XGBoost", "Plotly", "Jupyter"]
+      tools: ["Pandas", "scikit-learn", 'sklearn-optimizer', "XGBoost", "LghtGBM", "SQLite", "Matplotlib", "Streamlit", "Jupyter"]
     },
-
+    
     solution: {
       title: "Lösung",
       content: "ML-Pipeline mit Feature Engineering und Kreuzvalidierung für kurzfristige Strombedarfsprognosen.",
       features: [
-        "Automatisiertes Feature Engineering für Zeitreihen",
-        "Zeitbasierte Kreuzvalidierung zur Vermeidung von Data Leakage",
-        "Modellvergleich und Fehleranalyse",
+        "Erst manuelles und dann automatisiertes Feature Engineering (ETL Pipeline) für Zeitreihen",
+        "Zeitbasierte Train-Test-Splits zur Vermeidung von Data Leakage",
+        "Hyperparameter-Optimierung: Bayesian Optimization für LightGBM und XGBoost",
         "Interaktive Visualisierungen der Prognoseergebnisse",
+        "Prognose und reale Verbrauchsdaten von SMARD im Vergleich: Visualisierung von Prognose vs Realität",
       ]
     },
 
     results: {
       title: "Ergebnisse",
       metrics: [
+        { label: "Wichtigkeit", value: "FeatureEngineering", change: "vs. Modellauswahl" },
         { label: "Bestes Modell", value: "XGBoost", change: "vs. Baseline" },
         { label: "Prognosehorizont", value: "24h", change: "stündlich" },
         { label: "Evaluierungsmethode", value: "Time-CV", change: "5 Folds" },
         { label: "Wichtigste Features", value: "Lag + Kalender", change: "Top-Features" },
       ],
       insights: [
-        "Kalender-Features (Wochentag, Feiertag) sind entscheidend für die Prognosegenauigkeit",
+        "Feature Engineering hat größeren Einfluss auf die Prognosegenauigkeit als die Wahl des ML-Modells", 
         "Lag-Features des Vortages und der Vorwoche liefern den höchsten Informationsgehalt",
-        "XGBoost übertrifft die Baseline-Modelle auf dem Testset",
+        "Kalender-Features (Wochentag, Feiertag) sind entscheidend für die Prognosegenauigkeit",
+        "XGBoost und LightGBM übertreffen die Baseline-Modelle auf dem Testset",
         "Residuenanalyse zeigt keine systematischen Abweichungen",
       ]
     },
@@ -84,14 +91,17 @@ const PROJECT_DATA = {
       positives: [
         "Zeitbasierte Kreuzvalidierung verhindert zuverlässig Data Leakage",
         "Feature Engineering bei Zeitreihen erfordert sorgfältige Planung der Lag-Fenster",
-        "Baseline-Modelle sind wichtig als Referenzpunkt für ML-Modelle",
         "Explorative Datenanalyse deckte wichtige saisonale Muster auf",
+        "Interative EDA und Visualisierungen halfen, FeatureEngineering-Entscheidungen zu treffen",
+        "Vergleich mit Live-Daten von SMARD ermöglichte realistische Evaluierung der Prognosequalität",
       ],
       improvements: [
-        "Wetterdaten als externe Kovariable integrieren",
-        "Langfristige Prognosen (mehrere Tage) testen",
+        "Zeitformat und Zeitzonen-Handling in der Datenvorverarbeitung von Anfang an standardisieren",
+        "Konvention der global- und Lokalvariabelbenennung in Funktionen",  
+        "Immer Refactoring nach Testlauf im Notebook und sofort testen",
+        "Python Sourcepath in Notebook-Umgebung korrekt setzen für Imports und Reloads",
+        "Visualiserungsstil vereintlichen in allen Plots (Farben, Achsenbeschriftungen, Legenden)", 
         "Spezialisierte Zeitreihenmodelle wie Prophet oder ARIMA vergleichen",
-        "Fehleranalyse nach Tageszeit und Jahreszeit vertiefen",
       ]
     },
 
@@ -100,7 +110,38 @@ const PROJECT_DATA = {
       presentation: "/yuchuan-portfolio/Stromverbrauch_Vorhersagen.pdf",
     },
 
-    visuals: []
+    visuals: [
+      {
+        title: "Kalender-Feature Distribution",
+        type: "distribution",
+        src: getImagePath("energy-demand-forecast/energy-calendar-distribution.jpg"),
+        description: "Verteilung der Kalender-Features im Zeitverlauf."
+      },
+      {
+        title: "Wetterdaten-Distribution",
+        type: "distribution",
+        src: getImagePath("energy-demand-forecast/energy-weather-distribution.jpg"),
+        description: "Verteilung der Wetterdaten (Temperatur, Sonneneinstrahlung, etc.)."
+      },
+      {
+        title: "Feature Importances",
+        type: "bar",
+        src: getImagePath("energy-demand-forecast/feature-importances.jpg"),
+        description: "Wichtigkeit der Features für die Prognosemodelle."
+      },
+      {
+        title: "Prognose vs. Historie",
+        type: "line",
+        src: getImagePath("energy-demand-forecast/prediction-historical.jpg"),
+        description: "Vergleich: Modellprognose und reale Verbrauchsdaten (Historie)."
+      },
+      {
+        title: "Prognose für den nächsten Tag",
+        type: "line",
+        src: getImagePath("energy-demand-forecast/prediction-tomorrow.jpg"),
+        description: "Modellprognose für den nächsten Tag im Vergleich zu SMARD."
+      }
+    ]
   },
 
   "airbnb-berlin": {
@@ -190,28 +231,34 @@ const PROJECT_DATA = {
 
     visuals: [
       {
-        title: "Revenue Distribution by Property Type",
+        title: "Umsatzverteilung nach Unterkunftsart",
         type: "violin",
         src: getImagePath("airbnb-eda-berlin/violinplot-revenue-property-type.png"),
-        description: "Violin Plot: Serviced Apartments €6K vs Private Rooms €800 median revenue"
+        description: "Violin-Plot: Serviced Apartments mit rund 6.000 EUR Medianumsatz gegen Private Rooms mit rund 800 EUR."
       },
       {
-        title: "License Compliance vs Performance",
+        title: "Lizenz-Compliance vs. Performance",
         type: "boxplot", 
         src: getImagePath("airbnb-eda-berlin/boxplot-revenue-license-status.png"),
-        description: "Paradox: Invalid/Dirty Licenses outperform Valid ones in revenue metrics"
+        description: "Paradox: Ungueltige oder verschmutzte Lizenzen uebertreffen gueltige in den Umsatzmetriken."
       },
       {
-        title: "Active Market Geographic Heatmap",
+        title: "Geografische Heatmap des aktiven Markts",
         type: "heatmap",
         src: getImagePath("airbnb-eda-berlin/geo-heatmap-revenue.png"),
-        description: "Mitte + Kreuzberg als Revenue-Cluster"
+        description: "Mitte und Kreuzberg treten als klare Umsatz-Cluster hervor."
       },
       {
-        title: "Commercial Host Analysis",
+        title: "Analyse gewerblicher Hosts",
         type: "dashboard",
         src: getImagePath("airbnb-eda-berlin/barplot-renenue-host.png"),
         description: "Wenige Commercial Hosts kontrollieren Großteil des Marktumsatzes"
+      },
+      {
+        title: "Heatmap Umsatz nach Nachbarschaftsgruppen",
+        type: "heatmap",
+        src: getImagePath("airbnb-eda-berlin/heatmap-revenue-neighborhood-group.png"),
+        description: "Heatmap: Umsatz nach Nachbarschaftsgruppen."
       }
     ]
   },
@@ -425,14 +472,20 @@ function MetricCard({ label, value, change }) {
   );
 }
 
-function VisualCard({ visual }) {
+function VisualCard({ visual, onOpen }) {
   return (
     <Card className="overflow-hidden">
-      <div className="aspect-video bg-muted flex items-center justify-center">
+      <button
+        type="button"
+        onClick={() => onOpen(visual)}
+        className="block w-full text-left"
+        aria-label={`${visual.title} vergroessern`}
+      >
+      <div className="aspect-video bg-muted flex items-center justify-center p-4 transition-colors hover:bg-muted/80">
         <img 
           src={visual.src} 
           alt={visual.title} 
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain"
           onError={(e) => {
             // Fallback to icon if image fails to load
             e.target.style.display = 'none';
@@ -443,9 +496,11 @@ function VisualCard({ visual }) {
           <BarChart3 className="h-12 w-12 text-muted-foreground" />
         </div>
       </div>
+      </button>
       <CardContent className="p-4">
         <h4 className="font-semibold mb-2">{visual.title}</h4>
         <p className="text-sm text-muted-foreground">{visual.description}</p>
+        <p className="text-xs text-muted-foreground mt-3">Klicken zum Vergrößern</p>
       </CardContent>
     </Card>
   );
@@ -482,6 +537,7 @@ function ProjectCard({ project, onViewDetails }) {
 
 export default function ProjectDetail({ projectId }) {
   const project = PROJECT_DATA[projectId];
+  const [selectedVisual, setSelectedVisual] = React.useState(null);
   
   const handleBack = () => {
     window.location.hash = '';
@@ -627,7 +683,7 @@ export default function ProjectDetail({ projectId }) {
         <ProjectSection icon={BarChart3} title="Visualisierungen">
           <div className="grid md:grid-cols-3 gap-6">
             {project.visuals.map((visual, i) => (
-              <VisualCard key={i} visual={visual} />
+              <VisualCard key={i} visual={visual} onOpen={setSelectedVisual} />
             ))}
           </div>
         </ProjectSection>
@@ -664,6 +720,42 @@ export default function ProjectDetail({ projectId }) {
             </Card>
           </div>
         </ProjectSection>
+
+        {selectedVisual && (
+          <div
+            className="fixed inset-0 z-50 bg-black/70 px-4 py-6"
+            onClick={() => setSelectedVisual(null)}
+            role="dialog"
+            aria-modal="true"
+            aria-label={selectedVisual.title}
+          >
+            <div className="mx-auto flex h-full max-w-6xl items-center justify-center">
+              <div
+                className="w-full rounded-lg bg-background shadow-2xl"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <div className="flex items-center justify-between border-b px-4 py-3">
+                  <div>
+                    <h3 className="font-semibold">{selectedVisual.title}</h3>
+                    <p className="text-sm text-muted-foreground">{selectedVisual.description}</p>
+                  </div>
+                  <Button variant="outline" onClick={() => setSelectedVisual(null)}>
+                    Schliessen
+                  </Button>
+                </div>
+                <div className="bg-muted p-4 md:p-6">
+                  <div className="flex max-h-[80vh] min-h-[320px] items-center justify-center overflow-auto rounded-md bg-muted">
+                    <img
+                      src={selectedVisual.src}
+                      alt={selectedVisual.title}
+                      className="max-h-[72vh] w-full object-contain"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Resources */}
         <ProjectSection icon={Code2} title="Code & Ressourcen">
