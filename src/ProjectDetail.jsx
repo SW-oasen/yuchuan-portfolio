@@ -83,11 +83,12 @@ const PROJECT_DATA = {
     results: {
       title: "Ergebnisse",
       metrics: [
+        { label: "Hauptmodell", value: "XGBoost", change: "Preisvorhersage" },
+        { label: "Train-Test-Split", value: "Zeit(Datum)", change: "2026-01-01" },
+        { label: "Bewertung", value: "MAE - RMSE - R²", change: "15.27 - 24.07 - 0.82" },
         { label: "Prognosehorizont", value: "24h", change: "stündlich" },
-        { label: "Hauptmodell", value: "XGBoost", change: "Preisforecast" },
         { label: "Datenquellen", value: "3+", change: "SMARD, Open-Meteo, MaStR" },
-        { label: "App", value: "Streamlit", change: "Forecast + Analyse" },
-        { label: "Feature-Fokus", value: "Residuallast", change: "Last - Wind - PV" },
+        { label: "App", value: "Streamlit", change: "Vorhersage + Analyse" },
       ],
       insights: [
         "Residuallast ist fachlich zentral, weil sie die verbleibende Nachfrage nach wetterabhängiger Erzeugung beschreibt",
@@ -131,7 +132,7 @@ const PROJECT_DATA = {
         title: "Preis-Ausreißer",
         type: "EDA",
         src: getImagePath("energy-price-forecast/price-outliers.png"),
-        description: "Identifikation und Analyse von Preis-Ausreißern. Ungewöhnliche extreme Preise erkannt, können denoch nicht pauschal als Ausreißer behandelt werden",
+        description: "Identifikation und Analyse von Preis-Ausreißern. Ungewöhnliche extreme Preise erkannt, können dennoch nicht pauschal als Ausreißer behandelt werden",
       },
       {
         title: "PV- und Wind-Energieerzeuger-Cluster",
@@ -201,17 +202,19 @@ const PROJECT_DATA = {
     results: {
       title: "Ergebnisse",
       metrics: [
-        { label: "Wichtigkeit", value: "Features", change: "vor Modellwahl" },
-        { label: "Bestes Modell", value: "XGBoost", change: "vs. Baseline" },
+        { label: "Beste Modelle", value: "XGBoost + LightGBM", change: "Tuned mit Bayesian Optimization" },
+        { label: "Konservative Modelle", value: "Asymetrische Verlustfunktionen", change: "<5% Unterschätzung für Produktionspuffer" },
         { label: "Prognosehorizont", value: "24h", change: "stündlich" },
         { label: "Evaluierung", value: "Time-CV", change: "5 Folds" },
-        { label: "Top-Features", value: "Lag + Kalender", change: "Zeitreihe" },
+        { label: "Wichtigkeit", value: "Features", change: "vor Modellwahl" },
+        { label: "Interaktive App", value: "Notebook + Streamlit", change: "Vorhersage + Analyse" },
       ],
       insights: [
+        "Baseline-Modelle mit saisonalen Mittelwerten und gleitenden Durchschnitten liefern bereits eine solide Prognose",
+        "XGBoost und LightGBM tuned mit Bayesian Optimization für stabile Prognosen mit konservativem Bias",
         "Feature Engineering hat größeren Einfluss auf die Prognosegenauigkeit als die Wahl des ML-Modells",
         "Lag-Features des Vortages und der Vorwoche liefern hohen Informationsgehalt",
-        "Kalender-Features sind entscheidend für die Prognosegenauigkeit",
-        "XGBoost und LightGBM übertreffen die Baseline-Modelle auf dem Testset",
+        "Historische Verbrauch und Kalender-Features sind entscheidend für die Prognosegenauigkeit",
       ],
     },
     learnings: {
@@ -220,13 +223,13 @@ const PROJECT_DATA = {
         "Zeitbasierte Kreuzvalidierung verhindert Data Leakage",
         "Feature Engineering bei Zeitreihen erfordert sorgfältige Planung der Lag-Fenster",
         "EDA deckte wichtige saisonale Muster auf",
-        "Vergleich mit Live-Daten von SMARD ermöglichte realistische Evaluierung",
+        "Vergleich mit Live-Daten von SMARD ermöglichte realistische Evaluierung und Modellanpassungen",
       ],
       improvements: [
         "Zeitformat und Zeitzonen-Handling von Anfang an standardisieren",
         "Variablenbenennung in Funktionen vereinheitlichen",
         "Visualisierungsstil in allen Plots vereinheitlichen",
-        "Spezialisierte Zeitreihenmodelle wie Prophet oder ARIMA vergleichen",
+        "Datenbank für das Folgeprojekt vorbereiten",
       ],
     },
     resources: {
