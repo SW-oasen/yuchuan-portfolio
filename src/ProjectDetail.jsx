@@ -525,7 +525,7 @@ export default function ProjectDetail({ projectId }) {
             <Badge>{project.status}</Badge>
             <Badge variant="secondary">{project.date}</Badge>
           </div>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">{project.title}</h1>
+          <h1 className="text-3xl font-bold tracking-tight break-words hyphens-auto leading-tight sm:text-4xl lg:text-5xl">{project.title}</h1>
           <p className="mt-4 text-slate-600">Dauer: {project.duration}</p>
         </motion.header>
 
