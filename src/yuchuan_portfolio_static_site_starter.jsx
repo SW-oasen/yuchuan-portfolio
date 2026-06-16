@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Github, ExternalLink, Mail, FileText, ChevronRight, Menu, X } from "lucide-react";
+import { Github, Mail, ChevronRight, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 
 // ======== DATA: Edit this to update your site ========
@@ -10,8 +10,7 @@ const PROFILE = {
   name: "Yuchuan",
   title: "Software Engineer → Data/ML Engineer",
   subtitle: "Portfolio, Lernreise und Projektübersicht",
-  tagline:
-    "Von Software Entwicklung zu Data Scientist",
+  tagline: "Von Software-Entwicklung zu Data Science, Machine Learning und Energieanalytik",
   email: "mailto:see.wind@gmx.de",
   location: "Berlin",
   links: {
@@ -22,18 +21,35 @@ const PROFILE = {
 
 const PROJECTS = [
   {
+    id: "energy-price-forecast",
+    title: "Strompreisprognose Deutschland — Day-Ahead Forecasting",
+    date: "2026-06",
+    summary:
+      "Vorhersage stündlicher Day-Ahead-Strompreise für Deutschland auf Basis von Nachfrage, Erzeugung, Wetterdaten und Kalendermerkmalen.",
+    highlights: [
+      "End-to-End-Pipeline von SMARD/Open-Meteo bis zur operativen Tagesprognose",
+      "XGBoost-Modell für stündliche Strompreisprognosen",
+      "Integration von Last-, Wind- und PV-Prognosen als Eingangsgrößen",
+      "Streamlit-App mit Tomorrow Forecast, historischer Analyse und Residuallast-Visualisierung",
+    ],
+    stack: ["Python", "Pandas", "scikit-learn", "XGBoost", "LightGBM", "SQLite", "Streamlit", "SMARD", "Open-Meteo"],
+    repo: "https://github.com/SW-oasen/electricity_price_forecast",
+    live: null,
+    video: null,
+  },
+  {
     id: "energy-demand-forecast",
     title: "Stromverbrauchsprognose — Zeitreihenanalyse",
     date: "2026-05",
     summary:
-      "Kurzfristige Strombedarfsprognose anhand der realen Verbrauchsdaten von SMARD und Wetterdaten.",
+      "Kurzfristige Strombedarfsprognose anhand realer Verbrauchsdaten von SMARD und Wetterdaten.",
     highlights: [
-      "ML Vorhersage vs realer Daten und Prognose von SMARD",
-      "Modulare Datenpipeline mit wiederverwendbare Komponenten",
-      "Asymmetrische Verlust Funktion für Unterschätzung",
-      "Interaktive Applikationanwendung mit Streamlit und interaktivem Notebook",
+      "ML-Vorhersage vs. reale Daten und SMARD-Prognose",
+      "Modulare Datenpipeline mit wiederverwendbaren Komponenten",
+      "Asymmetrische Verlustfunktion für Unterschätzung",
+      "Interaktive Streamlit-Anwendung und Notebook-Auswertung",
     ],
-    stack: ["Pandas", "scikit-learn", 'sklearn-optimizer', "XGBoost", "LghtGBM", "SQLite", "Matplotlib", "Streamlit"],
+    stack: ["Pandas", "scikit-learn", "sklearn-optimizer", "XGBoost", "LightGBM", "SQLite", "Matplotlib", "Streamlit"],
     repo: "https://github.com/SW-oasen/electricity_demand_forecast",
     live: null,
     video: null,
@@ -60,8 +76,7 @@ const PROJECTS = [
     id: "telco-customer-churn",
     title: "Telco Customer Churn — Klassifikation",
     date: "2025-10",
-    summary:
-      "Kundenabwanderungsprognose mit Klassifikationsmodellen.",
+    summary: "Kundenabwanderungsprognose mit Klassifikationsmodellen.",
     highlights: [
       "Datenvorverarbeitung und Imputation",
       "Modellauswertung mit ROC/AUC",
@@ -92,10 +107,16 @@ const PROJECTS = [
 
 const LEARNING = [
   {
+    date: "2026-06",
+    title: "Strompreisprognose mit operativer ML-Pipeline",
+    details:
+      "Day-Ahead-Strompreisprognose mit SMARD-, Open-Meteo- und MaStR-Daten, XGBoost-Modell, gestapelten Prognosefeatures und Streamlit-Dashboard umgesetzt.",
+  },
+  {
     date: "2026-05",
     title: "Stromverbrauchsprognose mit Zeitreihenanalyse",
     details:
-      "Portfolio-Projekt zur kurzfristigen Strombedarfsprognose mit Feature Engineering, ML, Vergleich mit SMARD realer Daten und Prognose.",
+      "Portfolio-Projekt zur kurzfristigen Strombedarfsprognose mit Feature Engineering, ML, Vergleich mit SMARD-Realdaten und SMARD-Prognose.",
   },
   {
     date: "2026-05",
@@ -107,7 +128,7 @@ const LEARNING = [
     date: "2026-02",
     title: "Abschlussprüfung des zweiten Fachs Data Analyse bei Stackfuel",
     details:
-      "Erfolgreiche Abschlussprüfung des Fach Data Analyse bei Stackfuel - Projekt: Kundenabwanderungsanalyse.",
+      "Erfolgreiche Abschlussprüfung des Fachs Data Analyse bei Stackfuel - Projekt: Kundenabwanderungsanalyse.",
   },
   {
     date: "2025-12",
@@ -136,8 +157,7 @@ const LEARNING = [
   {
     date: "2025-08",
     title: "Portfolio-Projekte gestartet",
-    details:
-      "EDA, Datenbereinigung, Modellierung, Visualisierung und Dokumentation.",
+    details: "EDA, Datenbereinigung, Modellierung, Visualisierung und Dokumentation.",
   },
   {
     date: "2025-07",
@@ -154,18 +174,25 @@ const LEARNING = [
 ];
 
 const EXPERIENCE = [
-  { period: "AZAV Ausbildung zu Data Scientist", place: "Stackfuel", date: "2025–2026"},
-  { period: "Support Engineer für Computernetzsicherheit ", place: "macmon", date: "2023-2025" },
-  { period: "Senior Support Engineer", place: "Spirent", date: "2010-2023" },
-  { period: "Order Manager", place: "Nokia Siemens", date: "2008-2010" },
-  {period: "Dipl.-Wirt.-Ing. (Informatik)", place: "TU Berlin", date: "2000-2007"},
+  { period: "AZAV Ausbildung zu Data Scientist", place: "Stackfuel", date: "2025–2026" },
+  { period: "Support Engineer für Computernetzsicherheit", place: "macmon", date: "2023–2025" },
+  { period: "Senior Support Engineer", place: "Spirent", date: "2010–2023" },
+  { period: "Order Manager", place: "Nokia Siemens", date: "2008–2010" },
+  { period: "Dipl.-Wirt.-Ing. (Informatik)", place: "TU Berlin", date: "2000–2007" },
 ];
 
 // ======== UI ========
 function Section({ id, title, children }) {
   return (
-    <section id={id} className="max-w-6xl mx-auto px-4 md:px-6 py-12">
-      <h2 className="text-2xl md:text-3xl font-bold mb-6">{title}</h2>
+    <section id={id} className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
+      <motion.h2
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        className="mb-8 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl"
+      >
+        {title}
+      </motion.h2>
       {children}
     </section>
   );
@@ -177,36 +204,40 @@ function ProjectCard({ project }) {
   };
 
   return (
-    <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-      <Card className="h-full hover:shadow-lg transition-shadow">
-        <CardContent className="p-6 flex-1 flex flex-col">
-          <h3 className="text-xl font-semibold mb-3">
-            {project.title}
-          </h3>
-          <p className="mt-2 text-sm md:text-base text-muted-foreground">{project.summary}</p>
-
-          <ul className="mt-4 list-disc list-inside text-sm space-y-1">
-            {project.highlights.map((h, i) => (
-              <li key={i}>{h}</li>
+    <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+      <Card className="h-full border-slate-200 bg-white/90 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+        <CardContent className="flex h-full flex-col gap-4 p-6">
+          <div>
+            <div className="mb-2 text-sm text-slate-500">{project.date}</div>
+            <h3 className="text-xl font-semibold text-slate-900">{project.title}</h3>
+          </div>
+          <p className="text-sm leading-6 text-slate-600">{project.summary}</p>
+          <ul className="space-y-2 text-sm text-slate-700">
+            {project.highlights.map((highlight, i) => (
+              <li key={i} className="flex gap-2">
+                <ChevronRight className="mt-0.5 h-4 w-4 shrink-0 text-slate-500" />
+                <span>{highlight}</span>
+              </li>
             ))}
           </ul>
-
-          <div className="mt-4 flex flex-wrap gap-2">
-            {project.stack.map((s, i) => (
-              <Badge key={i} variant="secondary" className="px-3 py-1 rounded-full">
-                {s}
+          <div className="mt-auto flex flex-wrap gap-2">
+            {project.stack.map((item, i) => (
+              <Badge key={i} variant="secondary">
+                {item}
               </Badge>
             ))}
           </div>
-
-          <div className="mt-auto pt-4">
-            <Button 
-              onClick={handleViewDetails}
-              className="w-full"
-            >
-              Details ansehen
-              <ChevronRight className="ml-2 h-4 w-4" />
+          <div className="flex flex-wrap gap-2 pt-2">
+            <Button onClick={handleViewDetails} className="gap-2">
+              Details ansehen <ChevronRight className="h-4 w-4" />
             </Button>
+            {project.repo && (
+              <Button asChild variant="outline" className="gap-2">
+                <a href={project.repo} target="_blank" rel="noreferrer">
+                  <Github className="h-4 w-4" /> Repo
+                </a>
+              </Button>
+            )}
           </div>
         </CardContent>
       </Card>
@@ -217,144 +248,167 @@ function ProjectCard({ project }) {
 export default function Portfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
 
+  const navLinks = [
+    { href: "#projects", label: "Projekte" },
+    { href: "#learning", label: "Lernfortschritte" },
+    { href: "#career", label: "Werdegang" },
+    { href: "#contact", label: "Kontakt" },
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-muted/30">
-      {/* Header */}
-      <header className="sticky top-0 z-10 backdrop-blur supports-[backdrop-filter]:bg-background/70 border-b">
-        <div className="max-w-6xl mx-auto flex items-center justify-between px-4 md:px-6 h-16">
-          <a href="#home" className="font-bold text-lg">{PROFILE.name}</a>
-          <nav className="hidden md:flex items-center gap-6 text-sm">
-            <a href="#projects" className="hover:underline">Projekte</a>
-            <a href="#learning" className="hover:underline">Lernfortschritte</a>
-            <a href="#about" className="hover:underline">Werdegang</a>
-            <a href="#contact" className="hover:underline">Kontakt</a>
+    <div className="min-h-screen bg-slate-50 text-slate-900">
+      <header className="sticky top-0 z-50 border-b border-slate-200 bg-white/90 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+          <a href="#" className="text-lg font-bold">
+            {PROFILE.name}
+          </a>
+          <nav className="hidden gap-6 text-sm font-medium sm:flex">
+            {navLinks.map((link) => (
+              <a key={link.href} href={link.href} className="hover:text-slate-600">
+                {link.label}
+              </a>
+            ))}
           </nav>
           <button
-            className="md:hidden p-2 rounded-md hover:bg-muted"
+            className="sm:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Navigation öffnen"
           >
-            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
         {mobileMenuOpen && (
-          <div className="md:hidden border-t bg-background">
-            <nav className="flex flex-col px-4 py-3 gap-1 text-sm">
-              <a href="#projects" onClick={() => setMobileMenuOpen(false)} className="hover:underline py-2">Projekte</a>
-              <a href="#learning" onClick={() => setMobileMenuOpen(false)} className="hover:underline py-2">Lernfortschritte</a>
-              <a href="#about" onClick={() => setMobileMenuOpen(false)} className="hover:underline py-2">Werdegang</a>
-              <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="hover:underline py-2">Kontakt</a>
-            </nav>
-          </div>
+          <nav className="flex flex-col gap-3 border-t border-slate-200 bg-white px-4 py-4 text-sm sm:hidden">
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className="py-2 hover:underline"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
         )}
       </header>
 
-      {/* Hero */}
-      <section id="home" className="max-w-6xl mx-auto px-4 md:px-6 py-14">
-        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-          <h1 className="text-3xl md:text-5xl font-extrabold tracking-tight">
-            {PROFILE.title}
-          </h1>
-          <p className="mt-2 text-lg md:text-xl font-medium text-foreground">
-            {PROFILE.subtitle}
-          </p>
-          <p className="mt-4 text-base md:text-lg text-muted-foreground max-w-3xl">
-            {PROFILE.tagline}
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Button asChild>
-              <a href="#projects"><FileText className="h-4 w-4 mr-2"/>Projekte ansehen</a>
-            </Button>
-            <Button variant="outline" asChild>
-              <a href={PROFILE.links.github} target="_blank" rel="noreferrer"><Github className="h-4 w-4 mr-2"/>GitHub</a>
-            </Button>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Projects */}
-      <Section id="projects" title="Projekte">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {PROJECTS.map((project, index) => (
-            <ProjectCard 
-              key={index} 
-              project={project}
-            />
-          ))}
-        </div>
-        <p className="mt-4 text-sm text-muted-foreground">
-          Hinweis: Einige Teile wurden mit Hilfe von AI‑Tools (Copilot/ChatGPT) generiert und anschließend von mir nachvollzogen, validiert und dokumentiert.
-        </p>
-      </Section>
-
-      {/* Learning Journey */}
-      <Section id="learning" title="Lernfortschritte">
-        <ol className="relative border-s ps-6">
-          {LEARNING.map((item, i) => (
-            <li key={i} className="mb-8 ms-4">
-              <div className="absolute w-3 h-3 bg-primary rounded-full mt-1.5 -start-1.5 border"></div>
-              <time className="mb-1 text-sm font-medium text-muted-foreground">{item.date}</time>
-              <h3 className="text-base md:text-lg font-semibold">{item.title}</h3>
-              <p className="text-sm md:text-base text-muted-foreground">{item.details}</p>
-            </li>
-          ))}
-        </ol>
-      </Section>
-
-      {/* About / Werdegang */}
-      <Section id="about" title="Werdegang">
-        <div className="grid md:grid-cols-2 gap-6">
-          <div>
-            <h3 className="font-semibold mb-2">Stationen</h3>
-            <ul className="space-y-2 text-sm md:text-base">
-              {EXPERIENCE.map((e, i) => (
-                <li key={i} className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-primary"></span>
-                  <span className="font-medium">{e.period}</span>
-                  <span className="text-muted-foreground">— {e.place}</span>
-                  {e.date && <span className="text-muted-foreground text-xs">({e.date})</span>}
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h3 className="font-semibold mb-2">Kernkompetenzen</h3>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {["Python","EDA","Daten-Visualisierung","Feature Engineering", "Machine Learning Modellselektion",
-              "ML Modell-Evaluierung","Deep Learning","ETL Pipelines","Big Data"].map((t, i)=> (
-                <Badge key={i} variant="secondary" className="px-3 py-1 rounded-full">{t}</Badge>
-              ))}
+      <main>
+        <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+          <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl">
+            <p className="mb-3 text-sm font-medium text-slate-500">{PROFILE.location}</p>
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">{PROFILE.title}</h1>
+            <p className="mt-4 text-xl text-slate-600">{PROFILE.subtitle}</p>
+            <p className="mt-4 text-slate-600">{PROFILE.tagline}</p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Button asChild>
+                <a href="#projects">Projekte ansehen</a>
+              </Button>
+              <Button asChild variant="outline" className="gap-2">
+                <a href={PROFILE.links.github} target="_blank" rel="noreferrer">
+                  <Github className="h-4 w-4" /> GitHub
+                </a>
+              </Button>
             </div>
-            <h3 className="font-semibold mb-2">Aktuell vertiefend</h3>
-            <div className="flex flex-wrap gap-2">
-              {["NLP","Docker","MLOps","GenAI"].map((t, i)=> (
-                <Badge key={i} variant="outline" className="px-3 py-1 rounded-full">{t}</Badge>
-              ))}
-            </div>
-            <p className="text-sm text-muted-foreground mt-3">
-              Fokus: saubere Datenpipelines, reproduzierbare Experimente, klare Visualisierung und ehrliche Dokumentation.
-            </p>
+          </motion.div>
+        </section>
+
+        <Section id="projects" title="Projekte">
+          <div className="grid gap-6 md:grid-cols-2">
+            {PROJECTS.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
           </div>
-        </div>
-      </Section>
+          <p className="mt-6 text-sm text-slate-500">
+            Hinweis: Einige Teile wurden mit Hilfe von AI-Tools (Copilot/ChatGPT) generiert und anschließend von mir nachvollzogen,
+            validiert und dokumentiert.
+          </p>
+        </Section>
 
-      {/* Contact */}
-      <Section id="contact" title="Kontakt">
-        <div className="flex flex-wrap items-center gap-3">
-          <Button asChild variant="outline">
-            <a href={PROFILE.email}><Mail className="h-4 w-4 mr-2"/>E-Mail</a>
-          </Button>
-          <Button asChild variant="outline">
-            <a href={PROFILE.links.github} target="_blank" rel="noreferrer"><Github className="h-4 w-4 mr-2"/>GitHub</a>
-          </Button>
-          <Button asChild variant="outline">
-            <a href={PROFILE.links.linkedin} target="_blank" rel="noreferrer"><ExternalLink className="h-4 w-4 mr-2"/>LinkedIn</a>
-          </Button>
-        </div>
-      </Section>
+        <Section id="learning" title="Lernfortschritte">
+          <ol className="space-y-5 border-l border-slate-200 pl-6">
+            {LEARNING.map((item, i) => (
+              <li key={i} className="relative">
+                <span className="absolute -left-[31px] top-1 h-3 w-3 rounded-full bg-slate-900" />
+                <div className="text-sm font-medium text-slate-500">{item.date}</div>
+                <h3 className="mt-1 font-semibold">{item.title}</h3>
+                <p className="mt-1 text-sm leading-6 text-slate-600">{item.details}</p>
+              </li>
+            ))}
+          </ol>
+        </Section>
 
-      {/* Footer */}
-      <footer className="border-t py-8 text-center text-sm text-muted-foreground">
+        <Section id="career" title="Werdegang">
+          <div className="grid gap-8 md:grid-cols-2">
+            <Card>
+              <CardContent className="p-6">
+                <h3 className="mb-4 text-lg font-semibold">Stationen</h3>
+                <ul className="space-y-3 text-sm text-slate-700">
+                  {EXPERIENCE.map((item, i) => (
+                    <li key={i}>
+                      <span className="font-medium">{item.period}</span> — {item.place} {item.date && <span className="text-slate-500">({item.date})</span>}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <h3 className="mb-4 text-lg font-semibold">Kernkompetenzen</h3>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Python",
+                    "EDA",
+                    "Datenvisualisierung",
+                    "Feature Engineering",
+                    "Machine Learning Modellselektion",
+                    "ML Modell-Evaluierung",
+                    "Zeitreihenanalyse",
+                    "ETL Pipelines",
+                    "SQL",
+                    "Streamlit",
+                  ].map((item) => (
+                    <Badge key={item} variant="secondary">
+                      {item}
+                    </Badge>
+                  ))}
+                </div>
+                <h3 className="mb-4 mt-6 text-lg font-semibold">Aktuell vertiefend</h3>
+                <div className="flex flex-wrap gap-2">
+                  {["MLOps", "Docker", "Energieanalytik", "GenAI", "Agentic AI"].map((item) => (
+                    <Badge key={item}>{item}</Badge>
+                  ))}
+                </div>
+                <p className="mt-6 text-sm leading-6 text-slate-600">
+                  Fokus: saubere Datenpipelines, reproduzierbare Experimente, klare Visualisierung und ehrliche Dokumentation.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </Section>
+
+        <Section id="contact" title="Kontakt">
+          <div className="flex flex-wrap gap-3">
+            <Button asChild className="gap-2">
+              <a href={PROFILE.email}>
+                <Mail className="h-4 w-4" /> E-Mail
+              </a>
+            </Button>
+            <Button asChild variant="outline" className="gap-2">
+              <a href={PROFILE.links.github} target="_blank" rel="noreferrer">
+                <Github className="h-4 w-4" /> GitHub
+              </a>
+            </Button>
+            <Button asChild variant="outline">
+              <a href={PROFILE.links.linkedin} target="_blank" rel="noreferrer">
+                LinkedIn
+              </a>
+            </Button>
+          </div>
+        </Section>
+      </main>
+
+      <footer className="border-t border-slate-200 py-8 text-center text-sm text-slate-500">
         © {new Date().getFullYear()} {PROFILE.name}. Built as a lightweight static portfolio.
       </footer>
     </div>

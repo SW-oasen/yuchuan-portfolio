@@ -2,265 +2,354 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Github, 
-  ExternalLink, 
-  ArrowLeft, 
-  Target, 
-  Database, 
-  CheckCircle, 
-  BarChart3, 
+import {
+  Github,
+  ExternalLink,
+  ArrowLeft,
+  Target,
+  Database,
+  CheckCircle,
+  BarChart3,
   BookOpen,
-  Code2
+  Code2,
 } from "lucide-react";
 import { motion } from "framer-motion";
 
 const getImagePath = (path) => {
-  const baseUrl = import.meta.env.BASE_URL || '/';
+  const baseUrl = import.meta.env.BASE_URL || "/";
   return `${baseUrl}img/${path}`;
 };
 
 // ======== PROJECT DATA ========
 const PROJECT_DATA = {
+  "energy-price-forecast": {
+    title: "Strompreisprognose Deutschland — Day-Ahead Forecasting",
+    date: "2026-06",
+    duration: "3 Wochen",
+    status: "Abegeschlossen",
+    problem: {
+      title: "Problem",
+      content:
+        "Der deutsche Strommarkt ist stark von wetterabhängiger Einspeisung, Stromnachfrage und kurzfristiger Residuallast geprägt. Ziel des Projekts ist die stündliche Vorhersage der Day-Ahead-Strompreise für Deutschland (DE/LU) auf Basis öffentlicher Markt-, Erzeugungs-, Nachfrage- und Wetterdaten.",
+      challenges: [
+        "Hohe Preisvolatilität durch Wind- und PV-Einspeisung, inklusive negativer Preise",
+        "Unvollständige reale Daten für heute und gestern, obwohl diese als Prädiktoren relevant sind",
+        "Zeitreihen mit unterschiedlichen Aktualisierungsständen aus SMARD, Open-Meteo und eigener Lastprognose",
+        "Zeitzonen-Handling zwischen UTC und Europe/Berlin, inklusive Sommerzeitumstellung",
+        "Operative Tomorrow-Prognose ohne Data Leakage und mit konsistentem Feature Engineering",
+        "Plausible Darstellung der Preisprognose zusammen mit Residuallast und Referenzwerten",
+      ],
+    },
+    approach: {
+      title: "Daten & Ansatz",
+      dataset:
+        "Stündliche öffentliche Strommarktzeitreihen für Deutschland: Day-Ahead-Preise, Last, Wind, PV, konventionelle Erzeugung sowie technologiegewichtete Wetterdaten.",
+      methodology: [
+        "ETL-Pipeline für SMARD-Daten: Day-Ahead-Preise, Nachfrage, Wind Onshore/Offshore, PV und konventionelle Erzeugung",
+        "Open-Meteo-Integration für PV- und Wind-Wetterdaten mit gewichteter Aggregation über Anlagencluster",
+        "MaStR-basierte Clusterbildung und jährliche Kapazitätsgewichtung für Wind- und PV-Anlagen",
+        "Feature Engineering mit Preis-, Nachfrage-, Erzeugungs-, Wetter-, Kalender- und Residuallastmerkmalen",
+        "Gestapelte operative Pipeline: fehlende Last-, Wind- und PV-Werte für gestern/heute/morgen werden durch Vorhersagemodelle bereitgestellt",
+        "Modellvergleich mit LightGBM und XGBoost; XGBoost als aktuell bevorzugtes Preisvorhersagemodell",
+        "Streamlit-App für Tomorrow Forecast und historische Analyse",
+      ],
+      tools: [
+        "Python",
+        "Pandas",
+        "scikit-learn",
+        "XGBoost",
+        "LightGBM",
+        "SQLite",
+        "Streamlit",
+        "Matplotlib",
+        "SMARD API",
+        "Open-Meteo API",
+      ],
+    },
+    solution: {
+      title: "Lösung",
+      content:
+        "End-to-End-ML-Pipeline für stündliche Strompreisprognosen: Datenabruf, Datenhaltung, Feature Engineering, Modelltraining, operative Vorhersage und interaktive Visualisierung sind in einem reproduzierbaren Workflow verbunden.",
+      features: [
+        "SQLite-Datenbank mit normalisiertem Zeitreihenschema für Markt-, Erzeugungs- und Wetterdaten",
+        "Entkoppelte Ingestion für SMARD- und Open-Meteo-Daten mit Delta-Logik",
+        "Technologiegewichtete Wetteraggregation für Wind und PV auf Basis installierter Anlagenleistung",
+        "XGBoost-Regressor für die stündliche Day-Ahead-Preisprognose",
+        "Operative Funktion prepare_data_for_price_prediction_operational() für die Tomorrow-Pipeline",
+        "Integration der prognostizierten Last-, Wind- und PV-Werte als Eingangsgrößen für die Preisprognose",
+        "Streamlit-Dashboard mit Preisprognose, historischer Vorhersageanalyse und Residuallast-Visualisierung",
+      ],
+    },
+    results: {
+      title: "Ergebnisse",
+      metrics: [
+        { label: "Prognosehorizont", value: "24h", change: "stündlich" },
+        { label: "Hauptmodell", value: "XGBoost", change: "Preisforecast" },
+        { label: "Datenquellen", value: "3+", change: "SMARD, Open-Meteo, MaStR" },
+        { label: "App", value: "Streamlit", change: "Forecast + Analyse" },
+        { label: "Feature-Fokus", value: "Residuallast", change: "Last - Wind - PV" },
+      ],
+      insights: [
+        "Residuallast ist fachlich zentral, weil sie die verbleibende Nachfrage nach wetterabhängiger Erzeugung beschreibt",
+        "Die operative Prognose benötigt Ersatzwerte für heute und gestern, da reale Erzeugungs- und Lastdaten oft verspätet vollständig sind",
+        "XGBoost lieferte im aktuellen Projektstand plausiblere Tomorrow-Forecasts als LightGBM",
+        "Zeitzonen müssen projektweit konsequent behandelt werden, damit Berlin-Tage korrekt als 00:00–23:00 Europe/Berlin interpretiert werden",
+        "Eine fachlich nachvollziehbare Visualisierung ist für die Bewertung der Prognose fast genauso wichtig wie die reine Modellmetrik",
+      ],
+    },
+    learnings: {
+      title: "Learnings & Reflexion",
+      positives: [
+        "Komplexe Energieprognosen benötigen eine saubere Trennung zwischen Rohdaten, Feature Engineering und operativer Prognose",
+        "Feature Engineering und Datenverfügbarkeit bestimmen die Qualität stärker als ein einzelner Modellwechsel",
+        "Gestapelte Prognosefeatures können eine realistische operative Tomorrow-Prognose ermöglichen",
+        "SMARD-, Open-Meteo- und MaStR-Daten lassen sich zu einem praxisnahen Energie-ML-Projekt kombinieren",
+        "Streamlit eignet sich gut, um Modellverhalten, Ausreißer und Plausibilität iterativ zu prüfen",
+      ],
+      improvements: [
+        "Walk-Forward-Simulation für eine realistischere historische Bewertung ergänzen",
+        "Historische Prognosen persistieren, um echte operative Forecasts mit späteren Ist-Werten zu vergleichen",
+        "Modellmetriken und Feature-Importances systematisch dokumentieren",
+        "Automatische Aktualisierung der MaStR-Erzeugerdaten und Wettergewichtungen vorbereiten",
+        "Power-BI-Dashboard als ergänzende Business-Intelligence-Perspektive umsetzen",
+      ],
+    },
+    resources: {
+      repo: "https://github.com/SW-oasen/electricity_price_forecast",
+      presentation: "/yuchuan-portfolio/Strompreis_Vorhersagen.pdf",
+      readme: "https://github.com/SW-oasen/electricity_price_forecast/blob/main/README.md",
+      context: "https://github.com/SW-oasen/electricity_price_forecast/blob/main/documents/PROJECT_CONTEXT.md",
+    },
+    visuals: [
+      {
+        title: "Preismuster in verschiedenen Perioden",
+        type: "EDA",
+        src: getImagePath("energy-price-forecast/price-pattern-influences.png"),
+        description: "Verteilungsmuster der Preise in verschiedenen Perioden.",
+      },
+      {
+        title: "Preis-Ausreißer",
+        type: "EDA",
+        src: getImagePath("energy-price-forecast/price-outliers.png"),
+        description: "Identifikation und Analyse von Preis-Ausreißern. Ungewöhnliche extreme Preise erkannt, können denoch nicht pauschal als Ausreißer behandelt werden",
+      },
+      {
+        title: "PV- und Wind-Energieerzeuger-Cluster",
+        type: "ETL",
+        src: getImagePath("energy-price-forecast/pv-wind-clusters.png"),
+        description: "Clustering von PV- und Wind-Energieerzeugern zur Aggregation von Wetterdaten.",
+      },
+      {
+        title: "Historische Preis-Vorhersage",
+        type: "ML",
+        src: getImagePath("energy-price-forecast/historical-prediction.png"),
+        description: "Historische Preis-Vorhersagen im Vergleich zu realen Preisen. Ungewöhnliche extreme Preise erkannt. Eventuell weitere Analyse und Feature Engineering. ",
+      },
+      {
+        title: "Vorhersage für morgen",
+        type: "ML",
+        src: getImagePath("energy-price-forecast/prediction-tomorrow.png"),
+        description: "Prognose der Energiepreise für den nächsten Tag und Vergleich zu den Preisen von vorgestern und dem Durchschnitt der letzten 7 Tagen.",
+      },
+
+    ],
+  },
+
   "energy-demand-forecast": {
     title: "Stromverbrauchsprognose — Zeitreihenanalyse",
     date: "2026-05",
     duration: "3 Wochen",
     status: "Abgeschlossen",
-
     problem: {
       title: "Problem",
-      content: "Kurzfristige Prognosen des Stromverbrauchs sind ein Kernproblem im Energiesektor. Genaue Vorhersagen helfen bei der Netzsteuerung und der Einsatzplanung von Kraftwerken.",
+      content:
+        "Kurzfristige Prognosen des Stromverbrauchs sind ein Kernproblem im Energiesektor. Genaue Vorhersagen helfen bei der Netzsteuerung und der Einsatzplanung von Kraftwerken.",
       challenges: [
         "Unterschiedliche Zeitformate aus verschiedenen Quellen (SMARD, Wetterdaten)",
         "Starke Saisonalität: täglich, wöchentlich und jährlich überlagerte Muster",
         "Kalendarische Einflüsse: Feiertage, Wochentage und Brückentage",
         "Wettereinflüsse: empfundene Temperatur, Sonneneinstrahlung und Windstärke",
-        "Wetterdatenaggregation mit der Population der ausgewählten Städten als Gewichtung", 
+        "Wetterdatenaggregation mit der Population ausgewählter Städte als Gewichtung",
         "Auswahl geeigneter Lag-Features ohne Data Leakage",
-        "Robuste Evaluierung durch zeitbasierte Train-Test Split und Kreuzvalidierung",
-      ]
+        "Robuste Evaluierung durch zeitbasierten Train-Test-Split und Kreuzvalidierung",
+      ],
     },
-
     approach: {
       title: "Daten & Ansatz",
       dataset: "Öffentliche Stromverbrauchsdaten für Deutschland (stündliche Auflösung)",
       methodology: [
         "Explorative Datenanalyse: saisonale Dekompositionen und Autokorrelationen",
         "Feature Engineering: Kalender-Features, Lag-Features, Rolling-Window-Statistiken",
-        "Saisonell Naive und Moving Average der Stromverbrauchsdaten und Wetterdaten als Referenz", 
+        "Saisonell-naive und Moving-Average-Baselines für Stromverbrauchs- und Wetterdaten",
         "Baseline-Modelle: Linear Regression, Random Forest, XGBoost, LightGBM, SVR",
-        "Vergleich der ML Vorhersage gegen SMARD realer Daten und Prognose", 
+        "Vergleich der ML-Vorhersage gegen reale SMARD-Daten und SMARD-Prognose",
         "Fehleranalyse: MAE, RMSE und visuelle Residuendiagnostik",
       ],
-      tools: ["Pandas", "scikit-learn", 'sklearn-optimizer', "XGBoost", "LghtGBM", "SQLite", "Matplotlib", "Streamlit", "Jupyter"]
+      tools: ["Pandas", "scikit-learn", "sklearn-optimizer", "XGBoost", "LightGBM", "SQLite", "Matplotlib", "Streamlit", "Jupyter"],
     },
-    
     solution: {
       title: "Lösung",
       content: "ML-Pipeline mit Feature Engineering und Kreuzvalidierung für kurzfristige Strombedarfsprognosen.",
       features: [
-        "Erst manuelles und dann automatisiertes Feature Engineering (ETL Pipeline) für Zeitreihen",
+        "Manuelles und automatisiertes Feature Engineering für Zeitreihen",
         "Zeitbasierte Train-Test-Splits zur Vermeidung von Data Leakage",
-        "Hyperparameter-Optimierung: Bayesian Optimization für LightGBM und XGBoost",
+        "Hyperparameter-Optimierung mit Bayesian Optimization für LightGBM und XGBoost",
         "Interaktive Visualisierungen der Prognoseergebnisse",
-        "Prognose und reale Verbrauchsdaten von SMARD im Vergleich: Visualisierung von Prognose vs Realität",
-      ]
+        "Vergleich von Prognose und realen Verbrauchsdaten von SMARD",
+      ],
     },
-
     results: {
       title: "Ergebnisse",
       metrics: [
-        { label: "Wichtigkeit", value: "FeatureEngineering", change: "vs. Modellauswahl" },
+        { label: "Wichtigkeit", value: "Features", change: "vor Modellwahl" },
         { label: "Bestes Modell", value: "XGBoost", change: "vs. Baseline" },
         { label: "Prognosehorizont", value: "24h", change: "stündlich" },
-        { label: "Evaluierungsmethode", value: "Time-CV", change: "5 Folds" },
-        { label: "Wichtigste Features", value: "Lag + Kalender", change: "Top-Features" },
+        { label: "Evaluierung", value: "Time-CV", change: "5 Folds" },
+        { label: "Top-Features", value: "Lag + Kalender", change: "Zeitreihe" },
       ],
       insights: [
-        "Feature Engineering hat größeren Einfluss auf die Prognosegenauigkeit als die Wahl des ML-Modells", 
-        "Lag-Features des Vortages und der Vorwoche liefern den höchsten Informationsgehalt",
-        "Kalender-Features (Wochentag, Feiertag) sind entscheidend für die Prognosegenauigkeit",
+        "Feature Engineering hat größeren Einfluss auf die Prognosegenauigkeit als die Wahl des ML-Modells",
+        "Lag-Features des Vortages und der Vorwoche liefern hohen Informationsgehalt",
+        "Kalender-Features sind entscheidend für die Prognosegenauigkeit",
         "XGBoost und LightGBM übertreffen die Baseline-Modelle auf dem Testset",
-        "Residuenanalyse zeigt keine systematischen Abweichungen",
-      ]
+      ],
     },
-
     learnings: {
       title: "Learnings & Reflexion",
       positives: [
-        "Zeitbasierte Kreuzvalidierung verhindert zuverlässig Data Leakage",
+        "Zeitbasierte Kreuzvalidierung verhindert Data Leakage",
         "Feature Engineering bei Zeitreihen erfordert sorgfältige Planung der Lag-Fenster",
-        "Explorative Datenanalyse deckte wichtige saisonale Muster auf",
-        "Interative EDA und Visualisierungen halfen, FeatureEngineering-Entscheidungen zu treffen",
-        "Vergleich mit Live-Daten von SMARD ermöglichte realistische Evaluierung der Prognosequalität",
+        "EDA deckte wichtige saisonale Muster auf",
+        "Vergleich mit Live-Daten von SMARD ermöglichte realistische Evaluierung",
       ],
       improvements: [
-        "Zeitformat und Zeitzonen-Handling in der Datenvorverarbeitung von Anfang an standardisieren",
-        "Konvention der global- und Lokalvariabelbenennung in Funktionen",  
-        "Immer Refactoring nach Testlauf im Notebook und sofort testen",
-        "Python Sourcepath in Notebook-Umgebung korrekt setzen für Imports und Reloads",
-        "Visualiserungsstil vereintlichen in allen Plots (Farben, Achsenbeschriftungen, Legenden)", 
+        "Zeitformat und Zeitzonen-Handling von Anfang an standardisieren",
+        "Variablenbenennung in Funktionen vereinheitlichen",
+        "Visualisierungsstil in allen Plots vereinheitlichen",
         "Spezialisierte Zeitreihenmodelle wie Prophet oder ARIMA vergleichen",
-      ]
+      ],
     },
-
     resources: {
       repo: "https://github.com/SW-oasen/electricity_demand_forecast",
       presentation: "/yuchuan-portfolio/Stromverbrauch_Vorhersagen.pdf",
     },
-
     visuals: [
       {
         title: "Kalender-Feature Distribution",
         type: "distribution",
         src: getImagePath("energy-demand-forecast/energy-calendar-distribution.jpg"),
-        description: "Verteilung der Kalender-Features im Zeitverlauf."
+        description: "Verteilung der Kalender-Features im Zeitverlauf.",
       },
       {
         title: "Wetterdaten-Distribution",
         type: "distribution",
         src: getImagePath("energy-demand-forecast/energy-weather-distribution.jpg"),
-        description: "Verteilung der Wetterdaten (Temperatur, Sonneneinstrahlung, etc.)."
+        description: "Verteilung der Wetterdaten.",
       },
       {
         title: "Feature Importances",
         type: "bar",
         src: getImagePath("energy-demand-forecast/feature-importances.jpg"),
-        description: "Wichtigkeit der Features für die Prognosemodelle."
+        description: "Wichtigkeit der Features für die Prognosemodelle.",
       },
       {
         title: "Prognose vs. Historie",
         type: "line",
         src: getImagePath("energy-demand-forecast/prediction-historical.jpg"),
-        description: "Vergleich: Modellprognose und reale Verbrauchsdaten (Historie)."
+        description: "Vergleich: Modellprognose und reale Verbrauchsdaten.",
       },
       {
         title: "Prognose für den nächsten Tag",
         type: "line",
         src: getImagePath("energy-demand-forecast/prediction-tomorrow.jpg"),
-        description: "Modellprognose für den nächsten Tag im Vergleich zu SMARD."
-      }
-    ]
+        description: "Modellprognose für den nächsten Tag im Vergleich zu SMARD.",
+      },
+    ],
   },
 
   "airbnb-berlin": {
     title: "Berlin Airbnb Marktanalyse 2025 — Business Intelligence & Compliance",
-    date: "2025-11, erneuert in 2026-02", 
+    date: "2025-11, erneuert in 2026-02",
     duration: "3 Wochen",
     status: "Abgeschlossen (v2: Revenue Modelling & Regulatory Analysis)",
-    
     problem: {
       title: "Problem",
-      content: "Der Berliner Kurzzeitvermietungsmarkt unterliegt dem Zweckentfremungsverbot, doch die Effektivität städtischer Regulierungen und echte Umsatzpotenziale bleiben intransparent. Investoren und Stadtplaner benötigen evidenzbasierte Insights über aktiveLIstings, Compliance-Patterns und Revenue-Potenziale.",
+      content:
+        "Der Berliner Kurzzeitvermietungsmarkt unterliegt dem Zweckentfremungsverbot. Ziel war eine datenbasierte Analyse aktiver Listings, Umsatzpotenziale und Compliance-Muster.",
       challenges: [
-        "95% der Listings sind 'Ghost-Einträge' ohne echte Marktaktivität", 
-        "Berliner Lizenz-Compliance nur oberflächlich überprüfbar (Regex-Sanitization nötig)",
-        "Revenue-Schätzungen: Inside Airbnb nutzt veraltete SF-Model-Annahmen",
-        "Power BI Import: Deutsche Trennzeichen-Standards erforderlich (CSV-Export-Pipeline)",
-        "Business Intelligence: Welche Listings sind echter 'Active Market'?"
-      ]
+        "Viele Listings sind Ghost-Einträge ohne echte Marktaktivität",
+        "Berliner Lizenz-Compliance nur oberflächlich prüfbar",
+        "Revenue-Schätzungen benötigen transparente Annahmen",
+        "Power-BI-Import mit deutschen Trennzeichenstandards",
+      ],
     },
-
     approach: {
       title: "Daten & Ansatz",
       dataset: "Inside Airbnb Berlin Dataset Sept. 2025 (~13k Listings) → Active Market (~2.4k)",
       methodology: [
-        "Active Market Filtering: Reviews >2/Monat als echter Marktindikator",
-        "Revenue Proxy Modelling: Upper/Lower Bounds mit San Francisco Model",
-        "Berliner Lizenz-Klassifizierung: Regex-basierte Kategorisierung (Gültig/Befreit/Invalid/Dirty)",
-        "Compliance-Performance Analysis: Boxplot Revenue vs. License Status", 
-        "Power BI Export: Deutsche Lokalisierung (Semikolon/Komma-Standards)",
-        "Regulatory Paradox: Performance vs. Legal Compliance Correlation"
+        "Active-Market-Filtering über Reviews pro Monat",
+        "Revenue Proxy Modelling mit Upper-/Lower-Bounds",
+        "Lizenz-Klassifizierung per Regex",
+        "Compliance-Performance-Analyse",
+        "Power-BI-Export mit deutscher Lokalisierung",
       ],
-      tools: ["Python", "Pandas", "Seaborn", "Violin Plots", "Regex", "Jupyter", "Power BI"]
+      tools: ["Python", "Pandas", "Seaborn", "Regex", "Jupyter", "Power BI"],
     },
-
     solution: {
-      title: "Lösung", 
-      content: "Business Intelligence Pipeline mit Revenue Proxy Modelling und einzigartiger Berliner Compliance-Analyse für Stakeholder in Investor Relations und Urban Planning.",
+      title: "Lösung",
+      content:
+        "Business-Intelligence-Pipeline mit Revenue Proxy Modelling und Berliner Compliance-Analyse.",
       features: [
-        "San Francisco Model Implementation: Upper (30% Review Rate) vs Lower (70%) Revenue Proxy",
-        "Active Market Definition: Filtering auf >2 Reviews/Monat (reale vs Ghost Listings)",
-        "4-Kategorien Lizenz-Klassifizierung: Gültig, Befreit, Invalid/Dirty, Missing",
-        "Power BI Dashboard: Pareto-Analyse für Commercial Hosts (80/20 Rule)",
-        "Geografische Revenue Heatmaps: Mitte vs Kreuzberg Performance-Cluster",
-        "Host-Profiling: Commercial (3+ Units) vs Private Segmentation"
-      ]
+        "Active-Market-Definition",
+        "Lizenz-Kategorisierung",
+        "Power-BI-Dashboard",
+        "Geografische Revenue Heatmaps",
+        "Host-Profiling",
+      ],
     },
-
     results: {
       title: "Ergebnisse",
       metrics: [
-        { label: "Active Market Listings", value: "2.395", change: "~35% real market" },
-        { label: "Median Revenue (Active)", value: "€1.074", change: "€800-€1.500" },
-        { label: "Top 5% Property Performance", value: "€6.000+", change: "Apartment/Loft" },
-        { label: "License Compliance Rate", value: "44%", change: "Valid + Exempt" }
+        { label: "Active Listings", value: "2.395", change: "real market" },
+        { label: "Median Revenue", value: "€1.074", change: "active" },
+        { label: "Top 5%", value: "€6.000+", change: "Performance" },
+        { label: "Compliance", value: "44%", change: "Valid + Exempt" },
       ],
       insights: [
-        "REGULATORY PARADOX: Invalid/Dirty Lizenzen zeigen höhere Median-Revenue als konforme",
-        "Professionalisierung: Commercielle Hosts (3+ Units) dominieren Umsatz-Pareto",
-        "Active Market: 95% aller Listings sind ƒGhosts' - nur 35% echte Marktteilnehmer", 
-        "Geographic Premium: Mitte (€150+ avg) vs Pankow Private Room Density",
-        "Survival Bias: Missing License = 0% in Active Market (Algorithmus-Filtereffekt)"
-      ]
+        "Wenige professionelle Hosts dominieren einen großen Umsatzanteil",
+        "Mitte und Kreuzberg treten als Revenue-Cluster hervor",
+        "Active-Market-Filtering verändert die Marktperspektive deutlich",
+      ],
     },
-
     learnings: {
       title: "Learnings & Reflexion",
-      positives: [
-        "Business Intelligence statt EDA: Fokus auf actionable Stakeholder-Insights",
-        "Revenue Proxy Modelling liefert realistische Umsatz-Estimates vs naive Preisanalysen",
-        "Berliner Lizenz-Regex ermöglicht einzigartige Compliance-vs-Performance-Analyse",
-        "Power BI deutsche Lokalisierung: Semikolon-CSV erhöht Dashboard-Workflow um 80%",
-        "Active Market Filtering: Echte Marktdynamik vs 'Ghost Listing'-Verzerrung"
-      ],
-      improvements: [
-        "Zeitreihen-Vergleich: Q3/Q4 2025 vs Q1 2026 für Regulierungs-Impact",
-        "External Data: Events-Kalender, ÖPNV-Index für Revenue-Korrelationen",
-        "Host Churn Analysis: Lizenz-Verlust führt zu Market-Exit-Rate?",
-        "Advanced Power BI: DAX-Measures für dynamische Host-Kategorisierung implementieren",
-        "Neighborhood-Level: BezirksAMT-Daten für micro-lokale Enforcement-Patterns"  
-      ]
+      positives: ["Business-Intelligence-Fokus statt reiner EDA", "Power-BI-Workflow verbessert", "Compliance-Analyse strukturiert umgesetzt"],
+      improvements: ["Zeitreihenvergleich ergänzen", "Externe Eventdaten einbinden", "DAX-Measures erweitern"],
     },
-
     resources: {
       repo: "https://github.com/SW-oasen/airbnb-eda-berlin",
       notebook: "https://github.com/SW-oasen/airbnb-eda-berlin/blob/main/notebooks/Airbnb_EDA_Berlin.ipynb",
     },
-
     visuals: [
       {
         title: "Umsatzverteilung nach Unterkunftsart",
         type: "violin",
         src: getImagePath("airbnb-eda-berlin/violinplot-revenue-property-type.png"),
-        description: "Violin-Plot: Serviced Apartments mit rund 6.000 EUR Medianumsatz gegen Private Rooms mit rund 800 EUR."
+        description: "Umsatzverteilung nach Unterkunftsart.",
       },
       {
         title: "Lizenz-Compliance vs. Performance",
-        type: "boxplot", 
+        type: "boxplot",
         src: getImagePath("airbnb-eda-berlin/boxplot-revenue-license-status.png"),
-        description: "Paradox: Ungueltige oder verschmutzte Lizenzen uebertreffen gueltige in den Umsatzmetriken."
+        description: "Vergleich der Umsatzmetriken nach Lizenzstatus.",
       },
       {
         title: "Geografische Heatmap des aktiven Markts",
         type: "heatmap",
         src: getImagePath("airbnb-eda-berlin/geo-heatmap-revenue.png"),
-        description: "Mitte und Kreuzberg treten als klare Umsatz-Cluster hervor."
+        description: "Geografische Umsatz-Cluster in Berlin.",
       },
-      {
-        title: "Analyse gewerblicher Hosts",
-        type: "dashboard",
-        src: getImagePath("airbnb-eda-berlin/barplot-renenue-host.png"),
-        description: "Wenige Commercial Hosts kontrollieren Großteil des Marktumsatzes"
-      },
-      {
-        title: "Heatmap Umsatz nach Nachbarschaftsgruppen",
-        type: "heatmap",
-        src: getImagePath("airbnb-eda-berlin/heatmap-revenue-neighborhood-group.png"),
-        description: "Heatmap: Umsatz nach Nachbarschaftsgruppen."
-      }
-    ]
+    ],
   },
 
   "telco-customer-churn": {
@@ -268,86 +357,40 @@ const PROJECT_DATA = {
     date: "2025-10",
     duration: "3 Wochen",
     status: "Abgeschlossen",
-    
     problem: {
       title: "Problem",
-      content: "Telekommunikationsunternehmen verlieren 26.5% ihrer Kunden jährlich. Ohne präzise Churn-Vorhersage können keine gezielten Retention-Maßnahmen eingeleitet werden, was zu Millionen-Umsatzverlusten führt.",
-      challenges: [
-        "Hohe Churn-Rate: 26.5% überschreitet Industriestandard (15-20%)",
-        "Klassendisbalance: Nur 26.5% Churn-Fälle im Dataset von 7.043 Kunden",
-        "Feature-Komplexität: 19 verschiedene Kundenattribute (demografisch, Services, Billing)",
-        "Business-Implikationen: $276K+ jährlich gefährdeter Umsatz bei High-Risk-Kunden",
-        "Actionable Insights: ML-Modell muss konkrete Retention-Strategien ermöglichen"
-      ]
+      content:
+        "Telekommunikationsunternehmen verlieren Kunden durch Churn. Ziel war ein Klassifikationsmodell zur Identifikation gefährdeter Kunden und zur Ableitung von Retention-Strategien.",
+      challenges: ["Klassendisbalance", "Viele kategorische Features", "Business-orientierte Threshold-Wahl", "Erklärbarkeit für Retention-Maßnahmen"],
     },
-
     approach: {
       title: "Daten & Ansatz",
       dataset: "Kaggle Telco Customer Churn Dataset - 7.043 Kunden mit 19 Features",
-      methodology: [
-        "Data Prep: Missing Value Imputation, Feature Encoding, Data Validation",
-        "Feature Engineering: Tenure Buckets, Service Count, Revenue-to-Date, Contract-Payment Risk",
-        "Baseline Models: Logistic Regression, Random Forest, Gradient Boosting",
-        "Hyperparameter Optimization: Bayesian Optimization mit Optuna (50 Trials)",
-        "Threshold Optimization: F1-Score und Cost-based Optimization für Business Value",
-        "Model Interpretability: Feature Importance, SHAP Values, Statistical Testing"
-      ],
-      tools: ["Python", "scikit-learn", "Optuna", "Power BI", "Pandas", "SHAP", "Matplotlib"]
+      methodology: ["Data Prep und Encoding", "Feature Engineering", "Modellvergleich", "Optuna-Tuning", "SHAP-Auswertung"],
+      tools: ["Python", "scikit-learn", "Optuna", "Power BI", "Pandas", "SHAP", "Matplotlib"],
     },
-
     solution: {
       title: "Lösung",
-      content: "End-to-End ML-Pipeline mit Feature Engineering, automatisierter Hyperparameter-Optimierung und 3-seitigem Power BI Dashboard für Retention-Strategien.",
-      features: [
-        "Advanced Feature Engineering: Tenure Buckets, Service Engagement Scores",
-        "Optuna-basierte Hyperparameter-Optimierung für 3 Algorithmen",
-        "Business-optimierte Threshold-Findung (F1-Score maximiert)",
-        "Risk Segmentation: Very High (>75%), High (50-74%), Medium (25-49%), Low (<25%)",
-        "Power BI Dashboard mit Retention Campaign Strategies",
-        "ROI Calculator für Interventions-Kosten vs. Revenue Protection"
-      ]
+      content:
+        "End-to-End-ML-Pipeline mit Feature Engineering, Hyperparameter-Optimierung und Dashboard für Churn-Risiken.",
+      features: ["Feature Engineering", "Optuna-Tuning", "Risk Segmentation", "Power-BI-Dashboard", "SHAP-Erklärbarkeit"],
     },
-
     results: {
       title: "Ergebnisse",
       metrics: [
-        { label: "Model Accuracy", value: "77.7%", change: "AUC 0.85+" },
-        { label: "F1-Score", value: "0.82", change: "Optimiert" },
-        { label: "High-Risk Kunden", value: "178", change: "$276K Risk" },
-        { label: "Churn Rate", value: "26.5%", change: "vs 15-20% Industry" }
+        { label: "Accuracy", value: "77.7%", change: "AUC 0.85+" },
+        { label: "F1-Score", value: "0.82", change: "optimiert" },
+        { label: "Churn Rate", value: "26.5%", change: "Dataset" },
       ],
-      insights: [
-        "Customer Tenure ist wichtigster Prädiktor (13.4% Feature Importance)",
-        "Month-to-month + Electronic Check = höchstes Churn-Risiko-Profil",
-        "Neue Kunden (0-12 Monate) zeigen 40%+ höhere Churn-Wahrscheinlichkeit",
-        "Service Bundle: Kunden mit <3 Services haben 2.3x höheres Churn-Risiko",
-        "Payment Method Impact: Electronic Check korreliert mit 35% höherem Churn"
-      ]
+      insights: ["Tenure ist ein wichtiger Prädiktor", "Month-to-month-Verträge zeigen hohes Risiko", "Service-Bundles senken Churn-Risiko"],
     },
-
     learnings: {
-      title: "Learnings & Reflexion", 
-      positives: [
-        "Feature Engineering verbessert Modell-Performance um 5+ AUC-Punkte",
-        "Optuna-Hyperparameter-Tuning deutlich effektiver als Grid Search",
-        "Power BI Dashboard macht ML-Insights für Business-Teams zugänglich",
-        "Threshold-Optimierung kritisch für actionable Business-Metriken"
-      ],
-      improvements: [
-        "Zeitreihen-Features hinzufügen für Customer Journey Analysis",
-        "A/B-Testing-Framework für Retention Campaign Effectiveness",
-        "Real-time Scoring Pipeline für dynamische Churn-Risk-Updates",
-        "Ensemble Methods testen (Voting, Stacking) für robustere Predictions",
-        "Externe Datenquellen integrieren (Customer Support Tickets, Usage Patterns)",
-        "Explainable AI für individuelle Customer-Risk-Erklärungen implementieren"
-      ]
+      title: "Learnings & Reflexion",
+      positives: ["Feature Engineering verbessert Performance", "Optuna effektiver als Grid Search", "Dashboard macht ML-Insights zugänglich"],
+      improvements: ["Zeitreihen-Features ergänzen", "A/B-Testing-Framework vorbereiten", "Real-time Scoring Pipeline prüfen"],
     },
-
-    resources: {
-      repo: "https://github.com/SW-oasen/telco-customer-churn",
-    },
-
-    visuals: []
+    resources: { repo: "https://github.com/SW-oasen/telco-customer-churn" },
+    visuals: [],
   },
 
   "turbine-maintenance": {
@@ -355,118 +398,73 @@ const PROJECT_DATA = {
     date: "2025-10",
     duration: "4 Wochen",
     status: "Abgeschlossen",
-
     problem: {
       title: "Problem",
-      content: "Die NASA CMAPSS-Datensätze enthalten Sensordaten von Turbinentriebwerken bis zum Ausfall. Ziel war die Vorhersage der verbleibenden Nutzungsdauer (RUL) mithilfe einer GPU-beschleunigten ML-Pipeline mit Workflow-Automatisierung und Dashboard.",
+      content:
+        "Die NASA CMAPSS-Datensätze enthalten Sensordaten von Turbinentriebwerken bis zum Ausfall. Ziel war die Vorhersage der verbleibenden Nutzungsdauer (RUL).",
       challenges: [
-        "GPU-Einrichtung: PyTorch CUDA und XGBoost GPU korrekt konfigurieren",
-        "Feature Engineering für 21 Sensorzeitreihen mit Rolling Windows und Z-Scores",
-        "Cross-Dataset-Validierung über 4 CMAPSS-Subsets mit unterschiedlichen Betriebsbedingungen",
-        "GPU Memory Management bei größeren Tensoren und Batch-Größen",
-        "Integration von dbt, n8n und Streamlit in eine zusammenhängende Pipeline",
-      ]
+        "PyTorch CUDA und XGBoost GPU konfigurieren",
+        "Feature Engineering für Sensorzeitreihen",
+        "Cross-Dataset-Validierung",
+        "Integration von dbt, n8n und Streamlit",
+      ],
     },
-
     approach: {
       title: "Daten & Ansatz",
-      dataset: "NASA Turbofan Engine Degradation Simulation (CMAPSS) — 4 Sub-Datensätze (FD001–FD004)",
-      methodology: [
-        "Feature Engineering: Rolling Windows, Z-Scores und Sensor-Differenzen für 21 Signale",
-        "dbt-Pipeline: Staging → Intermediate → Marts mit Qualitätstests",
-        "GPU-Training: PyTorch Neural Networks und XGBoost GPU mit Memory Management",
-        "Multi-Modell-Vergleich: Baseline bis Deep Learning mit systematischer Evaluierung",
-        "n8n-Automatisierung: Pipeline-Orchestrierung von ETL bis Dashboard-Aktualisierung",
-        "Cross-Dataset-Validierung: FD001–FD004 für Robustheitsprüfung",
-      ],
-      tools: ["PyTorch (CUDA)", "XGBoost GPU", "CuPy", "dbt", "SQLite", "n8n", "Streamlit", "Docker"]
+      dataset: "NASA Turbofan Engine Degradation Simulation (CMAPSS) — FD001–FD004",
+      methodology: ["Rolling Windows", "dbt-Pipeline", "GPU-Training", "Multi-Modell-Vergleich", "n8n-Automatisierung"],
+      tools: ["PyTorch (CUDA)", "XGBoost GPU", "CuPy", "dbt", "SQLite", "n8n", "Streamlit", "Docker"],
     },
-
     solution: {
       title: "Lösung",
-      content: "GPU-beschleunigte ML-Pipeline mit n8n-Workflow-Automatisierung, Streamlit-Dashboard und dbt-Datenpipeline für Predictive Maintenance auf NASA CMAPSS-Daten.",
-      features: [
-        "GPU-Training: PyTorch NN und XGBoost GPU für beschleunigtes Modelltraining",
-        "Neuronale Netzarchitektur: 256→128→64→1 mit BatchNorm, Dropout und Early Stopping",
-        "Feature Engineering: 21 Sensorsignale → 84+ Features (Rolling Stats, Z-Scores, Diffs)",
-        "Multi-Modell-Vergleich: Lineare Regression, Random Forest, XGBoost GPU, PyTorch NN",
-        "n8n-Workflow: automatisierte ETL → dbt → ML-Training → Dashboard-Aktualisierung",
-        "Cross-Dataset-Validierung: FD001–FD004 mit verschiedenen Betriebsbedingungen",
-      ]
+      content:
+        "GPU-beschleunigte ML-Pipeline mit n8n-Workflow-Automatisierung, Streamlit-Dashboard und dbt-Datenpipeline.",
+      features: ["GPU-Training", "Neuronales Netz", "84+ Features", "Multi-Modell-Vergleich", "n8n-Workflow"],
     },
-
     results: {
       title: "Ergebnisse",
       metrics: [
-        { label: "Trainierte Modelle", value: "4", change: "inkl. PyTorch NN + XGBoost" },
-        { label: "Engineered Features", value: "84+", change: "aus 21 Sensoren" },
-        { label: "GPU-Speedup", value: "~5x", change: "gegenüber CPU-Baseline" },
-        { label: "RMSE (Cross-Dataset)", value: "<15", change: "FD001–FD004" },
+        { label: "Modelle", value: "4", change: "inkl. NN + XGB" },
+        { label: "Features", value: "84+", change: "aus Sensoren" },
+        { label: "GPU-Speedup", value: "~5x", change: "vs. CPU" },
       ],
-      insights: [
-        "GPU-Training mit PyTorch CUDA deutlich schneller als CPU-Baseline (gemessener Speedup ~5x)",
-        "Feature Engineering mit Rolling Windows und Z-Scores entscheidend für Modellperformance",
-        "Sensor 2, 11 und 15 zeigen die stärkste Korrelation mit der RUL-Degradation",
-        "XGBoost GPU erzielt niedrigere RMSE-Werte, PyTorch NN generalisiert besser auf neuen Datensätzen",
-        "Cross-Dataset-Validierung zeigt robuste Ergebnisse über unterschiedliche Betriebsbedingungen",
-      ]
+      insights: ["GPU-Training beschleunigt Experimente", "Feature Engineering ist entscheidend", "Cross-Dataset-Validierung zeigt Robustheit"],
     },
-
     learnings: {
       title: "Learnings & Reflexion",
-      positives: [
-        "GPU-Training mit PyTorch CUDA ist deutlich schneller als CPU-basierte Alternativen",
-        "GPU Memory Management erfordert sorgfältige Planung bei größeren Tensoren",
-        "n8n-Workflows vereinfachen die Automatisierung der Pipeline erheblich",
-        "Streamlit eignet sich gut für einfache Monitoring-Dashboards während der Entwicklung",
-        "Feature Engineering für Sensorzeitreihen ist aufwändig, aber entscheidend für die Performance",
-        "Cross-Dataset-Validierung zeigt, wie gut Modelle auf neuen Betriebsbedingungen generalisieren",
-      ],
-      improvements: [
-        "MLflow für Experiment-Tracking und Modellversionierung integrieren",
-        "Hyperparameter-Tuning mit Optuna für GPU-Modelle ergänzen",
-        "Streamlit-Dashboard um Modellvergleichs-Visualisierungen erweitern",
-        "Robustheit durch weitere Cross-Dataset-Szenarien prüfen",
-      ]
+      positives: ["GPU-Training praktisch umgesetzt", "n8n vereinfacht Orchestrierung", "Streamlit eignet sich für Monitoring"],
+      improvements: ["MLflow integrieren", "Optuna für GPU-Modelle ergänzen", "Dashboard erweitern"],
     },
-
     resources: {
       repo: "https://github.com/SW-oasen/turbine-maintenance-etl",
       notebook: "https://github.com/SW-oasen/turbine-maintenance-etl/blob/master/notebooks/turbine_maintenance_etl.ipynb",
     },
-
-    visuals: []
-  }
-  // Weitere Projekte 
+    visuals: [],
+  },
 };
 
 // ======== COMPONENTS ========
 function ProjectSection({ icon: Icon, title, children, className = "" }) {
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }} 
-      whileInView={{ opacity: 1, y: 0 }} 
-      viewport={{ once: true }}
-      className={`mb-12 ${className}`}
-    >
-      <div className="flex items-center gap-3 mb-6">
-        <Icon className="h-6 w-6 text-primary" />
-        <h2 className="text-2xl md:text-3xl font-bold">{title}</h2>
+    <section className={`mb-10 ${className}`}>
+      <div className="mb-4 flex items-center gap-3">
+        <div className="rounded-lg bg-slate-100 p-2">
+          <Icon className="h-5 w-5 text-slate-700" />
+        </div>
+        <h2 className="text-2xl font-bold text-slate-900">{title}</h2>
       </div>
       {children}
-    </motion.div>
+    </section>
   );
 }
 
 function MetricCard({ label, value, change }) {
   return (
-    <Card className="text-center">
-      <CardContent className="p-4">
-        <div className="text-2xl font-bold text-primary">{value}</div>
-        <div className="text-sm text-muted-foreground">{label}</div>
-        {change && (
-          <div className="text-xs text-green-600 mt-1">{change}</div>
-        )}
+    <Card className="border-slate-200 bg-white">
+      <CardContent className="p-5 text-center">
+        <div className="text-2xl font-bold text-slate-900">{value}</div>
+        <div className="mt-1 text-sm text-slate-600">{label}</div>
+        {change && <div className="mt-2 text-xs text-slate-500">{change}</div>}
       </CardContent>
     </Card>
   );
@@ -474,327 +472,235 @@ function MetricCard({ label, value, change }) {
 
 function VisualCard({ visual, onOpen }) {
   return (
-    <Card className="overflow-hidden">
-      <button
-        type="button"
-        onClick={() => onOpen(visual)}
-        className="block w-full text-left"
-        aria-label={`${visual.title} vergroessern`}
-      >
-      <div className="aspect-video bg-muted flex items-center justify-center p-4 transition-colors hover:bg-muted/80">
-        <img 
-          src={visual.src} 
-          alt={visual.title} 
-          className="w-full h-full object-contain"
-          onError={(e) => {
-            // Fallback to icon if image fails to load
-            e.target.style.display = 'none';
-            e.target.nextSibling.style.display = 'flex';
-          }}
-        />
-        <div className="hidden w-full h-full flex items-center justify-center">
-          <BarChart3 className="h-12 w-12 text-muted-foreground" />
-        </div>
-      </div>
-      </button>
-      <CardContent className="p-4">
-        <h4 className="font-semibold mb-2">{visual.title}</h4>
-        <p className="text-sm text-muted-foreground">{visual.description}</p>
-        <p className="text-xs text-muted-foreground mt-3">Klicken zum Vergrößern</p>
-      </CardContent>
-    </Card>
-  );
-}
-
-function ProjectCard({ project, onViewDetails }) {
-  return (
-    <Card className="h-full hover:shadow-lg transition-shadow">
-      {/* ...existing card content... */}
-      
-      <CardContent className="p-6 flex-1 flex flex-col">
-        <h3 className="text-xl font-semibold mb-3">
-          {project.title}
-        </h3>
-        
-        {/* ...existing content... */}
-        
-        <div className="mt-auto pt-4">
-          <Button 
-            onClick={() => {
-              // Set the hash to navigate to project detail
-              window.location.hash = `#project/${project.id}`;
+    <button onClick={() => onOpen(visual)} className="block w-full text-left" aria-label={`${visual.title} vergroessern`}>
+      <Card className="overflow-hidden border-slate-200 transition hover:shadow-md">
+        <div className="aspect-video bg-slate-100">
+          <img
+            src={visual.src}
+            alt={visual.title}
+            className="h-full w-full object-cover"
+            onError={(event) => {
+              event.currentTarget.style.display = "none";
             }}
-            className="w-full"
-          >
-            Details ansehen
-            <ChevronRight className="ml-2 h-4 w-4" />
-          </Button>
+          />
         </div>
-      </CardContent>
-    </Card>
+        <CardContent className="p-4">
+          <h4 className="font-semibold text-slate-900">{visual.title}</h4>
+          <p className="mt-1 text-sm text-slate-600">{visual.description}</p>
+          <p className="mt-2 text-xs text-slate-500">Klicken zum Vergrößern</p>
+        </CardContent>
+      </Card>
+    </button>
   );
 }
 
 export default function ProjectDetail({ projectId }) {
   const project = PROJECT_DATA[projectId];
   const [selectedVisual, setSelectedVisual] = React.useState(null);
-  
+
   const handleBack = () => {
-    window.location.hash = '';
+    window.location.hash = "";
   };
 
   if (!project) {
-    return <div>Projekt nicht gefunden</div>;
+    return (
+      <div className="mx-auto max-w-4xl px-4 py-16 text-center">
+        <h1 className="text-3xl font-bold">Projekt nicht gefunden</h1>
+        <Button onClick={handleBack} className="mt-6">
+          Zurück zur Übersicht
+        </Button>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
-      <div className="container mx-auto px-4 py-8">
-        <Button 
-          onClick={handleBack}
-          variant="outline" 
-          className="mb-6"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Zurück zur Übersicht
+    <div className="min-h-screen bg-slate-50 text-slate-900">
+      <main className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
+        <Button variant="ghost" onClick={handleBack} className="mb-8 gap-2">
+          <ArrowLeft className="h-4 w-4" /> Zurück zur Übersicht
         </Button>
-        
-        {/* Project Title */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }} 
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-16"
-        >
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
-            {project.title}
-          </h1>
-          <div className="flex justify-center gap-6 text-sm text-muted-foreground">
-            <span>Dauer: {project.duration}</span>
-            <span>•</span>
-            <span>{project.date}</span>
-          </div>
-        </motion.div>
 
-        {/* Problem */}
-        <ProjectSection icon={Target} title="Problem">
+        <motion.header initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
+          <div className="mb-3 flex flex-wrap gap-2">
+            <Badge>{project.status}</Badge>
+            <Badge variant="secondary">{project.date}</Badge>
+          </div>
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">{project.title}</h1>
+          <p className="mt-4 text-slate-600">Dauer: {project.duration}</p>
+        </motion.header>
+
+        <ProjectSection icon={Target} title={project.problem.title}>
           <Card>
             <CardContent className="p-6">
-              <p className="text-lg mb-6">{project.problem.content}</p>
-              <div>
-                <h4 className="font-semibold mb-3">Hauptherausforderungen:</h4>
-                <ul className="space-y-2">
-                  {project.problem.challenges.map((challenge, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <span className="w-2 h-2 rounded-full bg-red-500 mt-2 flex-shrink-0"></span>
-                      <span>{challenge}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <p className="leading-7 text-slate-700">{project.problem.content}</p>
+              <h4 className="mt-6 font-semibold">Hauptherausforderungen:</h4>
+              <ul className="mt-3 space-y-2 text-sm text-slate-700">
+                {project.problem.challenges.map((challenge, i) => (
+                  <li key={i} className="flex gap-2">
+                    <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-slate-500" />
+                    <span>{challenge}</span>
+                  </li>
+                ))}
+              </ul>
             </CardContent>
           </Card>
         </ProjectSection>
 
-        {/* Approach */}
-        <ProjectSection icon={Database} title="Daten & Ansatz">
-          <div className="grid md:grid-cols-2 gap-6">
-            <Card>
+        <ProjectSection icon={Database} title={project.approach.title}>
+          <div className="grid gap-6 lg:grid-cols-3">
+            <Card className="lg:col-span-1">
               <CardHeader>
                 <CardTitle>Dataset</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="font-medium">{project.approach.dataset}</p>
+                <p className="text-sm leading-6 text-slate-700">{project.approach.dataset}</p>
               </CardContent>
             </Card>
-            <Card>
+            <Card className="lg:col-span-2">
               <CardHeader>
-                <CardTitle>Tools & Technologien</CardTitle>
+                <CardTitle>Methodisches Vorgehen</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="flex flex-wrap gap-2">
-                  {project.approach.tools.map((tool, i) => (
-                    <Badge key={i} variant="secondary">{tool}</Badge>
+                <ol className="space-y-3 text-sm text-slate-700">
+                  {project.approach.methodology.map((step, i) => (
+                    <li key={i} className="flex gap-3">
+                      <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-slate-900 text-xs text-white">
+                        {i + 1}
+                      </span>
+                      <span>{step}</span>
+                    </li>
                   ))}
-                </div>
+                </ol>
               </CardContent>
             </Card>
           </div>
-          <Card className="mt-6">
-            <CardContent className="p-6">
-              <h4 className="font-semibold mb-3">Methodisches Vorgehen:</h4>
-              <ol className="space-y-2">
-                {project.approach.methodology.map((step, i) => (
-                  <li key={i} className="flex items-start gap-3">
-                    <span className="bg-primary text-primary-foreground w-6 h-6 rounded-full flex items-center justify-center text-sm font-medium flex-shrink-0">
-                      {i + 1}
-                    </span>
-                    <span>{step}</span>
-                  </li>
-                ))}
-              </ol>
-            </CardContent>
-          </Card>
+          <div className="mt-6 flex flex-wrap gap-2">
+            {project.approach.tools.map((tool, i) => (
+              <Badge key={i} variant="secondary">
+                {tool}
+              </Badge>
+            ))}
+          </div>
         </ProjectSection>
 
-        {/* Solution */}
-        <ProjectSection icon={CheckCircle} title="Lösung">
+        <ProjectSection icon={Code2} title={project.solution.title}>
           <Card>
             <CardContent className="p-6">
-              <p className="text-lg mb-6">{project.solution.content}</p>
-              <div>
-                <h4 className="font-semibold mb-3">Implementierte Features:</h4>
-                <div className="grid md:grid-cols-2 gap-3">
-                  {project.solution.features.map((feature, i) => (
-                    <div key={i} className="flex items-start gap-2">
-                      <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                      <span>{feature}</span>
-                    </div>
-                  ))}
-                </div>
+              <p className="leading-7 text-slate-700">{project.solution.content}</p>
+              <div className="mt-6 grid gap-3 md:grid-cols-2">
+                {project.solution.features.map((feature, i) => (
+                  <div key={i} className="rounded-lg border border-slate-200 bg-white p-4 text-sm text-slate-700">
+                    {feature}
+                  </div>
+                ))}
               </div>
             </CardContent>
           </Card>
         </ProjectSection>
 
-        {/* Results */}
-        <ProjectSection icon={BarChart3} title="Ergebnisse">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <ProjectSection icon={BarChart3} title={project.results.title}>
+          <div className="mb-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {project.results.metrics.map((metric, i) => (
               <MetricCard key={i} {...metric} />
             ))}
           </div>
           <Card>
-            <CardContent className="p-6">
-              <h4 className="font-semibold mb-4">Wichtigste Erkenntnisse:</h4>
-              <div className="space-y-3">
+            <CardHeader>
+              <CardTitle>Zentrale Erkenntnisse</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-3 text-sm text-slate-700">
                 {project.results.insights.map((insight, i) => (
-                  <div key={i} className="flex items-start gap-2">
-                    <BarChart3 className="h-5 w-5 text-primary mt-0.5 flex-shrink-0" />
+                  <li key={i} className="flex gap-2">
+                    <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-slate-500" />
                     <span>{insight}</span>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </CardContent>
           </Card>
         </ProjectSection>
 
-        {/* Visuals */}
         {project.visuals && project.visuals.length > 0 && (
-        <ProjectSection icon={BarChart3} title="Visualisierungen">
-          <div className="grid md:grid-cols-3 gap-6">
-            {project.visuals.map((visual, i) => (
-              <VisualCard key={i} visual={visual} onOpen={setSelectedVisual} />
-            ))}
-          </div>
-        </ProjectSection>
-        )}
-
-        {/* Learnings */}
-        <ProjectSection icon={BookOpen} title="Learnings & Reflexion">
-          <div className="grid md:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-green-600">Was gut lief</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {project.learnings.positives.map((positive, i) => (
-                  <div key={i} className="flex items-start gap-2 mb-3">
-                    <CheckCircle className="h-5 w-5 text-green-500 mt-0.5 flex-shrink-0" />
-                    <span>{positive}</span>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-orange-600">Wie würd' ich's beim nächsten Mal besser machen</CardTitle>
-              </CardHeader>
-              <CardContent>
-                {project.learnings.improvements.map((improvement, i) => (
-                  <div key={i} className="flex items-start gap-2 mb-3">
-                    <span className="w-2 h-2 rounded-full bg-orange-500 mt-2 flex-shrink-0"></span>
-                    <span>{improvement}</span>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-          </div>
-        </ProjectSection>
-
-        {selectedVisual && (
-          <div
-            className="fixed inset-0 z-50 bg-black/70 px-4 py-6"
-            onClick={() => setSelectedVisual(null)}
-            role="dialog"
-            aria-modal="true"
-            aria-label={selectedVisual.title}
-          >
-            <div className="mx-auto flex h-full max-w-6xl items-center justify-center">
-              <div
-                className="w-full rounded-lg bg-background shadow-2xl"
-                onClick={(event) => event.stopPropagation()}
-              >
-                <div className="flex items-center justify-between border-b px-4 py-3">
-                  <div>
-                    <h3 className="font-semibold">{selectedVisual.title}</h3>
-                    <p className="text-sm text-muted-foreground">{selectedVisual.description}</p>
-                  </div>
-                  <Button variant="outline" onClick={() => setSelectedVisual(null)}>
-                    Schliessen
-                  </Button>
-                </div>
-                <div className="bg-muted p-4 md:p-6">
-                  <div className="flex max-h-[80vh] min-h-[320px] items-center justify-center overflow-auto rounded-md bg-muted">
-                    <img
-                      src={selectedVisual.src}
-                      alt={selectedVisual.title}
-                      className="max-h-[72vh] w-full object-contain"
-                    />
-                  </div>
-                </div>
-              </div>
+          <ProjectSection icon={BarChart3} title="Visualisierungen">
+            <div className="grid gap-6 md:grid-cols-2">
+              {project.visuals.map((visual, i) => (
+                <VisualCard key={i} visual={visual} onOpen={setSelectedVisual} />
+              ))}
             </div>
-          </div>
+          </ProjectSection>
         )}
 
-        {/* Resources */}
-        <ProjectSection icon={Code2} title="Code & Ressourcen">
-          <div className="flex flex-wrap gap-4">
-            {project.resources.repo && (
-            <Button asChild>
-              <a href={project.resources.repo} target="_blank" rel="noreferrer">
-                <Github className="h-4 w-4 mr-2" />
-                GitHub Repository
-              </a>
-            </Button>
-            )}
-            {project.resources.notebook && (
-            <Button variant="outline" asChild>
-              <a href={project.resources.notebook} target="_blank" rel="noreferrer">
-                <BookOpen className="h-4 w-4 mr-2" />
-                Jupyter Notebook
-              </a>
-            </Button>
-            )}
-            {project.resources.report && (
-            <Button variant="outline" asChild>
-              <a href={project.resources.report} target="_blank" rel="noreferrer">
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Abschlussbericht
-              </a>
-            </Button>
-            )}
-            {project.resources.presentation && (
-            <Button variant="outline" asChild>
-              <a href={project.resources.presentation} target="_blank" rel="noreferrer">
-                <ExternalLink className="h-4 w-4 mr-2" />
-                Präsentation (PDF)
-              </a>
-            </Button>
-            )}
+        <ProjectSection icon={BookOpen} title={project.learnings.title}>
+          <div className="grid gap-6 md:grid-cols-2">
+            <Card>
+              <CardHeader>
+                <CardTitle>Was gut funktioniert hat</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm text-slate-700">
+                  {project.learnings.positives.map((item, i) => (
+                    <li key={i} className="flex gap-2">
+                      <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-slate-500" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardHeader>
+                <CardTitle>Nächste Verbesserungen</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2 text-sm text-slate-700">
+                  {project.learnings.improvements.map((item, i) => (
+                    <li key={i} className="flex gap-2">
+                      <CheckCircle className="mt-0.5 h-4 w-4 shrink-0 text-slate-500" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
           </div>
         </ProjectSection>
-      </div>
+
+        <div className="mb-12 flex flex-wrap gap-3">
+          {project.resources.repo && (
+            <Button asChild className="gap-2">
+              <a href={project.resources.repo} target="_blank" rel="noreferrer">
+                <Github className="h-4 w-4" /> GitHub Repository
+              </a>
+            </Button>
+          )}
+          {Object.entries(project.resources)
+            .filter(([key]) => key !== "repo")
+            .map(([key, value]) => (
+              <Button key={key} asChild variant="outline" className="gap-2">
+                <a href={value} target="_blank" rel="noreferrer">
+                  <ExternalLink className="h-4 w-4" /> {key}
+                </a>
+              </Button>
+            ))}
+        </div>
+      </main>
+
+      {selectedVisual && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          onClick={() => setSelectedVisual(null)}
+        >
+          <div className="max-h-[90vh] max-w-5xl overflow-auto rounded-xl bg-white p-4" onClick={(event) => event.stopPropagation()}>
+            <img src={selectedVisual.src} alt={selectedVisual.title} className="max-h-[75vh] w-full object-contain" />
+            <h3 className="mt-4 text-lg font-semibold">{selectedVisual.title}</h3>
+            <p className="mt-1 text-sm text-slate-600">{selectedVisual.description}</p>
+            <Button className="mt-4" onClick={() => setSelectedVisual(null)}>
+              Schließen
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
