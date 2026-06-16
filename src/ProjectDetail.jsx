@@ -84,11 +84,10 @@ const PROJECT_DATA = {
       title: "Ergebnisse",
       metrics: [
         { label: "Hauptmodell", value: "XGBoost", change: "Preisvorhersage" },
-        { label: "Train-Test-Split", value: "Zeit(Datum)", change: "2026-01-01" },
-        { label: "Bewertung", value: "MAE - RMSE - R²", change: "15.27 - 24.07 - 0.82" },
+        { label: "Train-Test-Split", value: "2026-01-01", change: "Zeit(Datum)" },
+        { label: "Bewertung", value: "15 - 24 - 0.82", change: "MAE - RMSE - R²" },
         { label: "Prognosehorizont", value: "24h", change: "stündlich" },
         { label: "Datenquellen", value: "3+", change: "SMARD, Open-Meteo, MaStR" },
-        { label: "App", value: "Streamlit", change: "Vorhersage + Analyse" },
       ],
       insights: [
         "Residuallast ist fachlich zentral, weil sie die verbleibende Nachfrage nach wetterabhängiger Erzeugung beschreibt",
@@ -203,11 +202,9 @@ const PROJECT_DATA = {
       title: "Ergebnisse",
       metrics: [
         { label: "Beste Modelle", value: "XGBoost + LightGBM", change: "Tuned mit Bayesian Optimization" },
-        { label: "Konservative Modelle", value: "Asymetrische Verlustfunktionen", change: "<5% Unterschätzung für Produktionspuffer" },
+        { label: "Konservative Modelle", value: "bis 5% Unterschätzung", change: "Asymetrische Verlustfunktionen" },
         { label: "Prognosehorizont", value: "24h", change: "stündlich" },
-        { label: "Evaluierung", value: "Time-CV", change: "5 Folds" },
-        { label: "Wichtigkeit", value: "Features", change: "vor Modellwahl" },
-        { label: "Interaktive App", value: "Notebook + Streamlit", change: "Vorhersage + Analyse" },
+        { label: "Visualisierung", value: "Notebook + Streamlit", change: "Vergleich Prognose vs. Realität" },
       ],
       insights: [
         "Baseline-Modelle mit saisonalen Mittelwerten und gleitenden Durchschnitten liefern bereits eine solide Prognose",
