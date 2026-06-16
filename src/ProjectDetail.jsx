@@ -465,8 +465,8 @@ function MetricCard({ label, value, change }) {
   return (
     <Card className="border-slate-200 bg-white">
       <CardContent className="p-5 text-center">
-        <div className="text-2xl font-bold text-slate-900">{value}</div>
         <div className="mt-1 text-sm text-slate-600">{label}</div>
+        <div className="text-2xl font-bold text-slate-900">{value}</div>
         {change && <div className="mt-2 text-xs text-slate-500">{change}</div>}
       </CardContent>
     </Card>
