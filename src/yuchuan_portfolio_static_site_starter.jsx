@@ -295,7 +295,7 @@ export default function Portfolio() {
 
       <main>
         <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="max-w-5xl">
+          <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="max-w-6xl">
             <p className="mb-3 text-sm font-medium text-slate-500">{PROFILE.location}</p>
             <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">{PROFILE.title}</h1>
             <p className="mt-4 text-xl text-slate-600">{PROFILE.subtitle}</p>
