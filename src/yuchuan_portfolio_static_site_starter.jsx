@@ -22,12 +22,12 @@ const PROFILE = {
 const PROJECTS = [
   {
     id: "energy-price-forecast",
-    title: "Strompreisprognose Deutschland — Day-Ahead Forecasting",
+    title: "Strompreis-Prognose Deutschland",
     date: "2026-06",
     summary:
       "Vorhersage stündlicher Day-Ahead-Strompreise für Deutschland auf Basis von Nachfrage, Erzeugung, Wetterdaten und Kalendermerkmalen.",
     highlights: [
-      "End-to-End-Pipeline von SMARD/Open-Meteo bis zur operativen Tagesprognose",
+      "End-to-End-Pipeline bis zur operativen Tagesprognose",
       "XGBoost-Modell für stündliche Strompreisprognosen",
       "Integration von Last-, Wind- und PV-Prognosen als Eingangsgrößen",
       "Streamlit-App mit Tomorrow Forecast, historischer Analyse und Residuallast-Visualisierung",
@@ -39,7 +39,7 @@ const PROJECTS = [
   },
   {
     id: "energy-demand-forecast",
-    title: "Stromverbrauchsprognose — Zeitreihenanalyse",
+    title: "Stromverbrauchs-Prognose Deutschland",
     date: "2026-05",
     summary:
       "Kurzfristige Strombedarfsprognose anhand realer Verbrauchsdaten von SMARD und Wetterdaten.",
@@ -63,8 +63,8 @@ const PROJECTS = [
     highlights: [
       "ETL-Pipeline mit SQLite-Datenhaltung",
       "RUL-Berechnung für FD001–FD004 ohne Data Leakage",
-      "Feature Engineering mit Sensor-Trendfeatures",
-      "Bayesian Optimization für Hyperparameter-Tuning",
+      "Feature Engineering mit Sensor-Trendfeatures und RUL Capping",
+      "Streamlit Dashboard mit Performance, Prognose und Sensortrends",
     ],
     stack: [
       "Python",
@@ -96,25 +96,15 @@ const PROJECTS = [
     live: null,
     video: null,
   },
-  {
-    id: "airbnb-berlin",
-    title: "Airbnb Berlin — Explorative Datenanalyse",
-    date: "2025-08",
-    summary:
-      "EDA der Airbnb-Listings in Berlin mit Preisanalysen, geografischen Visualisierungen und ML-Modellen.",
-    highlights: [
-      "Datenbereinigung und Feature Engineering",
-      "Preisanalyse nach Bezirk und Unterkunftstyp",
-      "AutoML-Preisvorhersage mit FLAML und H2O",
-    ],
-    stack: ["Python", "Pandas", "Jupyter", "Power BI"],
-    repo: "https://github.com/SW-oasen/airbnb-eda-berlin",
-    live: null,
-    video: null,
-  },
 ];
 
 const LEARNING = [
+  {
+    date: "2026-06",
+    title: "Überarbeitung bestehender Turbine-Maintenance-Projekt mit Fokus auf ETL-Pipeline und Feature Engineering",
+    details:
+      "Altes Projekt überarbeitet mit Fokus auf saubere ETL-Pipeline, Feature Engineering (Sensor-Trendfeatures, RUL Capping) und Streamlit-Dashboard-Visualisierung.",
+  },
   {
     date: "2026-06",
     title: "Strompreisprognose mit operativer ML-Pipeline",
@@ -146,16 +136,10 @@ const LEARNING = [
       "Erfolgreiche Abschlussprüfung Business Intelligence / Power BI - Projekt: Flugverspätungsanalyse.",
   },
   {
-    date: "2025-10",
-    title: "MLOps-Pipeline mit n8n und Streamlit Dashboard",
+    date: "2025-11",
+    title: "Anfang der Ausbildung zum Data/ML Engineer bei Stackfuel",
     details:
-      "n8n-Workflow-Automatisierung, Streamlit-Dashboard und Docker für das Turbinen-Maintenance-Projekt implementiert.",
-  },
-  {
-    date: "2025-10",
-    title: "GPU-Setup für PyTorch",
-    details:
-      "CUDA-Installation für schnellere Trainingsläufe — GPU-Training deutlich schneller als CPU-Baseline.",
+      "Die Ausbildung zum Data/ML Engineer bei Stackfuel begonnen.",
   },
   {
     date: "2025-09",
@@ -384,12 +368,12 @@ export default function Portfolio() {
                 </div>
                 <h3 className="mb-4 mt-6 text-lg font-semibold">Aktuell vertiefend</h3>
                 <div className="flex flex-wrap gap-2">
-                  {["MLOps", "Docker", "Energieanalytik", "GenAI", "Agentic AI"].map((item) => (
+                  {["MLOps", "Docker", "GenAI", "Agentic AI"].map((item) => (
                     <Badge key={item}>{item}</Badge>
                   ))}
                 </div>
                 <p className="mt-6 text-sm leading-6 text-slate-600">
-                  Fokus: saubere Datenpipelines, reproduzierbare Experimente, klare Visualisierung und ehrliche Dokumentation.
+                  Fokus: saubere Datenpipelines, reproduzierbare Experimente, klare Visualisierung und nachvollziehbare Dokumentation.
                 </p>
               </CardContent>
             </Card>

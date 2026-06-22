@@ -23,7 +23,7 @@ const getImagePath = (path) => {
 // ======== PROJECT DATA ========
 const PROJECT_DATA = {
   "energy-price-forecast": {
-    title: "Strompreisprognose Deutschland — Day-Ahead Forecasting",
+    title: "Strompreis-Prognose Deutschland — Day-Ahead Forecasting",
     date: "2026-06",
     duration: "3 Wochen",
     status: "Abegeschlossen",
@@ -83,10 +83,12 @@ const PROJECT_DATA = {
     results: {
       title: "Ergebnisse",
       metrics: [
-        { label: "Hauptmodell", value: "XGBoost", change: "Preisvorhersage" },
         { label: "Train-Test-Split", value: "2026-01-01", change: "Zeit(Datum)" },
-        { label: "Bewertung", value: "15 - 24 - 0.82", change: "MAE - RMSE - R²" },
         { label: "Prognosehorizont", value: "24h", change: "stündlich" },
+        { label: "Hauptmodell", value: "XGBoost", change: "Preisvorhersage" },
+        { label: "MAE", value: "15.27", change: "EUR/MWh" },
+        { label: "RMSE", value: "24.07", change: "EUR/MWh" },
+        { label: "R²", value: "0.82", change: "Testbewertung" },
         { label: "Datenquellen", value: "3+", change: "SMARD, Open-Meteo, MaStR" },
       ],
       insights: [
@@ -117,8 +119,6 @@ const PROJECT_DATA = {
     resources: {
       repo: "https://github.com/SW-oasen/electricity_price_forecast",
       presentation: "/yuchuan-portfolio/Strompreis_Vorhersagen.pdf",
-      readme: "https://github.com/SW-oasen/electricity_price_forecast/blob/main/README.md",
-      context: "https://github.com/SW-oasen/electricity_price_forecast/blob/main/documents/PROJECT_CONTEXT.md",
     },
     visuals: [
       {
@@ -156,7 +156,7 @@ const PROJECT_DATA = {
   },
 
   "energy-demand-forecast": {
-    title: "Stromverbrauchsprognose — Zeitreihenanalyse",
+    title: "Stromverbrauchs-Prognose Deutschland — Day-Ahead Forecasting",
     date: "2026-05",
     duration: "3 Wochen",
     status: "Abgeschlossen",
@@ -267,91 +267,6 @@ const PROJECT_DATA = {
     ],
   },
 
-  "airbnb-berlin": {
-    title: "Berlin Airbnb Marktanalyse 2025 — Business Intelligence & Compliance",
-    date: "2025-11, erneuert in 2026-02",
-    duration: "3 Wochen",
-    status: "Abgeschlossen (v2: Revenue Modelling & Regulatory Analysis)",
-    problem: {
-      title: "Problem",
-      content:
-        "Der Berliner Kurzzeitvermietungsmarkt unterliegt dem Zweckentfremungsverbot. Ziel war eine datenbasierte Analyse aktiver Listings, Umsatzpotenziale und Compliance-Muster.",
-      challenges: [
-        "Viele Listings sind Ghost-Einträge ohne echte Marktaktivität",
-        "Berliner Lizenz-Compliance nur oberflächlich prüfbar",
-        "Revenue-Schätzungen benötigen transparente Annahmen",
-        "Power-BI-Import mit deutschen Trennzeichenstandards",
-      ],
-    },
-    approach: {
-      title: "Daten & Ansatz",
-      dataset: "Inside Airbnb Berlin Dataset Sept. 2025 (~13k Listings) → Active Market (~2.4k)",
-      methodology: [
-        "Active-Market-Filtering über Reviews pro Monat",
-        "Revenue Proxy Modelling mit Upper-/Lower-Bounds",
-        "Lizenz-Klassifizierung per Regex",
-        "Compliance-Performance-Analyse",
-        "Power-BI-Export mit deutscher Lokalisierung",
-      ],
-      tools: ["Python", "Pandas", "Seaborn", "Regex", "Jupyter", "Power BI"],
-    },
-    solution: {
-      title: "Lösung",
-      content:
-        "Business-Intelligence-Pipeline mit Revenue Proxy Modelling und Berliner Compliance-Analyse.",
-      features: [
-        "Active-Market-Definition",
-        "Lizenz-Kategorisierung",
-        "Power-BI-Dashboard",
-        "Geografische Revenue Heatmaps",
-        "Host-Profiling",
-      ],
-    },
-    results: {
-      title: "Ergebnisse",
-      metrics: [
-        { label: "Active Listings", value: "2.395", change: "real market" },
-        { label: "Median Revenue", value: "€1.074", change: "active" },
-        { label: "Top 5%", value: "€6.000+", change: "Performance" },
-        { label: "Compliance", value: "44%", change: "Valid + Exempt" },
-      ],
-      insights: [
-        "Wenige professionelle Hosts dominieren einen großen Umsatzanteil",
-        "Mitte und Kreuzberg treten als Revenue-Cluster hervor",
-        "Active-Market-Filtering verändert die Marktperspektive deutlich",
-      ],
-    },
-    learnings: {
-      title: "Learnings & Reflexion",
-      positives: ["Business-Intelligence-Fokus statt reiner EDA", "Power-BI-Workflow verbessert", "Compliance-Analyse strukturiert umgesetzt"],
-      improvements: ["Zeitreihenvergleich ergänzen", "Externe Eventdaten einbinden", "DAX-Measures erweitern"],
-    },
-    resources: {
-      repo: "https://github.com/SW-oasen/airbnb-eda-berlin",
-      notebook: "https://github.com/SW-oasen/airbnb-eda-berlin/blob/main/notebooks/Airbnb_EDA_Berlin.ipynb",
-    },
-    visuals: [
-      {
-        title: "Umsatzverteilung nach Unterkunftsart",
-        type: "violin",
-        src: getImagePath("airbnb-eda-berlin/violinplot-revenue-property-type.png"),
-        description: "Umsatzverteilung nach Unterkunftsart.",
-      },
-      {
-        title: "Lizenz-Compliance vs. Performance",
-        type: "boxplot",
-        src: getImagePath("airbnb-eda-berlin/boxplot-revenue-license-status.png"),
-        description: "Vergleich der Umsatzmetriken nach Lizenzstatus.",
-      },
-      {
-        title: "Geografische Heatmap des aktiven Markts",
-        type: "heatmap",
-        src: getImagePath("airbnb-eda-berlin/geo-heatmap-revenue.png"),
-        description: "Geografische Umsatz-Cluster in Berlin.",
-      },
-    ],
-  },
-
   "telco-customer-churn": {
     title: "Telco Customer Churn — Classification",
     date: "2025-10",
@@ -396,7 +311,7 @@ const PROJECT_DATA = {
   "turbine-maintenance": {
     title: "Turbofan Predictive Maintenance — RUL Prediction",
     date: "2026-06",
-    duration: "Überarbeitung eines alten Projekts",
+    duration: "Eine Woche (Überarbeitung eines alten Projekts)",
     status: "Abgeschlossen",
     problem: {
       title: "Problem",
@@ -415,7 +330,7 @@ const PROJECT_DATA = {
       dataset:
         "NASA CMAPSS Turbofan Engine Degradation Simulation Dataset — FD001, FD002, FD003 und FD004.",
       methodology: [
-        "Entfernung unnötiger Komplexität aus dem alten KI-generierten Projekt",
+        "Entfernung unnötiger Komplexität aus dem alten Projekt",
         "Aufbau einer klaren ETL-Pipeline mit SQLite-Datenbank",
         "Berechnung der RUL-Werte pro Engine und Zyklus",
         "Feature Engineering mit Sensorwerten, Operational Settings und Trendfeatures",
@@ -451,10 +366,10 @@ const PROJECT_DATA = {
     results: {
       title: "Ergebnisse",
       metrics: [
-        { label: "Bestes Modell", value: "Tuned XGBoost", change: "Bayesian Optimization" },
-        { label: "MAE", value: "18.07", change: "Zyklen" },
-        { label: "RMSE", value: "25.45", change: "Zyklen" },
-        { label: "R²", value: "0.75", change: "Testbewertung" },
+        { label: "Bestes Modell", value: "XGBoost", change: "Tuned + RUL cap 150" },
+        { label: "MAE", value: "18.30", change: "Zyklen" },
+        { label: "RMSE", value: "24.64", change: "Zyklen" },
+        { label: "R²", value: "0.77", change: "Testbewertung" },
         { label: "Datensätze", value: "FD001–FD004", change: "CMAPSS" },
       ],
       insights: [
@@ -468,23 +383,50 @@ const PROJECT_DATA = {
     learnings: {
       title: "Learnings & Reflexion",
       positives: [
-        "Data Leakage ist bei Predictive-Maintenance-Zeitreihen besonders kritisch",
-        "Feature Engineering hatte einen größeren Einfluss als die Modellwahl",
+        "ETL mit SQLite ermöglichte eine klare Trennung von Datenimport, Feature Engineering und Modelltraining",
+        "Feature Engineering wie Sensor-Trendfeatures und RUL-Capping hatten einen größeren Einfluss als die Modellwahl",
+        "Rolling Features und Setting-Kombinationen hatten keine deutliche Verbesserung gebracht",
         "Bayesian Optimization brachte nach gutem Feature Engineering zusätzliche, aber kleinere Verbesserungen",
         "Gradient-Boosting-Modelle waren für diesen Datensatz besonders robust",
+        "Streamlit-Dashboard brachte wichtige Einblicke in die Prognosequalität und Sensorverläufe",
       ],
       improvements: [
-        "SHAP-basierte Modellinterpretation ergänzen",
-        "Fehleranalyse getrennt nach FD001–FD004 durchführen",
-        "Cross-Dataset-Generalization testen",
-        "Inference-API oder kleines Dashboard als nächsten Schritt vorbereiten",
+        "Echtzeit-Integration in industrielle Wartungssysteme vorbereiten",
+        "Erweiterung auf weitere Sensordaten und Anwendungsbereiche",
+        "Unsicherheitsabschätzung der RUL-Prognosen ergänzen",
       ],
     },
     resources: {
       repo: "https://github.com/SW-oasen/turbine-predictive-maintenance",
-      readme: "https://github.com/SW-oasen/turbine-predictive-maintenance/blob/main/README.md",
+      presentation: "/yuchuan-portfolio/Turbofan-predictive-maintenance.pdf",
     },
-    visuals: [],
+    visuals: [
+      {
+        title: "Vergleich der Modell-Performance",
+        type: "Line",
+        src: getImagePath("turbine-maintenance/model_performance_comparison.png"),
+        description: "Vergleich der LightGBM und XGBoost Modell-Performance auf verschiedenen ML Stufen.",
+      },
+      {
+        title: "RUL Capping Effekt",
+        type: "boxplot",
+        src: getImagePath("turbine-maintenance/rul_capping_effect.png"),
+        description: "Vergleich der RUL Capping Effekte auf die Modell-Performance.",
+      },
+      {
+        title: "Tatsächliche vs. prognostizierte RUL",
+        type: "heatmap",
+        src: getImagePath("turbine-maintenance/true_prediction_comparison.png"),
+        description: "Vergleich der tatsächlichen und prognostizierten RUL Werte.",
+      },
+      {
+        title: "Entwicklung wichtiger Sensorwerte über die Zyklen",
+        type: "line",
+        src: getImagePath("turbine-maintenance/sensor_trends.png"),
+        description: "Verlauf wichtiger Sensorwerte über die Betriebszyklen.",
+      }
+    ],
+
   },
 };
 
@@ -519,11 +461,11 @@ function VisualCard({ visual, onOpen }) {
   return (
     <button onClick={() => onOpen(visual)} className="block w-full text-left" aria-label={`${visual.title} vergroessern`}>
       <Card className="overflow-hidden border-slate-200 transition hover:shadow-md">
-        <div className="aspect-video bg-slate-100">
+        <div className="aspect-[16/9] bg-white flex items-center justify-center rounded-t-xl overflow-hidden">
           <img
             src={visual.src}
             alt={visual.title}
-            className="h-full w-full object-cover"
+            className="w-full h-full object-contain p-3"
             onError={(event) => {
               event.currentTarget.style.display = "none";
             }}
