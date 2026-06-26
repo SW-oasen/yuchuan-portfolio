@@ -22,6 +22,130 @@ const getImagePath = (path) => {
 
 // ======== PROJECT DATA ========
 const PROJECT_DATA = {
+  "ai-rag-local": {
+    title: "Lokales AI-RAG-System — Dokumentensuche mit lokalen LLMs",
+    date: "2026-06",
+    duration: "2 Wochen",
+    status: "Abgeschlossen",
+    problem: {
+      title: "Problem",
+      content:
+        "Viele KI-gestützte Dokumentensysteme nutzen Cloud-APIs und übertragen dabei potenziell vertrauliche Inhalte an externe Dienste. Ziel des Projekts ist ein lokal ausführbares RAG-System, mit dem eigene Dokumente durchsucht, analysiert und über natürliche Sprache abgefragt werden können.",
+      challenges: [
+        "Lokale Verarbeitung ohne externe LLM- oder Cloud-API",
+        "Dokumente in unterschiedlichen Formaten zuverlässig einlesen",
+        "OCR für gescannte Dokumente und Bilder integrieren",
+        "Relevante Textstellen semantisch finden und dem LLM als Kontext bereitstellen",
+        "Antworten möglichst nachvollziehbar auf Basis der gefundenen Dokumentinhalte erzeugen",
+        "Weboberfläche für Upload, Retrieval, OCR und Zusammenfassung bereitstellen",
+      ],
+    },
+    approach: {
+      title: "Daten & Ansatz",
+      dataset:
+        "Eigene PDF-, Text- und Bilddokumente, die lokal verarbeitet, extrahiert, in Chunks aufgeteilt und als Embeddings in einer Vektordatenbank gespeichert werden.",
+      methodology: [
+        "Dokument-Upload über eine lokale Webanwendung",
+        "Textextraktion aus PDF- und Textdateien",
+        "OCR-Verarbeitung für gescannte Dokumente und Bilder",
+        "Chunking der extrahierten Inhalte für semantische Suche",
+        "Embedding-Erzeugung und Speicherung in ChromaDB",
+        "Retrieval relevanter Dokumentabschnitte zu Benutzerfragen",
+        "Antwortgenerierung mit lokalen LLMs über Ollama",
+        "Web-UI für Dokumentenanalyse, Fragen, OCR und Zusammenfassungen",
+      ],
+      tools: [
+        "Python",
+        "Ollama",
+        "ChromaDB",
+        "Sentence Transformers",
+        "Tesseract OCR",
+        "Streamlit",
+        "Pandas",
+      ],
+    },
+    solution: {
+      title: "Lösung",
+      content:
+        "Das Projekt implementiert eine lokale Retrieval-Augmented-Generation-Anwendung. Dokumente werden eingelesen, bei Bedarf per OCR verarbeitet, in kleinere Textabschnitte zerlegt und in einer Vektordatenbank gespeichert. Bei einer Nutzerfrage sucht das System passende Dokumentstellen und nutzt diese als Kontext für ein lokales Sprachmodell.",
+      features: [
+        "Lokale RAG-Pipeline für eigene Dokumente",
+        "Dokument-Upload über Weboberfläche",
+        "Textextraktion aus PDF- und Textdateien",
+        "OCR-Unterstützung für Bilder und gescannte Dokumente",
+        "Semantische Suche mit Embeddings und ChromaDB",
+        "Lokale Antwortgenerierung mit Ollama-Modellen",
+        "Zusammenfassung und Analyse von Dokumentinhalten",
+        "Modulare Struktur für zukünftige Erweiterungen von Modellen, Retrieval und UI",
+      ],
+    },
+    results: {
+      title: "Ergebnisse",
+      metrics: [
+        { label: "Anwendungstyp", value: "RAG", change: "lokal" },
+        { label: "LLM-Ausführung", value: "Ollama", change: "ohne Cloud-API" },
+        { label: "Vektordatenbank", value: "ChromaDB", change: "semantische Suche" },
+        { label: "OCR", value: "Tesseract", change: "Scans & Bilder" },
+        { label: "Interface", value: "Streamlit", change: "Web-UI" },
+        { label: "Dokumenttypen", value: "PDF/Bild/Text", change: "lokale Analyse" },
+      ],
+      insights: [
+        "Lokale LLMs ermöglichen datenschutzfreundliche Dokumentenanalyse ohne externe API-Abhängigkeit",
+        "Die Qualität der Antworten hängt stark von Chunking, Embeddings und der Relevanz der gefundenen Textstellen ab",
+        "OCR erweitert den praktischen Nutzen deutlich, ist aber bei komplexen Layouts oder schlechter Scanqualität begrenzt",
+        "Für einfache Dokumentenfragen reichen kleinere lokale Modelle oft aus",
+        "Eine Weboberfläche macht das technische RAG-System deutlich greifbarer und portfoliofähiger",
+      ],
+    },
+    learnings: {
+      title: "Learnings & Reflexion",
+      positives: [
+        "RAG-Systeme lassen sich mit lokalen Komponenten praktikabel als vollständige Anwendung umsetzen",
+        "Ollama vereinfacht die Integration lokaler LLMs in eigene Python-Anwendungen",
+        "ChromaDB eignet sich gut für einen kompakten lokalen Prototyp mit semantischer Suche",
+        "OCR ist ein wichtiger Zusatz, weil viele reale Dokumente nicht direkt als sauberer Text vorliegen",
+        "Das Projekt verbindet Software Engineering, NLP, Information Retrieval und AI Engineering in einer Anwendung",
+      ],
+      improvements: [
+        "Retrieval-Qualität systematisch mit Testfragen und erwarteten Quellen bewerten",
+        "Quellenanzeige und Antwortbegründung weiter verbessern",
+        "Chunking-Strategien und Embedding-Modelle vergleichen",
+        "Performance bei größeren Dokumentensammlungen testen",
+        "Unterstützung für weitere Dateiformate und bessere Layout-Erkennung ergänzen",
+      ],
+    },
+    resources: {
+      repo: "https://github.com/SW-oasen/ai-rag-local",
+      presentation: null,
+    },
+    visuals: [
+      {
+        title: "Weboberfläche des lokalen RAG-Systems",
+        type: "UI",
+        src: getImagePath("ai-rag-local/overview.png"),
+        description: "Startansicht der lokalen Webanwendung für Dokumenten-Upload, Analyse und Abfrage.",
+      },
+      {
+        title: "Dokumentbasierte Frage-Antwort",
+        type: "RAG",
+        src: getImagePath("ai-rag-local/ask.png"),
+        description: "Beantwortung natürlicher Sprachfragen auf Basis der lokal indexierten Dokumentinhalte.",
+      },
+      {
+        title: "OCR-Verarbeitung",
+        type: "OCR",
+        src: getImagePath("ai-rag-local/extract_text.png"),
+        description: "Texterkennung für gescannte Dokumente und Bilddateien als zusätzlicher Verarbeitungsschritt.",
+      },
+      {
+        title: "Dokumentzusammenfassung",
+        type: "LLM",
+        src: getImagePath("ai-rag-local/summarize.png"),
+        description: "Zusammenfassung extrahierter Dokumentinhalte durch ein lokal ausgeführtes Sprachmodell.",
+      },
+    ],
+  },
+
   "energy-price-forecast": {
     title: "Strompreis-Prognose Deutschland — Day-Ahead Forecasting",
     date: "2026-06",

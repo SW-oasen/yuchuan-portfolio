@@ -8,9 +8,9 @@ import { motion } from "framer-motion";
 // ======== DATA: Edit this to update your site ========
 const PROFILE = {
   name: "Yuchuan",
-  title: "Software Engineer → Data/ML Engineer",
+  title: "Machine Learning Engineer | Software Engineer",
   subtitle: "Portfolio, Lernreise und Projektübersicht",
-  tagline: "Von Software-Entwicklung zu Data Science, Machine Learning und Energieanalytik",
+  tagline: "Von Software-Entwicklung zu Data Science, Machine Learning und KI-gestützten Lösungen.",
   email: "mailto:see.wind@gmx.de",
   location: "Berlin",
   links: {
@@ -20,6 +20,24 @@ const PROFILE = {
 };
 
 const PROJECTS = [
+  {
+    id: "ai-rag-local",
+    title: "Lokales AI-RAG-System",
+    date: "2026-06",
+    summary:
+      "Webanwendung für lokale Dokumentenanalyse mit Retrieval-Augmented Generation, OCR und lokalen Large Language Models ohne Cloud-API.",
+    highlights: [
+      "Lokales RAG-System für Fragen zu eigenen Dokumenten",
+      "Integration lokaler LLMs über Ollama",
+      "Semantische Suche mit Embeddings und ChromaDB",
+      "OCR-Unterstützung für gescannte Dokumente und Bilder",
+      "Weboberfläche zum Hochladen, Analysieren und Durchsuchen von Dokumenten",
+    ],
+    stack: ["Python", "Ollama", "ChromaDB", "Sentence Transformers", "Tesseract OCR", "Streamlit"],
+    repo: "https://github.com/SW-oasen/ai-rag-local",
+    live: null,
+    video: null,
+  },
   {
     id: "energy-price-forecast",
     title: "Strompreis-Prognose Deutschland",
@@ -313,10 +331,6 @@ export default function Portfolio() {
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>
-          <p className="mt-6 text-sm text-slate-500">
-            Hinweis: Einige Teile wurden mit Hilfe von AI-Tools (Copilot/Codex) generiert und anschließend von mir angepasst, nachvollzogen,
-            validiert und dokumentiert.
-          </p>
         </Section>
 
         <Section id="learning" title="Lernfortschritte">
