@@ -85,13 +85,14 @@ const PROJECTS = [
     id: "telco-customer-churn",
     title: "Telco Customer Churn — Klassifikation",
     date: "2025-10",
-    summary: "Kundenabwanderungsprognose mit Klassifikationsmodellen.",
+    summary: "Kundenabwanderungsprognose mit Feature Engineering, Modellvergleich und Risiko-Segmentierung.",
     highlights: [
       "Datenvorverarbeitung und Imputation",
-      "Modellauswertung mit ROC/AUC",
-      "Erklärbarkeit mit SHAP und Permutation Importance",
+      "Feature Engineering für Kundenwert, Vertrags- und Service-Merkmale",
+      "Modellauswertung mit ROC/AUC und Threshold-Optimierung",
+      "Erklärbarkeit mit Feature Importance, Permutation Importance",
     ],
-    stack: ["scikit-learn", "Pandas", "Optuna", "SHAP"],
+    stack: ["Python", "Pandas", "scikit-learn", "Optuna", "Matplotlib"],
     repo: "https://github.com/SW-oasen/telco-customer-churn",
     live: null,
     video: null,
@@ -101,9 +102,9 @@ const PROJECTS = [
 const LEARNING = [
   {
     date: "2026-06",
-    title: "Überarbeitung bestehender Turbine-Maintenance-Projekt mit Fokus auf ETL-Pipeline und Feature Engineering",
+    title: "Überarbeitung bestehender Turbine-Maintenance-Projekt und Telco-Customer-Churn-Projekt",
     details:
-      "Altes Projekt überarbeitet mit Fokus auf saubere ETL-Pipeline, Feature Engineering (Sensor-Trendfeatures, RUL Capping) und Streamlit-Dashboard-Visualisierung.",
+      "Alte Projekte überarbeitet mit Fokus auf saubere ETL-Pipeline, Feature Engineering (Sensor-Trendfeatures, RUL Capping) und Streamlit-Dashboard-Visualisierung.",
   },
   {
     date: "2026-06",
@@ -313,7 +314,7 @@ export default function Portfolio() {
             ))}
           </div>
           <p className="mt-6 text-sm text-slate-500">
-            Hinweis: Einige Teile wurden mit Hilfe von AI-Tools (Copilot/ChatGPT) generiert und anschließend von mir nachvollzogen,
+            Hinweis: Einige Teile wurden mit Hilfe von AI-Tools (Copilot/Codex) generiert und anschließend von mir angepasst, nachvollzogen,
             validiert und dokumentiert.
           </p>
         </Section>

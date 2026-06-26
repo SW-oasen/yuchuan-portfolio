@@ -269,8 +269,8 @@ const PROJECT_DATA = {
 
   "telco-customer-churn": {
     title: "Telco Customer Churn — Classification",
-    date: "2025-10",
-    duration: "3 Wochen",
+    date: "2026-06",
+    duration: "Überarbeitung eines alten Projekts",
     status: "Abgeschlossen",
     problem: {
       title: "Problem",
@@ -281,31 +281,81 @@ const PROJECT_DATA = {
     approach: {
       title: "Daten & Ansatz",
       dataset: "Kaggle Telco Customer Churn Dataset - 7.043 Kunden mit 19 Features",
-      methodology: ["Data Prep und Encoding", "Feature Engineering", "Modellvergleich", "Optuna-Tuning", "SHAP-Auswertung"],
-      tools: ["Python", "scikit-learn", "Optuna", "Power BI", "Pandas", "SHAP", "Matplotlib"],
+      methodology: [
+        "Data Prep, Missing-Value-Behandlung und Encoding",
+        "Explorative Analyse von Churn Rate, Tenure und Monthly Charges",
+        "Feature Engineering für Tenure Buckets, Service Count, Revenue to Date und Contract-Payment-Risk",
+        "Modellvergleich mit Logistic Regression, Random Forest, LightGBM und XGBoost",
+        "Optuna-Tuning und Threshold-Optimierung für business-orientierte Churn-Erkennung",
+        "Feature-Importance-Analyse mit Tree Importance, Permutation Importance und SHAP",
+      ],
+      tools: ["Python", "Pandas", "scikit-learn", "Optuna", "LightGBM", "XGBoost", "SHAP", "Matplotlib", "Seaborn"],
     },
     solution: {
       title: "Lösung",
       content:
-        "End-to-End-ML-Pipeline mit Feature Engineering, Hyperparameter-Optimierung und Dashboard für Churn-Risiken.",
-      features: ["Feature Engineering", "Optuna-Tuning", "Risk Segmentation", "Power-BI-Dashboard", "SHAP-Erklärbarkeit"],
+        "End-to-End-ML-Pipeline mit Feature Engineering, Hyperparameter-Optimierung, Threshold-Wahl und Risiko-Segmentierung für Churn-Risiken.",
+      features: [
+        "Automatisierte Datenbereinigung und Preprocessing",
+        "Feature Engineering für Kundenlebenszyklus, Service-Nutzung und Vertragsrisiko",
+        "Modellvergleich mit mehreren Klassifikationsalgorithmen",
+        "Optuna-Tuning mit Cross-Validation",
+        "Risk Segmentation in Low, Medium, High und Very High",
+        "Feature-Importance-Analyse für Retention-Maßnahmen",
+      ],
     },
     results: {
       title: "Ergebnisse",
       metrics: [
-        { label: "Accuracy", value: "77.7%", change: "AUC 0.85+" },
-        { label: "F1-Score", value: "0.82", change: "optimiert" },
+        { label: "Bestes Modell", value: "XGBoost", change: "AUC 0.849" },
+        { label: "Modelle", value: "4", change: "LogReg, RF, LightGBM, XGBoost" },
         { label: "Churn Rate", value: "26.5%", change: "Dataset" },
+        { label: "Kunden", value: "7.043", change: "Kaggle Dataset" },
       ],
-      insights: ["Tenure ist ein wichtiger Prädiktor", "Month-to-month-Verträge zeigen hohes Risiko", "Service-Bundles senken Churn-Risiko"],
+      insights: [
+        "Tenure ist ein wichtiger Prädiktor, besonders neue Kunden mit 0-12 Monaten zeigen hohes Risiko",
+        "Month-to-month-Verträge und Electronic-Check-Zahlungen korrelieren stark mit Churn",
+        "Service-Bundles und längere Vertragslaufzeiten senken Churn-Risiko",
+        "XGBoost und LightGBM erzielten sehr ähnliche AUC-Werte im Modellvergleich",
+        "Feature Engineering verbessert nicht die AUC, aber die Interpretierbarkeit und Handlungsfähigkeit für Retention-Maßnahmen",
+      ],
     },
     learnings: {
       title: "Learnings & Reflexion",
-      positives: ["Feature Engineering verbessert Performance", "Optuna effektiver als Grid Search", "Dashboard macht ML-Insights zugänglich"],
-      improvements: ["Zeitreihen-Features ergänzen", "A/B-Testing-Framework vorbereiten", "Real-time Scoring Pipeline prüfen"],
+      positives: [
+        "Feature Engineering verbessert nicht die AUC, aber die Interpretierbarkeit und Handlungsfähigkeit für Retention-Maßnahmen",
+        "Optuna effektiver als Grid Search",
+        "Feature Importance macht ML-Insights für Retention-Maßnahmen zugänglich",
+        "Threshold-Optimierung ist für Churn-Projekte fachlich wichtiger als reine Accuracy",
+      ],
+      improvements: [
+        "Zeitreihen-Features ergänzen",
+        "A/B-Testing-Framework vorbereiten",
+        "Real-time Scoring Pipeline prüfen",
+        "MLOps-Pipeline mit Modellmonitoring vorbereiten",
+      ],
     },
     resources: { repo: "https://github.com/SW-oasen/telco-customer-churn" },
-    visuals: [],
+    visuals: [
+      {
+        title: "Customer Churn Analyse",
+        type: "EDA",
+        src: getImagePath("telco-customer-churn/churn_eda.png"),
+        description: "EDA zu Churn-Verteilung, Tenure, Monthly Charges und Churn Rate nach Tenure-Gruppen.",
+      },
+      {
+        title: "Modell-Evaluierung",
+        type: "ML",
+        src: getImagePath("telco-customer-churn/model_evaluation.png"),
+        description: "ROC-Kurven, AUC-Vergleich, Confusion Matrix und Wahrscheinlichkeitsverteilung der Modelle.",
+      },
+      {
+        title: "Feature Importance",
+        type: "ML",
+        src: getImagePath("telco-customer-churn/feature_importance.png"),
+        description: "Vergleich der wichtigsten Features über mehrere Modelle.",
+      },
+    ],
   },
 
   "turbine-maintenance": {
