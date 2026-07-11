@@ -23,17 +23,17 @@ const PROJECTS = [
   {
     id: "ai-rag-local",
     title: "Lokales AI-RAG-System",
-    date: "2026-06",
+    date: "2026-07",
     summary:
-      "Webanwendung für lokale Dokumentenanalyse mit Retrieval-Augmented Generation, OCR und lokalen Large Language Models ohne Cloud-API.",
+      "Local-first RAG-Assistent für private Dokumentbibliotheken mit Hybrid-Suche, Quellenangaben, OCR und vollständig lokalen Ollama-Modellen.",
     highlights: [
-      "Lokales RAG-System für Fragen zu eigenen Dokumenten",
-      "Integration lokaler LLMs über Ollama",
-      "Semantische Suche mit Embeddings und ChromaDB",
-      "OCR-Unterstützung für gescannte Dokumente und Bilder",
-      "Weboberfläche zum Hochladen, Analysieren und Durchsuchen von Dokumenten",
+      "Semantische, Keyword- und Hybrid-Suche mit nachvollziehbaren Quellenangaben",
+      "Lokale LLMs und Embeddings über Ollama – ohne Cloud-API",
+      "Profile, persistente Chat-Sessions und separates Langzeitgedächtnis",
+      "Mehrsprachige OCR mit optionaler LLM-Korrektur für gescannte PDFs",
+      "Hierarchische Dokumentzusammenfassungen mit Cache und Export",
     ],
-    stack: ["Python", "Ollama", "ChromaDB", "Sentence Transformers", "Tesseract OCR", "Streamlit"],
+    stack: ["Python", "Ollama", "ChromaDB", "Tesseract OCR", "PyPDF", "HTML/CSS", "pytest"],
     repo: "https://github.com/SW-oasen/ai-rag-local",
     live: null,
     video: null,
@@ -118,6 +118,12 @@ const PROJECTS = [
 ];
 
 const LEARNING = [
+  {
+    date: "2026-07",
+    title: "Lokales AI-RAG-System mit Ollama und lokalen LLMs",
+    details:
+      "Lokales RAG-System für private Dokumentbibliotheken mit Hybrid-Suche, Quellenangaben, OCR und vollständig lokalen Ollama-Modellen.",
+  },
   {
     date: "2026-06",
     title: "Überarbeitung bestehender Turbine-Maintenance-Projekt und Telco-Customer-Churn-Projekt",
