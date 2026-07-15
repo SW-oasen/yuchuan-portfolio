@@ -60,14 +60,14 @@ const PROJECTS = [
     title: "Stromverbrauchs-Prognose Deutschland",
     date: "2026-05",
     summary:
-      "Kurzfristige Strombedarfsprognose anhand realer Verbrauchsdaten von SMARD und Wetterdaten.",
+      "End-to-End-Day-Ahead-Prognose des stündlichen Stromverbrauchs in Deutschland mit SMARD-, Wetter- und Kalenderdaten.",
     highlights: [
-      "ML-Vorhersage vs. reale Daten und SMARD-Prognose",
-      "Modulare Datenpipeline mit wiederverwendbaren Komponenten",
-      "Asymmetrische Verlustfunktion für Unterschätzung",
-      "Interaktive Streamlit-Anwendung und Notebook-Auswertung",
+      "Dreifachvergleich: Ist-Verbrauch vs. SMARD-Prognose vs. ML-Prognose",
+      "Modulare Python-Pipeline für Datenabruf, Feature Engineering, Training und Vorhersage",
+      "Optuna-Tuning und Exploration asymmetrischer Verlustfunktionen sowie Quantilregression",
+      "Streamlit-App mit Tomorrow Forecast und frei wählbarem historischem Vergleich",
     ],
-    stack: ["Pandas", "scikit-learn", "sklearn-optimizer", "XGBoost", "LightGBM", "SQLite", "Matplotlib", "Streamlit"],
+    stack: ["Python", "Pandas", "scikit-learn", "Optuna", "XGBoost", "LightGBM", "SMARD", "Open-Meteo", "Streamlit"],
     repo: "https://github.com/SW-oasen/electricity_demand_forecast",
     live: null,
     video: null,
@@ -118,6 +118,12 @@ const PROJECTS = [
 ];
 
 const LEARNING = [
+    {
+    date: "2026-06",
+    title: "AI RAG-System mit lokalen LLMs und OCR",
+    details:
+      "Lokales RAG-System für Dokumentenanalyse mit Ollama, ChromaDB, Sentence Transformers und Tesseract OCR entwickelt. Streamlit-App für Upload, Analyse und semantische Suche implementiert.",
+  },
   {
     date: "2026-06",
     title: "Überarbeitung bestehender Turbine-Maintenance-Projekt und Telco-Customer-Churn-Projekt",
@@ -134,7 +140,7 @@ const LEARNING = [
     date: "2026-05",
     title: "Stromverbrauchsprognose mit Zeitreihenanalyse",
     details:
-      "Portfolio-Projekt zur kurzfristigen Strombedarfsprognose mit Feature Engineering, ML, Vergleich mit SMARD-Realdaten und SMARD-Prognose.",
+      "End-to-End-Pipeline und Streamlit-App für Day-Ahead-Lastprognosen umgesetzt – inklusive SMARD-Live-Daten, offizieller SMARD-Prognose und historischem Drei-Kurven-Vergleich mit MAE und RMSE.",
   },
   {
     date: "2026-05",
