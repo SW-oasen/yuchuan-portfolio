@@ -1,9 +1,14 @@
 import React from "react";
 import Portfolio from "./yuchuan_portfolio_static_site_starter.jsx";
 import ProjectDetail from "./ProjectDetail.jsx";
+import { getProjectById } from "@/data/projects";
+import { DEFAULT_LANGUAGE, normalizeLanguage } from "@/i18n/config";
 
 // Simple router based on URL hash
 export default function App() {
+  const [language, setLanguage] = React.useState(() =>
+    normalizeLanguage(window.localStorage.getItem("portfolio-language") ?? DEFAULT_LANGUAGE),
+  );
   const [currentView, setCurrentView] = React.useState('home');
   const [selectedProject, setSelectedProject] = React.useState(null);
 
@@ -11,6 +16,10 @@ export default function App() {
   React.useEffect(() => {
     window.scrollTo(0, 0);
   }, [currentView, selectedProject]);
+
+  React.useEffect(() => {
+    document.documentElement.lang = language;
+  }, [language]);
 
   React.useEffect(() => {
     const handleHashChange = () => {
@@ -35,9 +44,22 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
+  const handleLanguageChange = (nextLanguage) => {
+    const normalizedLanguage = normalizeLanguage(nextLanguage);
+    setLanguage(normalizedLanguage);
+    window.localStorage.setItem("portfolio-language", normalizedLanguage);
+    document.documentElement.lang = normalizedLanguage;
+  };
+
   if (currentView === 'project') {
-    return <ProjectDetail projectId={selectedProject} />;
+    return (
+      <ProjectDetail
+        project={getProjectById(selectedProject, language)}
+        language={language}
+        onLanguageChange={handleLanguageChange}
+      />
+    );
   }
 
-  return <Portfolio />;
+  return <Portfolio language={language} onLanguageChange={handleLanguageChange} />;
 }

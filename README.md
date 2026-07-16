@@ -1,34 +1,65 @@
 # Yuchuan Portfolio
 
-Persönliches Datenanalyse-Portfolio — Projektübersicht, Lernreise und Werdegang.
+Persönliches Portfolio mit Projekten aus Softwareentwicklung, Data Science und künstlicher Intelligenz.
 
-## Live Demo
+## Live-Demo
 
 [https://sw-oasen.github.io/yuchuan-portfolio](https://sw-oasen.github.io/yuchuan-portfolio)
 
-## Tech Stack
+## Tech-Stack
 
-- **Frontend**: React 18, Vite
-- **Styling**: Tailwind CSS, shadcn/ui
-- **Icons**: Lucide React
-- **Animationen**: Framer Motion
-- **Routing**: Hash-basiertes Routing (GitHub Pages kompatibel)
+- React 18 und Vite
+- Tailwind CSS und shadcn/ui
+- Lucide React
+- Framer Motion
+- Hash-basiertes Routing für GitHub Pages
 
 ## Projektstruktur
 
-```
+```text
 src/
-├── components/ui/          # Button, Card, Badge
-├── lib/                    # Hilfsfunktionen
-├── App.jsx                 # Router
-├── main.jsx                # Einstiegspunkt
-├── ProjectDetail.jsx       # Detailseiten der Projekte
-├── yuchuan_portfolio_static_site_starter.jsx  # Hauptkomponente
-└── index.css               # Globale Styles
-public/
-├── img/                    # Projektbilder
-└── Stromverbrauch_Vorhersagen.pdf  # Präsentation Stromverbrauchsprognose
+├── components/ui/                         # Wiederverwendbare UI-Komponenten
+├── data/
+│   ├── projects.js                        # Zentraler Projektkatalog und Zugriffsfunktionen
+│   └── projectDetails.js                  # Ausführliche Projektinhalte
+├── i18n/config.js                         # Unterstützte Sprachen und Fallback
+├── App.jsx                                # Hash-Routing und Projektauswahl
+├── ProjectDetail.jsx                      # Darstellung einer Projekt-Detailseite
+├── yuchuan_portfolio_static_site_starter.jsx # Startseite
+└── index.css                              # Globale Styles
 ```
+
+Die React-Komponenten enthalten keine Projektkataloge. Start- und Detailseite beziehen ihre Daten über `getProjects()` beziehungsweise `getProjectById()` aus `src/data/projects.js`.
+
+## Projektdaten pflegen
+
+- Karteninformationen, Tags, Stack und Ressourcen werden in `src/data/projects.js` gepflegt.
+- Ausführliche Inhalte und Visualisierungen liegen in `src/data/projectDetails.js`.
+- Die stabile Projekt-ID muss in beiden Dateien identisch sein.
+- Projektbilder liegen unter `public/img/<project-id>/`.
+
+Eine vollständige Vorlage und Pflegehinweise stehen in [PROJECT_DETAILS_GUIDE.md](PROJECT_DETAILS_GUIDE.md).
+
+## Sprachvorbereitung
+
+Die Website kann über den Umschalter in Kopfzeile und Detailansicht zwischen Deutsch und Englisch wechseln. Die Auswahl wird in `localStorage` gespeichert und beim nächsten Besuch wiederhergestellt. Deutsch ist die Standardsprache. Der Projektkatalog trennt sprachneutrale Felder von übersetzbaren Inhalten:
+
+```js
+translations: {
+  de: {
+    title: "Deutscher Titel",
+    summary: "Deutsche Zusammenfassung",
+    highlights: [],
+  },
+  en: {
+    title: "English title",
+    summary: "English summary",
+    highlights: [],
+  },
+}
+```
+
+`src/i18n/config.js` registriert `de` und `en`. Projektkarten, Navigation, Lernreise, Karriere und die fachlichen Inhalte der Detailseiten sind übersetzt. Technische Werte, Links, Bilder und Toolnamen werden gemeinsam genutzt. Fehlt künftig eine Übersetzung, fällt der Datenzugriff automatisch auf Deutsch zurück.
 
 ## Lokale Entwicklung
 
@@ -39,50 +70,17 @@ npm install
 npm run dev
 ```
 
-Läuft unter `http://localhost:5173/yuchuan-portfolio/`
+Die lokale Anwendung läuft standardmäßig unter `http://localhost:5173/yuchuan-portfolio/`.
 
 ```bash
-npm run build    # Produktions-Build
-npm run preview  # Build lokal testen
-npm run deploy   # Auf GitHub Pages deployen
+npm run build    # Produktions-Build erstellen
+npm run preview  # Produktions-Build lokal testen
+npm run deploy   # Auf GitHub Pages veröffentlichen
 ```
 
-## Projekte
-
-### 1. Stromverbrauchsprognose — Zeitreihenanalyse
-- **Tech**: Python, Pandas, scikit-learn, XGBoost, Plotly, Jupyter
-- **Highlights**: Feature Engineering für Zeitreihen, zeitbasierte Kreuzvalidierung, XGBoost vs. Baseline-Vergleich
-- **Ressourcen**: [GitHub](https://github.com/SW-oasen/electricity_demand_forecast) · Präsentation (PDF im Repo)
-
-### 2. Turbinen-ML-Pipeline — Predictive Maintenance (NASA CMAPSS)
-- **Tech**: Python, scikit-learn, XGBoost, Pandas, Jupyter
-- **Highlights**: RUL-Vorhersage, Feature Engineering auf Sensordaten, Modellvergleich
-- **Ressourcen**: [GitHub](https://github.com/SW-oasen/turbine-maintenance)
-
-### 3. Telco Customer Churn — Klassifikation
-- **Tech**: Python, scikit-learn, Optuna, SHAP, Jupyter
-- **Highlights**: Klassenbalancierung, Hyperparameter-Tuning, Erklärbarkeit mit SHAP
-- **Ressourcen**: [GitHub](https://github.com/SW-oasen/telco-customer-churn)
-
-### 4. Airbnb Berlin — Explorative Datenanalyse
-- **Tech**: Python, Pandas, Plotly, Jupyter
-- **Highlights**: Preisanalyse nach Bezirk, Angebotstypen, Review-Korrelationen
-- **Ressourcen**: [GitHub](https://github.com/SW-oasen/airbnb-eda-berlin)
+Hinweis: Das vorhandene `lint`-Skript benötigt noch eine ESLint-Konfigurationsdatei.
 
 ## Kontakt
 
-**Yuchuan Liu** — Berlin  
-[see.wind@gmx.de](mailto:see.wind@gmx.de) · [GitHub](https://github.com/SW-oasen)
-- 💼 [LinkedIn](https://de.linkedin.com/in/yuchuan-liu-58309a274)
-
-## � License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🤝 Contributing
-
-This is a personal portfolio project. If you find any issues or have suggestions, feel free to open an issue or reach out directly.
-
----
-
-*Built with ❤️ using React, Vite, and modern web technologies*
+Yuchuan Liu — Berlin  
+[E-Mail](mailto:see.wind@gmx.de) · [GitHub](https://github.com/SW-oasen) · [LinkedIn](https://de.linkedin.com/in/yuchuan-liu-58309a274)

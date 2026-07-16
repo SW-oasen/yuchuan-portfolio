@@ -1,142 +1,114 @@
-# Project Detail System - Setup Guide
+# Projektpflege
 
-## 📁 Struktur
+Projektinformationen werden zentral im Verzeichnis `src/data/` gepflegt. UI-Komponenten sollen keine eigenen Projektkopien enthalten.
 
-Das System verwendet eine flexible Datenstruktur in `ProjectDetail.jsx`, um detaillierte Projektpräsentationen zu erstellen.
+## Neues Projekt anlegen
 
-## 🎯 Verfügbare Projekte
+### 1. Übersichtsdaten ergänzen
 
-Aktuell implementiert:
-- ✅ **airbnb-berlin** - Vollständig konfiguriert
-- 🚧 **global-power-plants** - Template verfügbar
-- 🚧 **store-sales-forecast** - Template verfügbar  
-- 🚧 **telco-customer-churn** - Template verfügbar
-- 🚧 **turbine-maintenance** - Template verfügbar
+In `src/data/projects.js` einen Eintrag zu `PROJECTS` hinzufügen:
 
-## 📋 Template für neue Projekte
-
-```javascript
-"project-key": {
-  title: "Projekt Titel",
-  date: "YYYY-MM",
-  duration: "X Wochen",
-  status: "Abgeschlossen|In Bearbeitung",
-  
-  problem: {
-    title: "Problem",
-    content: "Beschreibung des Problems...",
-    challenges: [
-      "Herausforderung 1",
-      "Herausforderung 2"
-    ]
-  },
-
-  approach: {
-    title: "Daten & Ansatz", 
-    dataset: "Dataset Beschreibung",
-    methodology: [
-      "Schritt 1",
-      "Schritt 2"
-    ],
-    tools: ["Python", "Pandas", "etc."]
-  },
-
-  solution: {
-    title: "Lösung",
-    content: "Lösungsbeschreibung...",
-    features: [
-      "Feature 1",
-      "Feature 2"
-    ]
-  },
-
-  results: {
-    title: "Ergebnisse",
-    metrics: [
-      { label: "Metrik", value: "Wert", change: "±X%" }
-    ],
-    insights: [
-      "Erkenntnis 1",
-      "Erkenntnis 2"
-    ]
-  },
-
-  learnings: {
-    title: "Learnings & Reflexion",
-    positives: [
-      "Was gut lief"
-    ],
-    improvements: [
-      "Was beim nächsten Mal besser"
-    ]
-  },
-
+```js
+{
+  id: "project-id",
+  tags: ["software", "ai"],
+  date: "2026-07",
+  stack: ["React", "Python"],
   resources: {
-    repo: "GitHub URL",
-    notebook: "Notebook Pfad",
-    report: "Report Pfad"
+    repo: "https://github.com/...",
+    live: null,
+    video: null,
   },
-
-  visuals: [
-    {
-      title: "Visual Titel",
-      type: "image|chart|gif",
-      src: "/pfad/zum/bild.png",
-      description: "Beschreibung"
-    }
-  ]
+  translations: {
+    de: {
+      title: "Projekttitel",
+      summary: "Kurze Beschreibung für die Projektkarte.",
+      highlights: ["Highlight 1", "Highlight 2"],
+    },
+    en: {
+      title: "Project title",
+      summary: "Short description for the project card.",
+      highlights: ["Highlight 1", "Highlight 2"],
+    },
+  },
 }
 ```
 
-## 🖼️ Bilder hinzufügen
+Englische Inhalte sind zunächst optional. Fehlt `translations.en`, verwendet der Zugriff automatisch `translations.de`.
 
-1. **Bilder speichern** in `/public/img/projektname/`
-2. **Pfad referenzieren** als `/img/projektname/bild.png`
-3. **3-5 aussagekräftige Visuals** pro Projekt
+### 2. Detaildaten ergänzen
 
-Beispiel-Struktur:
+In `src/data/projectDetails.js` einen Eintrag mit derselben ID hinzufügen:
+
+```js
+"project-id": {
+  title: "Projekttitel",
+  date: "2026-07",
+  duration: "Vier Wochen",
+  status: "Abgeschlossen",
+  problem: {
+    title: "Problem",
+    content: "Beschreibung des Problems",
+    challenges: ["Herausforderung 1"],
+  },
+  approach: {
+    title: "Daten & Ansatz",
+    dataset: "Beschreibung der Datengrundlage",
+    methodology: ["Schritt 1", "Schritt 2"],
+    tools: ["Python", "Pandas"],
+  },
+  solution: {
+    title: "Lösung",
+    content: "Beschreibung der Lösung",
+    features: ["Funktion 1"],
+  },
+  results: {
+    title: "Ergebnisse",
+    metrics: [{ label: "Metrik", value: "Wert", change: "Kontext" }],
+    insights: ["Erkenntnis 1"],
+  },
+  learnings: {
+    title: "Learnings & Reflexion",
+    positives: ["Was gut funktioniert hat"],
+    improvements: ["Nächste Verbesserung"],
+  },
+  resources: {
+    repo: "https://github.com/...",
+  },
+  visuals: [],
+}
 ```
-public/
-  img/
-    airbnb-berlin/
-      - price-heatmap.png
-      - listing-types.png
-      - availability-ratings.png
-    global-power-plants/
-      - power-distribution.png
-      - capacity-trends.png
-    store-sales-forecast/
-      - forecast-accuracy.png
-      - feature-importance.png
+
+Englische Detailtexte werden als sprachabhängige Ergänzung in `src/data/projectDetails.en.js` gepflegt. Dort müssen nur übersetzbare Felder stehen; technische Werte, Ressourcen, Bilder und nicht überschriebene Felder werden aus `projectDetails.js` übernommen.
+
+## Bilder hinzufügen
+
+1. Bilder unter `public/img/<project-id>/` speichern.
+2. In `projectDetails.js` über `getImagePath("<project-id>/<datei>")` referenzieren.
+3. Aussagekräftigen Alternativtext und eine Beschreibung hinterlegen.
+
+```js
+visuals: [
+  {
+    title: "Visualisierungstitel",
+    type: "chart",
+    src: getImagePath("project-id/chart.png"),
+    description: "Was die Visualisierung zeigt.",
+  },
+]
 ```
 
-## 🔗 Navigation einrichten
+## Tags erweitern oder umbenennen
 
-In `yuchuan_portfolio_static_site_starter.jsx` die Projekt-Links aktualisieren:
+Tags werden in `PROJECT_TAGS` in `src/data/projects.js` definiert. Projekte speichern ausschließlich die stabile Tag-ID. Sichtbare Bezeichnungen können daher übersetzt oder geändert werden, ohne die Filterlogik anzupassen.
 
-```jsx
-// Statt nur repo Links:
-<Button variant="outline" asChild>
-  <a href={`/project/${projectKey}`}>
-    <ExternalLink className="h-4 w-4 mr-2" /> Details
-  </a>
-</Button>
+## Prüfen
+
+Nach jeder Datenänderung:
+
+```bash
+npm run build
+npm run dev
 ```
 
-## 🚀 Nächste Schritte
-
-1. **Projekt-Daten sammeln** aus den jeweiligen Workspaces
-2. **Screenshots/Visualisierungen** erstellen und speichern  
-3. **PROJECT_DATA erweitern** mit den anderen 4 Projekten
-4. **Routing einrichten** für Navigation zwischen Portfolio und Details
-5. **Live-Testing** mit echten Daten
-
-## 💡 Erweiterungen
-
-- **Bildergalerie** mit Lightbox-Funktionalität
-- **Code-Snippets** direkt in der Präsentation
-- **Performance-Metriken** mit Charts
-- **Download-Links** für Reports/Notebooks
-- **Kommentar-System** für Feedback
-
-Willst du dass ich die anderen Projekte als Templates vorbereite oder soll ich dir dabei helfen, die echten Daten aus deinen Workspaces zu übertragen?
+Danach Projektkarte, Filter, Detailseite, Bilder, externe Links und Zurück-Navigation manuell testen.

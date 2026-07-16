@@ -1,0 +1,731 @@
+const getImagePath = (path) => {
+  const baseUrl = import.meta.env.BASE_URL || "/";
+  return `${baseUrl}img/${path}`;
+};
+
+// ======== PROJECT DATA ========
+export const PROJECT_DETAILS = {
+  "ai-rag-local": {
+    title: "Lokaler RAG-Assistent — private Dokumentenanalyse mit Ollama",
+    date: "2026-07",
+    duration: "Fortlaufend erweitert",
+    status: "Aktiv weiterentwickelt",
+    problem: {
+      title: "Problem",
+      content:
+        "Viele KI-gestützte Dokumentensysteme übertragen potenziell vertrauliche Inhalte an externe Dienste. Das Projekt stellt deshalb einen vollständig lokal ausführbaren RAG-Assistenten bereit, der private Dokumentbibliotheken indexiert, durchsucht, zusammenfasst und mit nachvollziehbaren Quellenangaben beantwortet.",
+      challenges: [
+        "Lokale Verarbeitung ohne externe LLM- oder Cloud-API",
+        "Heterogene Formate wie PDF, Markdown, Text, EPUB, AZW3 und OpenDocument zuverlässig einlesen",
+        "OCR für gescannte Dokumente und Bilder integrieren",
+        "Relevante Textstellen semantisch finden und dem LLM als Kontext bereitstellen",
+        "Antworten mit konkreten Seiten- und Abschnittsangaben nachvollziehbar machen",
+        "Längere Chats und Dokumente innerhalb begrenzter lokaler Kontextfenster verarbeiten",
+      ],
+    },
+    approach: {
+      title: "Daten & Ansatz",
+      dataset:
+        "Eigene PDF-, Markdown-, Text-, EPUB-, AZW3- und OpenDocument-Dateien. Inhalte werden lokal extrahiert, in Chunks zerlegt, über Ollama eingebettet und getrennt nach Profilen in ChromaDB gespeichert.",
+      methodology: [
+        "Datei- und Ordner-Ingestion über CLI und lokale Weboberfläche",
+        "Formatabhängige Textextraktion inklusive optionaler PDF-Tabellenerkennung",
+        "Mehrsprachige Tesseract-OCR mit drei Stufen optionaler LLM-Korrektur",
+        "Chunking der extrahierten Inhalte für semantische Suche",
+        "Embedding-Erzeugung über Ollama und persistente Speicherung in ChromaDB",
+        "Semantisches, Keyword- oder hybrides Retrieval mit Dokument- und Profilfiltern",
+        "Kontextbudgetierung für Quellen, Chatverlauf und separates Langzeitgedächtnis",
+        "Lokale Web-UI und CLI für Bibliothek, Fragen, Extraktion und Zusammenfassungen",
+      ],
+      tools: [
+        "Python",
+        "Ollama",
+        "ChromaDB",
+        "Tesseract OCR",
+        "PyPDF",
+        "Python HTTP Server",
+        "pytest",
+      ],
+    },
+    solution: {
+      title: "Lösung",
+      content:
+        "Der Assistent verbindet eine lokale Dokumentbibliothek mit drei Suchmodi, ChromaDB und Ollama. Gefundene Passagen, relevante Erinnerungen und der komprimierte Chatverlauf werden unter festen Tokenbudgets zu einem Prompt zusammengesetzt. Antworten referenzieren die verwendeten Quellen; lange Dokumente werden hierarchisch zusammengefasst und Ergebnisse lokal gecacht.",
+      features: [
+        "Lokale RAG-Pipeline für eigene Dokumente",
+        "Lokale Dokumentbibliothek mit Datei- und Ordner-Ingestion",
+        "Semantische, Keyword- und Hybrid-Suche mit Quellen-, Verzeichnis- und Profilfiltern",
+        "Persistente Chats mit Folgefragen, Conversation Summary und Markdown-Export",
+        "Profilbezogenes Langzeitgedächtnis in separater Chroma-Collection",
+        "Mehrsprachige OCR, LLM-Korrektur und Export von Original- und Korrekturtext",
+        "Hierarchische Zusammenfassungen mit Validierung, Cache und Export",
+        "CLI sowie dependency-free Web-UI unter 127.0.0.1",
+      ],
+    },
+    results: {
+      title: "Ergebnisse",
+      metrics: [
+        { label: "Anwendungstyp", value: "RAG", change: "lokal" },
+        { label: "LLM-Ausführung", value: "Ollama", change: "ohne Cloud-API" },
+        { label: "Vektordatenbank", value: "ChromaDB", change: "semantische Suche" },
+        { label: "OCR", value: "Tesseract", change: "Scans & Bilder" },
+        { label: "Suchmodi", value: "3", change: "semantisch / Keyword / hybrid" },
+        { label: "Tests", value: "17 Module", change: "pytest-Suite" },
+      ],
+      insights: [
+        "Lokale LLMs ermöglichen datenschutzfreundliche Dokumentenanalyse ohne externe API-Abhängigkeit",
+        "Die Qualität der Antworten hängt stark von Chunking, Embeddings und der Relevanz der gefundenen Textstellen ab",
+        "OCR erweitert den praktischen Nutzen deutlich, ist aber bei komplexen Layouts oder schlechter Scanqualität begrenzt",
+        "Quellen-, Profil- und Verzeichnisfilter verbessern die Kontrolle über den Retrieval-Kontext",
+        "Feste Kontextbudgets machen längere Chats auch mit kleineren lokalen Modellen praktikabel",
+      ],
+    },
+    learnings: {
+      title: "Learnings & Reflexion",
+      positives: [
+        "RAG-Systeme lassen sich mit lokalen Komponenten als vollständige CLI- und Webanwendung umsetzen",
+        "Ollama vereinfacht die Integration lokaler LLMs in eigene Python-Anwendungen",
+        "Die Kombination von semantischer und lexikalischer Suche erhöht die Robustheit bei unterschiedlichen Fragetypen",
+        "OCR-Korrektur braucht Schutzregeln für Namen, Zahlen und andere sensible Fakten",
+        "Persistenz, Kontextbudgets und Evaluation sind ebenso wichtig wie die eigentliche RAG-Pipeline",
+      ],
+      improvements: [
+        "Retrieval-Qualität systematisch mit Testfragen und erwarteten Quellen bewerten",
+        "Retrieval-Evaluation ausbauen und als reproduzierbare Benchmark automatisieren",
+        "Chunking-Strategien und Embedding-Modelle vergleichen",
+        "Performance bei größeren Dokumentensammlungen testen",
+        "Unterstützung für weitere Dateiformate und bessere Layout-Erkennung ergänzen",
+      ],
+    },
+    resources: {
+      repo: "https://github.com/SW-oasen/ai-rag-local",
+    },
+    visuals: [
+      {
+        title: "Weboberfläche des lokalen RAG-Systems",
+        type: "UI",
+        src: getImagePath("ai-rag-local/Overview.png"),
+        description: "Startansicht mit Kennzahlen, Bibliotheksdetails und gruppierten lokalen Quellen.",
+      },
+      {
+        title: "Dokumentbasierte Frage-Antwort",
+        type: "RAG",
+        src: getImagePath("ai-rag-local/Ask.png"),
+        description: "Chat mit Suchmodus, Profil, Scope, Memory und nachvollziehbaren Quellen.",
+      },
+      {
+        title: "OCR-Verarbeitung",
+        type: "OCR",
+        src: getImagePath("ai-rag-local/Extract-Text.png"),
+        description: "Mehrsprachige OCR mit konfigurierbarer Vorverarbeitung, LLM-Korrektur und Text-Export.",
+      },
+      {
+        title: "Dokumentzusammenfassung",
+        type: "LLM",
+        src: getImagePath("ai-rag-local/Summerize.png"),
+        description: "Hierarchische Zusammenfassung langer Dokumente mit Cache, Fortschritt und Export.",
+      },
+    ],
+  },
+	"store-finder-platform": {
+	  title: "Store Finder Plattform — standortbasierte Suche und Geschäftsauskunft",
+	  date: "2026-07",
+	  duration: "Laufende Entwicklung",
+	  status: "MVP umgesetzt · Ausbau geplant",
+	  problem: {
+		title: "Problem",
+		content:
+		  "Informationen zu spezialisierten Geschäften, ihrem Leistungsumfang und der Verfügbarkeit gesuchter Waren sind häufig über verschiedene Quellen verteilt oder nicht aktuell. Die Plattform schafft einen zentralen Zugang, über den Endkunden passende Anbieter in ihrer Umgebung finden und strukturierte Geschäftsinformationen abrufen können. Gleichzeitig erhalten Betreiber und Administratoren getrennte Verwaltungsbereiche.",
+		challenges: [
+		  "Freitext-, Adress- und geografische Umkreissuche miteinander verbinden",
+		  "Standortdaten zuverlässig geocodieren und räumlich abfragen",
+		  "Öffentliche Inhalte und geschützte Verwaltungsfunktionen sauber trennen",
+		  "Mehrere Benutzergruppen mit unterschiedlichen Berechtigungen abbilden",
+		  "Eine erweiterbare Grundlage für Inventar-, Anfrage- und Auftragsprozesse schaffen",
+		  "Kommerzielle Geschäftsdetails schützen, ohne die technische Arbeit im Portfolio zu verbergen",
+		],
+	  },
+	  approach: {
+		title: "Architektur & Vorgehen",
+		dataset:
+		  "Strukturierte Geschäfts-, Standort- und Benutzerdaten in PostgreSQL. Geografische Koordinaten werden mit PostGIS gespeichert und für Umkreisabfragen verwendet. Artikel- und Community-Funktionen sind im aktuellen MVP teilweise als lokale Demo-Flows umgesetzt.",
+		methodology: [
+		  "Anforderungen und Benutzergruppen in öffentliche und geschützte Anwendungsfälle aufteilen",
+		  "React-Frontend mit wiederverwendbaren Seiten, Komponenten und Service-Layer entwickeln",
+		  "REST-Endpunkte für Suche, Detailansichten und Verwaltungsprozesse bereitstellen",
+		  "Adressen serverseitig geocodieren und Koordinaten als manuellen Fallback unterstützen",
+		  "Textsuche und räumliche Umkreissuche über PostgreSQL und PostGIS umsetzen",
+		  "Rollenbasierte Navigation und serverseitige Autorisierung integrieren",
+		  "Frontend- und Backend-Funktionen mit automatisierten Tests absichern",
+		  "Inventar, Kommunikation, Aufträge und Abrechnung als getrennte Ausbauphasen planen",
+		],
+		tools: [
+		  "React",
+		  "TypeScript",
+		  "Vite",
+		  "Java 21",
+		  "Spring Boot",
+		  "Spring Security",
+		  "PostgreSQL",
+		  "PostGIS",
+		  "Leaflet",
+		  "Docker",
+		  "Flyway",
+		  "Vitest",
+		],
+	  },
+	  solution: {
+		title: "Lösung",
+		content:
+		  "Der aktuelle MVP bildet eine Full-Stack-Plattform für die Suche und Verwaltung spezialisierter Geschäfte. Nutzer können Anbieter per Suchbegriff oder Kartenposition finden, einen Suchradius festlegen und Detailinformationen abrufen. Betreiber und Administratoren erhalten rollenabhängige Verwaltungsansichten. Die Architektur ist darauf vorbereitet, Warenverfügbarkeit, direkte Anfragen, Auftragskommunikation und Abonnementmodelle schrittweise zu ergänzen.",
+		features: [
+		  "Suche nach Name, Ort, Postleitzahl und Suchbegriffen",
+		  "Standort- und Umkreissuche auf einer interaktiven Karte",
+		  "Detailseiten mit Adresse, Kontakt und Beschreibung",
+		  "Geschäfte anlegen, bearbeiten und entfernen",
+		  "Automatische Geocodierung mit manuellem Karten-Fallback",
+		  "Rollenbasierte Anmeldung und geschützte Anwendungsbereiche",
+		  "Administration von Benutzern, Betreibern und Autoren",
+		  "Mehrsprachige Benutzeroberfläche auf Deutsch und Englisch",
+		  "Fachartikel- und Community-Prototyp",
+		  "Strukturierte REST-API mit Fehler- und Request-ID-Konzept",
+		],
+	  },
+
+	  results: {
+		title: "Aktueller Stand",
+		metrics: [
+		  {
+			label: "Anwendung",
+			value: "Full Stack",
+			change: "React + Spring Boot",
+		  },
+		  {
+			label: "Suche",
+			value: "Geo + Text",
+			change: "PostGIS-Abfragen",
+		  },
+		  {
+			label: "Karte",
+			value: "Leaflet",
+			change: "OpenStreetMap",
+		  },
+		  {
+			label: "Zugriff",
+			value: "RBAC",
+			change: "mehrere Benutzerrollen",
+		  },
+		  {
+			label: "Bereitstellung",
+			value: "Docker",
+			change: "reproduzierbare Umgebung",
+		  },
+		],
+		insights: [
+		  "PostGIS ermöglicht performante und nachvollziehbare Umkreissuchen direkt in der Datenbank",
+		  "Die Trennung von öffentlicher Suche und geschützten Verwaltungsbereichen vereinfacht die Weiterentwicklung",
+		  "Ein manueller Koordinaten-Fallback erhöht die Robustheit bei fehlgeschlagener Geocodierung",
+		  "Rollen und Besitzverhältnisse müssen sowohl im Frontend als auch serverseitig geprüft werden",
+		  "Die modulare Architektur bietet eine Grundlage für spätere Inventar-, Anfrage- und Abrechnungsprozesse",
+		],
+	  },
+
+	  learnings: {
+		title: "Learnings & Roadmap",
+		positives: [
+		  "Geografische Suche erfolgreich in eine klassische Full-Stack-Anwendung integriert",
+		  "Frontend, REST-API und räumliche Datenhaltung klar voneinander getrennt",
+		  "Rollenbasierte Navigation und serverseitige Zugriffsregeln gemeinsam modelliert",
+		  "Fehlerfälle bei API-Zugriff und Geocodierung benutzerfreundlich behandelt",
+		  "Automatisierte Tests für zentrale Frontend- und Backend-Flows aufgebaut",
+		],
+		improvements: [
+		  "Favoriten, Bewertungen und persönliche Notizen für angemeldete Endkunden",
+		  "Warenverfügbarkeit mit automatischer Anzeige und expliziten Anfragen",
+		  "Inventarimport über CSV/XLS und externe APIs",
+		  "Kontextbezogene Kommunikation innerhalb von Anfragen und Aufträgen",
+		  "Benachrichtigungen und Statusverfolgung für Beteiligte",
+		  "Registrierung und Verifizierung neuer Geschäfte",
+		  "Basis- und Premium-Abonnements inklusive Zahlungs- und Abrechnungsstatus",
+		  "Bildergalerien und erweiterte Geschäftsinformationen",
+		],
+	  },
+
+	  // Das Repository bleibt wegen der kommerziellen Natur des Projekts privat.
+	  resources: {},
+
+	  visuals: [
+      {
+        title: "Startseite der Store Finder Plattform",
+        type: "Screenshot",
+        src: getImagePath("store-finder-platform/homepage.png"),
+        description: "Startseite der Store Finder Plattform mit Suchfunktion, Navigation und Anmeldebereich.",
+      },
+    ],
+	},  
+  "energy-price-forecast": {
+    title: "Strompreis-Prognose Deutschland — Day-Ahead Forecasting",
+    date: "2026-06",
+    duration: "3 Wochen",
+    status: "Abegeschlossen",
+    problem: {
+      title: "Problem",
+      content:
+        "Der deutsche Strommarkt ist stark von wetterabhängiger Einspeisung, Stromnachfrage und kurzfristiger Residuallast geprägt. Ziel des Projekts ist die stündliche Vorhersage der Day-Ahead-Strompreise für Deutschland (DE/LU) auf Basis öffentlicher Markt-, Erzeugungs-, Nachfrage- und Wetterdaten.",
+      challenges: [
+        "Hohe Preisvolatilität durch Wind- und PV-Einspeisung, inklusive negativer Preise",
+        "Unvollständige reale Daten für heute und gestern, obwohl diese als Prädiktoren relevant sind",
+        "Zeitreihen mit unterschiedlichen Aktualisierungsständen aus SMARD, Open-Meteo und eigener Lastprognose",
+        "Zeitzonen-Handling zwischen UTC und Europe/Berlin, inklusive Sommerzeitumstellung",
+        "Operative Tomorrow-Prognose ohne Data Leakage und mit konsistentem Feature Engineering",
+        "Plausible Darstellung der Preisprognose zusammen mit Residuallast und Referenzwerten",
+      ],
+    },
+    approach: {
+      title: "Daten & Ansatz",
+      dataset:
+        "Stündliche öffentliche Strommarktzeitreihen für Deutschland: Day-Ahead-Preise, Last, Wind, PV, konventionelle Erzeugung sowie technologiegewichtete Wetterdaten.",
+      methodology: [
+        "ETL-Pipeline für SMARD-Daten: Day-Ahead-Preise, Nachfrage, Wind Onshore/Offshore, PV und konventionelle Erzeugung",
+        "Open-Meteo-Integration für PV- und Wind-Wetterdaten mit gewichteter Aggregation über Anlagencluster",
+        "MaStR-basierte Clusterbildung und jährliche Kapazitätsgewichtung für Wind- und PV-Anlagen",
+        "Feature Engineering mit Preis-, Nachfrage-, Erzeugungs-, Wetter-, Kalender- und Residuallastmerkmalen",
+        "Gestapelte operative Pipeline: fehlende Last-, Wind- und PV-Werte für gestern/heute/morgen werden durch Vorhersagemodelle bereitgestellt",
+        "Modellvergleich mit LightGBM und XGBoost; XGBoost als aktuell bevorzugtes Preisvorhersagemodell",
+        "Streamlit-App für Tomorrow Forecast und historische Analyse",
+      ],
+      tools: [
+        "Python",
+        "Pandas",
+        "scikit-learn",
+        "XGBoost",
+        "LightGBM",
+        "SQLite",
+        "Streamlit",
+        "Matplotlib",
+        "SMARD API",
+        "Open-Meteo API",
+      ],
+    },
+    solution: {
+      title: "Lösung",
+      content:
+        "End-to-End-ML-Pipeline für stündliche Strompreisprognosen: Datenabruf, Datenhaltung, Feature Engineering, Modelltraining, operative Vorhersage und interaktive Visualisierung sind in einem reproduzierbaren Workflow verbunden.",
+      features: [
+        "SQLite-Datenbank mit normalisiertem Zeitreihenschema für Markt-, Erzeugungs- und Wetterdaten",
+        "Entkoppelte Ingestion für SMARD- und Open-Meteo-Daten mit Delta-Logik",
+        "Technologiegewichtete Wetteraggregation für Wind und PV auf Basis installierter Anlagenleistung",
+        "XGBoost-Regressor für die stündliche Day-Ahead-Preisprognose",
+        "Operative Funktion prepare_data_for_price_prediction_operational() für die Tomorrow-Pipeline",
+        "Integration der prognostizierten Last-, Wind- und PV-Werte als Eingangsgrößen für die Preisprognose",
+        "Streamlit-Dashboard mit Preisprognose, historischer Vorhersageanalyse und Residuallast-Visualisierung",
+      ],
+    },
+    results: {
+      title: "Ergebnisse",
+      metrics: [
+        { label: "Train-Test-Split", value: "2026-01-01", change: "Zeit(Datum)" },
+        { label: "Prognosehorizont", value: "24h", change: "stündlich" },
+        { label: "Hauptmodell", value: "XGBoost", change: "Preisvorhersage" },
+        { label: "MAE", value: "15.27", change: "EUR/MWh" },
+        { label: "RMSE", value: "24.07", change: "EUR/MWh" },
+        { label: "R²", value: "0.82", change: "Testbewertung" },
+        { label: "Datenquellen", value: "3+", change: "SMARD, Open-Meteo, MaStR" },
+      ],
+      insights: [
+        "Residuallast ist fachlich zentral, weil sie die verbleibende Nachfrage nach wetterabhängiger Erzeugung beschreibt",
+        "Die operative Prognose benötigt Ersatzwerte für heute und gestern, da reale Erzeugungs- und Lastdaten oft verspätet vollständig sind",
+        "XGBoost lieferte im aktuellen Projektstand plausiblere Tomorrow-Forecasts als LightGBM",
+        "Zeitzonen müssen projektweit konsequent behandelt werden, damit Berlin-Tage korrekt als 00:00–23:00 Europe/Berlin interpretiert werden",
+        "Eine fachlich nachvollziehbare Visualisierung ist für die Bewertung der Prognose fast genauso wichtig wie die reine Modellmetrik",
+      ],
+    },
+    learnings: {
+      title: "Learnings & Reflexion",
+      positives: [
+        "Komplexe Energieprognosen benötigen eine saubere Trennung zwischen Rohdaten, Feature Engineering und operativer Prognose",
+        "Feature Engineering und Datenverfügbarkeit bestimmen die Qualität stärker als ein einzelner Modellwechsel",
+        "Gestapelte Prognosefeatures können eine realistische operative Tomorrow-Prognose ermöglichen",
+        "SMARD-, Open-Meteo- und MaStR-Daten lassen sich zu einem praxisnahen Energie-ML-Projekt kombinieren",
+        "Streamlit eignet sich gut, um Modellverhalten, Ausreißer und Plausibilität iterativ zu prüfen",
+      ],
+      improvements: [
+        "Walk-Forward-Simulation für eine realistischere historische Bewertung ergänzen",
+        "Historische Prognosen persistieren, um echte operative Forecasts mit späteren Ist-Werten zu vergleichen",
+        "Modellmetriken und Feature-Importances systematisch dokumentieren",
+        "Automatische Aktualisierung der MaStR-Erzeugerdaten und Wettergewichtungen vorbereiten",
+        "Power-BI-Dashboard als ergänzende Business-Intelligence-Perspektive umsetzen",
+      ],
+    },
+    resources: {
+      repo: "https://github.com/SW-oasen/electricity_price_forecast",
+      presentation: "/yuchuan-portfolio/Strompreis_Vorhersagen.pdf",
+    },
+    visuals: [
+      {
+        title: "Preismuster in verschiedenen Perioden",
+        type: "EDA",
+        src: getImagePath("energy-price-forecast/price-pattern-influences.png"),
+        description: "Verteilungsmuster der Preise in verschiedenen Perioden.",
+      },
+      {
+        title: "Preis-Ausreißer",
+        type: "EDA",
+        src: getImagePath("energy-price-forecast/price-outliers.png"),
+        description: "Identifikation und Analyse von Preis-Ausreißern. Ungewöhnliche extreme Preise erkannt, können dennoch nicht pauschal als Ausreißer behandelt werden",
+      },
+      {
+        title: "PV- und Wind-Energieerzeuger-Cluster",
+        type: "ETL",
+        src: getImagePath("energy-price-forecast/pv-wind-clusters.png"),
+        description: "Clustering von PV- und Wind-Energieerzeugern zur Aggregation von Wetterdaten.",
+      },
+      {
+        title: "Historische Preis-Vorhersage",
+        type: "ML",
+        src: getImagePath("energy-price-forecast/historical-prediction.png"),
+        description: "Historische Preis-Vorhersagen im Vergleich zu realen Preisen. Ungewöhnliche extreme Preise erkannt. Eventuell weitere Analyse und Feature Engineering. ",
+      },
+      {
+        title: "Vorhersage für morgen",
+        type: "ML",
+        src: getImagePath("energy-price-forecast/prediction-tomorrow.png"),
+        description: "Prognose der Energiepreise für den nächsten Tag und Vergleich zu den Preisen von vorgestern und dem Durchschnitt der letzten 7 Tagen.",
+      },
+
+    ],
+  },
+
+  "energy-demand-forecast": {
+    title: "Stromverbrauchs-Prognose Deutschland — Day-Ahead Forecasting",
+    date: "2026-05",
+    duration: "3 Wochen",
+    status: "Abgeschlossen",
+    problem: {
+      title: "Problem",
+      content:
+        "Kurzfristige Lastprognosen unterstützen Netzsteuerung und Einsatzplanung. Ziel ist eine operative, stündliche Day-Ahead-Prognose für Deutschland, die sich transparent mit realen Verbrauchswerten und der offiziellen SMARD-Prognose vergleichen lässt.",
+      challenges: [
+        "Unterschiedliche Zeitformate aus verschiedenen Quellen (SMARD, Wetterdaten)",
+        "Starke Saisonalität: täglich, wöchentlich und jährlich überlagerte Muster",
+        "Kalendarische Einflüsse: Feiertage, Wochentage und Brückentage",
+        "Wettereinflüsse: empfundene Temperatur, Sonneneinstrahlung und Windstärke",
+        "Wetterdatenaggregation mit der Population ausgewählter Städte als Gewichtung",
+        "Auswahl geeigneter Lag-Features ohne Data Leakage",
+        "Robuste Evaluierung durch zeitbasierten Train-Test-Split und Kreuzvalidierung",
+        "Operative Vorhersage für morgen trotz verzögert verfügbarer Ist-Daten",
+      ],
+    },
+    approach: {
+      title: "Daten & Ansatz",
+      dataset: "Stündliche Lastdaten 2019–2025 aus ENTSO-E/Kaggle sowie aktuelle Ist- und Prognosedaten von SMARD; historische und vorhergesagte Wetterdaten von Open-Meteo, bevölkerungsgewichtet über fünf deutsche Großstädte.",
+      methodology: [
+        "Explorative Datenanalyse: saisonale Dekompositionen und Autokorrelationen",
+        "Feature Engineering: Kalender-Features, Lag-Features, Rolling-Window-Statistiken",
+        "Zeitbasierter Split: Training 2019–2024, Test 2025; TimeSeriesSplit statt zufälliger Kreuzvalidierung",
+        "Modellvergleich: Linear Regression, Random Forest, SVR, XGBoost und LightGBM",
+        "Bayesian Optimization mit Optuna und Exploration asymmetrischer Verlustfunktionen/Quantilregression",
+        "Aktuelle Netzlast und offizielle Day-Ahead-Prognose über die SMARD-Filter 410 und 411",
+        "Historischer Dreifachvergleich von Ist-Werten, SMARD-Prognose und ML-Prognose mit MAE und RMSE",
+      ],
+      tools: ["Python", "Pandas", "scikit-learn", "Optuna", "XGBoost", "LightGBM", "Matplotlib", "Streamlit", "Jupyter", "SMARD API", "Open-Meteo API"],
+    },
+    solution: {
+      title: "Lösung",
+      content: "Modulare End-to-End-ML-Anwendung für Datenabruf, Feature Engineering, Modelltraining, Day-Ahead-Prognose und interaktive Auswertung.",
+      features: [
+        "Wiederverwendbare Python-Module für Datenaufbereitung, Training und Vorhersage",
+        "Kalender-, Wetter-, Lag- und Rolling-Window-Features für stündliche Zeitreihen",
+        "Zeitbasierte Train-Test-Splits zur Vermeidung von Data Leakage",
+        "Hyperparameter-Optimierung mit Bayesian Optimization/Optuna",
+        "Streamlit-App mit separaten Tabs für die Prognose von morgen und historische Vergleiche",
+        "Dreifachvergleich von ML-Prognose, realer SMARD-Netzlast und offizieller SMARD-Prognose",
+      ],
+    },
+    results: {
+      title: "Ergebnisse",
+      metrics: [
+        { label: "Datenzeitraum", value: "2019–2025", change: "stündliche Last" },
+        { label: "Modellvergleich", value: "5 Modelle", change: "inkl. RF, XGBoost, LightGBM" },
+        { label: "Prognosehorizont", value: "24h", change: "stündlich" },
+        { label: "Vergleich", value: "3 Kurven", change: "Ist, SMARD, ML" },
+        { label: "Interface", value: "Streamlit", change: "2 Analyse-Tabs" },
+      ],
+      insights: [
+        "Baseline-Modelle mit saisonalen Mittelwerten und gleitenden Durchschnitten liefern bereits eine solide Prognose",
+        "Baumbasierte Modelle übertreffen die lineare Baseline deutlich; Random Forest zeigte im dokumentierten Vergleich die beste Performance",
+        "Feature Engineering hat größeren Einfluss auf die Prognosegenauigkeit als die Wahl des ML-Modells",
+        "Lag-Features des Vortages und der Vorwoche liefern hohen Informationsgehalt",
+        "Historischer Verbrauch und Kalender-Features sind entscheidend für die Prognosegenauigkeit",
+        "Der direkte Vergleich mit der offiziellen SMARD-Prognose macht Modellgüte und Abweichungen fachlich greifbar",
+      ],
+    },
+    learnings: {
+      title: "Learnings & Reflexion",
+      positives: [
+        "Zeitbasierte Kreuzvalidierung verhindert Data Leakage",
+        "Feature Engineering bei Zeitreihen erfordert sorgfältige Planung der Lag-Fenster",
+        "EDA deckte wichtige saisonale Muster auf",
+        "Vergleich mit Live-Daten von SMARD ermöglichte realistische Evaluierung und Modellanpassungen",
+        "Die Trennung in Daten-, Trainings- und Vorhersagemodule macht Notebook und Web-App reproduzierbar nutzbar",
+      ],
+      improvements: [
+        "Zeitformat und Zeitzonen-Handling von Anfang an standardisieren",
+        "Variablenbenennung in Funktionen vereinheitlichen",
+        "Visualisierungsstil in allen Plots vereinheitlichen",
+        "ETL-Pipeline und automatisierte Aktualisierung weiter ausbauen",
+        "Quantilregression und asymmetrische Verlustfunktionen systematisch evaluieren",
+        "SARIMAX als zusätzliche Zeitreihen-Benchmark untersuchen",
+      ],
+    },
+    resources: {
+      repo: "https://github.com/SW-oasen/electricity_demand_forecast",
+      presentation: "/yuchuan-portfolio/Stromverbrauch_Vorhersagen.pdf",
+    },
+    visuals: [
+      {
+        title: "Kalender-Feature Distribution",
+        type: "distribution",
+        src: getImagePath("energy-demand-forecast/energy-calendar-distribution.jpg"),
+        description: "Verteilung der Kalender-Features im Zeitverlauf.",
+      },
+      {
+        title: "Wetterdaten-Distribution",
+        type: "distribution",
+        src: getImagePath("energy-demand-forecast/energy-weather-distribution.jpg"),
+        description: "Verteilung der Wetterdaten.",
+      },
+      {
+        title: "Feature Importances",
+        type: "bar",
+        src: getImagePath("energy-demand-forecast/feature-importances.jpg"),
+        description: "Wichtigkeit der Features für die Prognosemodelle.",
+      },
+      {
+        title: "Prognose vs. Historie",
+        type: "line",
+        src: getImagePath("energy-demand-forecast/prediction-historical.jpg"),
+        description: "Historischer Vergleich von Ist-Verbrauch, offizieller SMARD-Prognose und ML-Prognose inklusive MAE und RMSE.",
+      },
+      {
+        title: "Prognose für den nächsten Tag",
+        type: "line",
+        src: getImagePath("energy-demand-forecast/prediction-tomorrow.jpg"),
+        description: "Stündliche ML-Prognose für den nächsten Tag zusammen mit der offiziellen SMARD-Day-Ahead-Prognose.",
+      },
+    ],
+  },
+
+  "telco-customer-churn": {
+    title: "Telco Customer Churn — Classification",
+    date: "2026-06",
+    duration: "Überarbeitung eines alten Projekts",
+    status: "Abgeschlossen",
+    problem: {
+      title: "Problem",
+      content:
+        "Telekommunikationsunternehmen verlieren Kunden durch Churn. Ziel war ein Klassifikationsmodell zur Identifikation gefährdeter Kunden und zur Ableitung von Retention-Strategien.",
+      challenges: ["Klassendisbalance", "Viele kategorische Features", "Business-orientierte Threshold-Wahl", "Erklärbarkeit für Retention-Maßnahmen"],
+    },
+    approach: {
+      title: "Daten & Ansatz",
+      dataset: "Kaggle Telco Customer Churn Dataset - 7.043 Kunden mit 19 Features",
+      methodology: [
+        "Data Prep, Missing-Value-Behandlung und Encoding",
+        "Explorative Analyse von Churn Rate, Tenure und Monthly Charges",
+        "Feature Engineering für Tenure Buckets, Service Count, Revenue to Date und Contract-Payment-Risk",
+        "Modellvergleich mit Logistic Regression, Random Forest, LightGBM und XGBoost",
+        "Optuna-Tuning und Threshold-Optimierung für business-orientierte Churn-Erkennung",
+        "Feature-Importance-Analyse mit Tree Importance, Permutation Importance und SHAP",
+      ],
+      tools: ["Python", "Pandas", "scikit-learn", "Optuna", "LightGBM", "XGBoost", "SHAP", "Matplotlib", "Seaborn"],
+    },
+    solution: {
+      title: "Lösung",
+      content:
+        "End-to-End-ML-Pipeline mit Feature Engineering, Hyperparameter-Optimierung, Threshold-Wahl und Risiko-Segmentierung für Churn-Risiken.",
+      features: [
+        "Automatisierte Datenbereinigung und Preprocessing",
+        "Feature Engineering für Kundenlebenszyklus, Service-Nutzung und Vertragsrisiko",
+        "Modellvergleich mit mehreren Klassifikationsalgorithmen",
+        "Optuna-Tuning mit Cross-Validation",
+        "Risk Segmentation in Low, Medium, High und Very High",
+        "Feature-Importance-Analyse für Retention-Maßnahmen",
+      ],
+    },
+    results: {
+      title: "Ergebnisse",
+      metrics: [
+        { label: "Bestes Modell", value: "XGBoost", change: "AUC 0.849" },
+        { label: "Modelle", value: "4", change: "LogReg, RF, LightGBM, XGBoost" },
+        { label: "Churn Rate", value: "26.5%", change: "Dataset" },
+        { label: "Kunden", value: "7.043", change: "Kaggle Dataset" },
+      ],
+      insights: [
+        "Tenure ist ein wichtiger Prädiktor, besonders neue Kunden mit 0-12 Monaten zeigen hohes Risiko",
+        "Month-to-month-Verträge und Electronic-Check-Zahlungen korrelieren stark mit Churn",
+        "Service-Bundles und längere Vertragslaufzeiten senken Churn-Risiko",
+        "XGBoost und LightGBM erzielten sehr ähnliche AUC-Werte im Modellvergleich",
+        "Feature Engineering verbessert nicht die AUC, aber die Interpretierbarkeit und Handlungsfähigkeit für Retention-Maßnahmen",
+      ],
+    },
+    learnings: {
+      title: "Learnings & Reflexion",
+      positives: [
+        "Feature Engineering verbessert nicht die AUC, aber die Interpretierbarkeit und Handlungsfähigkeit für Retention-Maßnahmen",
+        "Optuna effektiver als Grid Search",
+        "Feature Importance macht ML-Insights für Retention-Maßnahmen zugänglich",
+        "Threshold-Optimierung ist für Churn-Projekte fachlich wichtiger als reine Accuracy",
+      ],
+      improvements: [
+        "Zeitreihen-Features ergänzen",
+        "A/B-Testing-Framework vorbereiten",
+        "Real-time Scoring Pipeline prüfen",
+        "MLOps-Pipeline mit Modellmonitoring vorbereiten",
+      ],
+    },
+    resources: { repo: "https://github.com/SW-oasen/telco-customer-churn" },
+    visuals: [
+      {
+        title: "Customer Churn Analyse",
+        type: "EDA",
+        src: getImagePath("telco-customer-churn/churn_eda.png"),
+        description: "EDA zu Churn-Verteilung, Tenure, Monthly Charges und Churn Rate nach Tenure-Gruppen.",
+      },
+      {
+        title: "Modell-Evaluierung",
+        type: "ML",
+        src: getImagePath("telco-customer-churn/model_evaluation.png"),
+        description: "ROC-Kurven, AUC-Vergleich, Confusion Matrix und Wahrscheinlichkeitsverteilung der Modelle.",
+      },
+      {
+        title: "Feature Importance",
+        type: "ML",
+        src: getImagePath("telco-customer-churn/feature_importance.png"),
+        description: "Vergleich der wichtigsten Features über mehrere Modelle.",
+      },
+    ],
+  },
+
+  "turbine-maintenance": {
+    title: "Turbofan Predictive Maintenance — RUL Prediction",
+    date: "2026-06",
+    duration: "Eine Woche (Überarbeitung eines alten Projekts)",
+    status: "Abgeschlossen",
+    problem: {
+      title: "Problem",
+      content:
+        "Ziel des Projekts ist die Vorhersage der Remaining Useful Life (RUL) von Turbofan Engines auf Basis der NASA CMAPSS-Datensätze FD001–FD004.",
+      challenges: [
+        "Vermeidung von Data Leakage bei Zeitreihen- und Engine-Daten",
+        "Korrekte RUL-Berechnung für Trainings- und Testdaten",
+        "Vereinheitlichung von vier Datensätzen mit unterschiedlichen Betriebsbedingungen und Fehlermodi",
+        "Feature Engineering für Sensorzeitreihen",
+        "Realistische Evaluation anhand der offiziellen Test-RUL-Werte",
+      ],
+    },
+    approach: {
+      title: "Daten & Ansatz",
+      dataset:
+        "NASA CMAPSS Turbofan Engine Degradation Simulation Dataset — FD001, FD002, FD003 und FD004.",
+      methodology: [
+        "Entfernung unnötiger Komplexität aus dem alten Projekt",
+        "Aufbau einer klaren ETL-Pipeline mit SQLite-Datenbank",
+        "Berechnung der RUL-Werte pro Engine und Zyklus",
+        "Feature Engineering mit Sensorwerten, Operational Settings und Trendfeatures",
+        "Modellvergleich mit LightGBM und XGBoost",
+        "Bayesian Optimization zur Hyperparameter-Optimierung",
+        "Evaluation nur auf dem letzten Testzyklus je Engine gegen die offiziellen RUL-Werte",
+      ],
+      tools: [
+        "Python",
+        "Pandas",
+        "NumPy",
+        "scikit-learn",
+        "XGBoost",
+        "LightGBM",
+        "SQLite",
+        "SQLAlchemy",
+        "scikit-optimize",
+        "Matplotlib",
+      ],
+    },
+    solution: {
+      title: "Lösung",
+      content:
+        "Reproduzierbare Predictive-Maintenance-Pipeline mit Datenimport, Feature Engineering, SQLite-Datenhaltung, Modelltraining, Hyperparameter-Tuning und sauberer Evaluation.",
+      features: [
+        "SQLite-Datenbank mit Tabellen für Engine-Zyklen, Dataset-Metadaten und Test-RUL",
+        "Separate Views für Training, Test und letzte Testzyklen",
+        "Feature Engineering für Sensor-Trends",
+        "Vergleich von Baseline- und Gradient-Boosting-Modellen",
+        "Bayesian Optimization für XGBoost und LightGBM",
+      ],
+    },
+    results: {
+      title: "Ergebnisse",
+      metrics: [
+        { label: "Bestes Modell", value: "XGBoost", change: "Tuned + RUL cap 150" },
+        { label: "MAE", value: "18.30", change: "Zyklen" },
+        { label: "RMSE", value: "24.64", change: "Zyklen" },
+        { label: "R²", value: "0.77", change: "Testbewertung" },
+        { label: "Datensätze", value: "FD001–FD004", change: "CMAPSS" },
+      ],
+      insights: [
+        "Feature Engineering verbesserte die Modellleistung deutlich stärker als reines Hyperparameter-Tuning",
+        "Trendfeatures aus Sensorsignalen lieferten den größten Performance-Gewinn",
+        "Condition und Fault Mode als kategoriale Features verbesserten die Scores kaum",
+        "Die alte zufällige Train-Test-Aufteilung war für dieses Zeitreihenproblem vermutlich zu optimistisch",
+        "XGBoost und LightGBM erzielten nach Tuning sehr ähnliche Ergebnisse",
+      ],
+    },
+    learnings: {
+      title: "Learnings & Reflexion",
+      positives: [
+        "ETL mit SQLite ermöglichte eine klare Trennung von Datenimport, Feature Engineering und Modelltraining",
+        "Feature Engineering wie Sensor-Trendfeatures und RUL-Capping hatten einen größeren Einfluss als die Modellwahl",
+        "Rolling Features und Setting-Kombinationen hatten keine deutliche Verbesserung gebracht",
+        "Bayesian Optimization brachte nach gutem Feature Engineering zusätzliche, aber kleinere Verbesserungen",
+        "Gradient-Boosting-Modelle waren für diesen Datensatz besonders robust",
+        "Streamlit-Dashboard brachte wichtige Einblicke in die Prognosequalität und Sensorverläufe",
+      ],
+      improvements: [
+        "Echtzeit-Integration in industrielle Wartungssysteme vorbereiten",
+        "Erweiterung auf weitere Sensordaten und Anwendungsbereiche",
+        "Unsicherheitsabschätzung der RUL-Prognosen ergänzen",
+      ],
+    },
+    resources: {
+      repo: "https://github.com/SW-oasen/turbine-predictive-maintenance",
+      presentation: "/yuchuan-portfolio/Turbofan-predictive-maintenance.pdf",
+    },
+    visuals: [
+      {
+        title: "Vergleich der Modell-Performance",
+        type: "Line",
+        src: getImagePath("turbine-maintenance/model_performance_comparison.png"),
+        description: "Vergleich der LightGBM und XGBoost Modell-Performance auf verschiedenen ML Stufen.",
+      },
+      {
+        title: "RUL Capping Effekt",
+        type: "boxplot",
+        src: getImagePath("turbine-maintenance/rul_capping_effect.png"),
+        description: "Vergleich der RUL Capping Effekte auf die Modell-Performance.",
+      },
+      {
+        title: "Tatsächliche vs. prognostizierte RUL",
+        type: "heatmap",
+        src: getImagePath("turbine-maintenance/true_prediction_comparison.png"),
+        description: "Vergleich der tatsächlichen und prognostizierten RUL Werte.",
+      },
+      {
+        title: "Entwicklung wichtiger Sensorwerte über die Zyklen",
+        type: "line",
+        src: getImagePath("turbine-maintenance/sensor_trends.png"),
+        description: "Verlauf wichtiger Sensorwerte über die Betriebszyklen.",
+      }
+    ],
+
+  },
+};
+

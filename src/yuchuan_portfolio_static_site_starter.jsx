@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Github, Mail, ChevronRight, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
+import { getProjects, getProjectTagLabels, PROJECT_TAGS } from "@/data/projects";
 
 // ======== DATA: Edit this to update your site ========
 const PROFILE = {
@@ -18,150 +19,6 @@ const PROFILE = {
     linkedin: "https://de.linkedin.com/in/yuchuan-liu-58309a274",
   },
 };
-
-const PROJECT_TAGS = [
-  { id: "all", label: "All" },
-  { id: "software", label: "Software" },
-  { id: "data-science", label: "Data Science" },
-  { id: "ai", label: "AI" },
-];
-
-const PROJECT_TAG_LABELS = Object.fromEntries(
-  PROJECT_TAGS.filter((tag) => tag.id !== "all").map((tag) => [tag.id, tag.label]),
-);
-
-const PROJECTS = [
-  {
-    id: "store-finder-platform",
-    tags: ["software"],
-    title: "Store Finder Plattform",
-    date: "2026-07",
-    summary:
-    "Kommerzielle Full-Stack-Plattform zur standortbasierten Suche nach Fachgeschäften und zur Bereitstellung strukturierter Geschäftsinformationen. Das System kombiniert Kartensuche, Detailansichten, Benutzerrollen und administrative Verwaltungsfunktionen.",
-    highlights: [
-      "Text-, Standort- und Umkreissuche mit interaktiver Kartenansicht",
-      "Geocodierung von Adressen und räumliche Abfragen mit PostGIS",
-      "Rollenbasierte Bereiche für Endkunden, Betreiber, Autoren und Administration",
-      "Verwaltung von Geschäften, Benutzern und Zugriffsrechten",
-      "Mehrsprachiges React-Frontend mit Spring-Boot-REST-API",
-      "Roadmap für Warenverfügbarkeit, Anfragen, Aufträge und Abonnements",
-    ],
-    stack: [
-      "React",
-      "TypeScript",
-      "Spring Boot",
-      "Java",
-      "PostgreSQL",
-      "PostGIS",
-      "Leaflet",
-      "Docker",
-      "REST API",
-    ],
-    repo: null,
-    live: null,
-    video: null,
-  },
-  {
-    id: "ai-rag-local",
-    tags: ["software", "ai"],
-    title: "Lokales AI-RAG-System",
-    date: "2026-07",
-    summary:
-      "Local-first RAG-Assistent für private Dokumentbibliotheken mit Hybrid-Suche, Quellenangaben, OCR und vollständig lokalen Ollama-Modellen.",
-    highlights: [
-      "Semantische, Keyword- und Hybrid-Suche mit nachvollziehbaren Quellenangaben",
-      "Lokale LLMs und Embeddings über Ollama – ohne Cloud-API",
-      "Profile, persistente Chat-Sessions und separates Langzeitgedächtnis",
-      "Mehrsprachige OCR mit optionaler LLM-Korrektur für gescannte PDFs",
-      "Hierarchische Dokumentzusammenfassungen mit Cache und Export",
-    ],
-    stack: ["Python", "Ollama", "ChromaDB", "Tesseract OCR", "PyPDF", "HTML/CSS", "pytest"],
-    repo: "https://github.com/SW-oasen/ai-rag-local",
-    live: null,
-    video: null,
-  },
-  {
-    id: "energy-price-forecast",
-    tags: ["data-science"],
-    title: "Strompreis-Prognose Deutschland",
-    date: "2026-06",
-    summary:
-      "Vorhersage stündlicher Day-Ahead-Strompreise für Deutschland auf Basis von Nachfrage, Erzeugung, Wetterdaten und Kalendermerkmalen.",
-    highlights: [
-      "End-to-End-Pipeline bis zur operativen Tagesprognose",
-      "XGBoost-Modell für stündliche Strompreisprognosen",
-      "Integration von Last-, Wind- und PV-Prognosen als Eingangsgrößen",
-      "Streamlit-App mit Tomorrow Forecast, historischer Analyse und Residuallast-Visualisierung",
-    ],
-    stack: ["Python", "Pandas", "scikit-learn", "XGBoost", "LightGBM", "SQLite", "Streamlit", "SMARD", "Open-Meteo"],
-    repo: "https://github.com/SW-oasen/electricity_price_forecast",
-    live: null,
-    video: null,
-  },
-  {
-    id: "energy-demand-forecast",
-    tags: ["data-science"],
-    title: "Stromverbrauchs-Prognose Deutschland",
-    date: "2026-05",
-    summary:
-      "End-to-End-Day-Ahead-Prognose des stündlichen Stromverbrauchs in Deutschland mit SMARD-, Wetter- und Kalenderdaten.",
-    highlights: [
-      "Dreifachvergleich: Ist-Verbrauch vs. SMARD-Prognose vs. ML-Prognose",
-      "Modulare Python-Pipeline für Datenabruf, Feature Engineering, Training und Vorhersage",
-      "Optuna-Tuning und Exploration asymmetrischer Verlustfunktionen sowie Quantilregression",
-      "Streamlit-App mit Tomorrow Forecast und frei wählbarem historischem Vergleich",
-    ],
-    stack: ["Python", "Pandas", "scikit-learn", "Optuna", "XGBoost", "LightGBM", "SMARD", "Open-Meteo", "Streamlit"],
-    repo: "https://github.com/SW-oasen/electricity_demand_forecast",
-    live: null,
-    video: null,
-  },
-  {
-    id: "turbine-maintenance",
-    tags: ["data-science"],
-    title: "Turbofan Predictive Maintenance — RUL Prediction",
-    date: "2026-06",
-    summary:
-      "End-to-End-ML-Projekt zur Vorhersage der Remaining Useful Life (RUL) von Turbofan Engines mit NASA CMAPSS-Daten.",
-    highlights: [
-      "ETL-Pipeline mit SQLite-Datenhaltung",
-      "RUL-Berechnung für FD001–FD004 ohne Data Leakage",
-      "Feature Engineering mit Sensor-Trendfeatures und RUL Capping",
-      "Streamlit Dashboard mit Performance, Prognose und Sensortrends",
-    ],
-    stack: [
-      "Python",
-      "Pandas",
-      "scikit-learn",
-      "XGBoost",
-      "LightGBM",
-      "SQLite",
-      "SQLAlchemy",
-      "scikit-optimize",
-      "Matplotlib",
-    ],
-    repo: "https://github.com/SW-oasen/turbine-predictive-maintenance",
-    live: null,
-    video: null,
-  },
-  {
-    id: "telco-customer-churn",
-    tags: ["data-science"],
-    title: "Telco Customer Churn — Klassifikation",
-    date: "2025-10",
-    summary: "Kundenabwanderungsprognose mit Feature Engineering, Modellvergleich und Risiko-Segmentierung.",
-    highlights: [
-      "Datenvorverarbeitung und Imputation",
-      "Feature Engineering für Kundenwert, Vertrags- und Service-Merkmale",
-      "Modellauswertung mit ROC/AUC und Threshold-Optimierung",
-      "Erklärbarkeit mit Feature Importance, Permutation Importance",
-    ],
-    stack: ["Python", "Pandas", "scikit-learn", "Optuna", "Matplotlib"],
-    repo: "https://github.com/SW-oasen/telco-customer-churn",
-    live: null,
-    video: null,
-  },
-];
 
 const LEARNING = [
   {
@@ -251,6 +108,69 @@ const EXPERIENCE = [
   { period: "Dipl.-Wirt.-Ing. (Informatik)", place: "TU Berlin", date: "2000–2007" },
 ];
 
+const LEARNING_EN = [
+  ["Store Finder Platform — Full-Stack Prototype", "Built a full-stack store finder with React, TypeScript, Java 21, Spring Boot, PostgreSQL and Leaflet, including search, maps, role-based administration and a multilingual interface."],
+  ["AI RAG System with Local LLMs and OCR", "Developed a local document-analysis system with Ollama, ChromaDB, Sentence Transformers and Tesseract OCR, including upload, analysis and semantic search."],
+  ["Modernised Predictive Maintenance and Customer Churn Projects", "Reworked earlier projects with a focus on clean ETL pipelines, feature engineering and Streamlit dashboard visualisation."],
+  ["Electricity Price Forecast with an Operational ML Pipeline", "Implemented a day-ahead price forecast using SMARD, Open-Meteo and MaStR data, XGBoost, stacked forecast features and a Streamlit dashboard."],
+  ["Electricity Demand Forecast with Time-Series Analysis", "Implemented an end-to-end day-ahead demand pipeline and Streamlit app with live SMARD data, the official forecast and historical MAE/RMSE comparisons."],
+  ["Completed Data/ML Engineer Training at StackFuel", "Passed the final Data Science examination with a taxi waiting-time prediction project."],
+  ["Completed the Data Analysis Module at StackFuel", "Passed the Data Analysis examination with a customer churn analysis project."],
+  ["Completed the Business Intelligence / Power BI Module", "Passed the Business Intelligence examination with a flight delay analysis project."],
+  ["Started Data/ML Engineer Training at StackFuel", "Began the professional Data/ML Engineer training programme at StackFuel."],
+  ["Deep Learning, Microsoft Power BI and Data Visualisation", "Completed an image-classification project, created Power BI dashboards, optimised data models and automated reports."],
+  ["Started Portfolio Projects", "Worked on exploratory analysis, data cleaning, modelling, visualisation and documentation."],
+  ["Kaggle Courses: Python, Data Analysis, ML and Deep Learning", "Learned Data Science and machine-learning foundations through hands-on Kaggle courses."],
+  ["Local RAG Experiments with Ollama and n8n", "Set up a local n8n and Ollama/Mistral environment with Docker Compose and connected it to local data sources."],
+].map(([title, details], index) => ({ ...LEARNING[index], title, details }));
+
+const EXPERIENCE_EN = [
+  { period: "Data Scientist vocational training", place: "StackFuel", date: "2025–2026" },
+  { period: "Network Security Support Engineer", place: "macmon", date: "2023–2025" },
+  { period: "Senior Support Engineer", place: "Spirent", date: "2010–2023" },
+  { period: "Order Manager", place: "Nokia Siemens", date: "2008–2010" },
+  { period: "Diploma in Business Engineering (Computer Science)", place: "TU Berlin", date: "2000–2007" },
+];
+
+const UI_TEXT = {
+  de: {
+    subtitle: PROFILE.subtitle,
+    tagline: PROFILE.tagline,
+    projects: "Projekte",
+    learning: "Lernfortschritte",
+    career: "Werdegang",
+    contact: "Kontakt",
+    viewProjects: "Projekte ansehen",
+    viewDetails: "Details ansehen",
+    filterLabel: "Projekte nach Kategorie filtern",
+    menuLabel: "Navigation öffnen",
+    contactText: "Interesse an Zusammenarbeit, Austausch oder Projektfeedback? Schreib mir gerne.",
+    stations: "Stationen",
+    skills: "Kernkompetenzen",
+    learningNow: "Aktuell vertiefend",
+    focus: "Fokus: saubere Datenpipelines, reproduzierbare Experimente, klare Visualisierung und nachvollziehbare Dokumentation.",
+    skillItems: ["Python", "EDA", "Datenvisualisierung", "Feature Engineering", "Machine Learning Modellselektion", "ML Modell-Evaluierung", "Zeitreihenanalyse", "ETL Pipelines", "SQL", "Streamlit"],
+  },
+  en: {
+    subtitle: "Selected projects in software engineering, data science and artificial intelligence",
+    tagline: "From software engineering to data science, machine learning and AI-powered solutions.",
+    projects: "Projects",
+    learning: "Learning journey",
+    career: "Career",
+    contact: "Contact",
+    viewProjects: "View projects",
+    viewDetails: "View details",
+    filterLabel: "Filter projects by category",
+    menuLabel: "Open navigation",
+    contactText: "Interested in collaborating, exchanging ideas or sharing project feedback? Feel free to contact me.",
+    stations: "Experience",
+    skills: "Core skills",
+    learningNow: "Currently developing",
+    focus: "Focus: clean data pipelines, reproducible experiments, clear visualisation and transparent documentation.",
+    skillItems: ["Python", "EDA", "Data visualisation", "Feature engineering", "Machine-learning model selection", "ML model evaluation", "Time-series analysis", "ETL pipelines", "SQL", "Streamlit"],
+  },
+};
+
 // ======== UI ========
 function Section({ id, title, children }) {
   return (
@@ -268,7 +188,7 @@ function Section({ id, title, children }) {
   );
 }
 
-function ProjectCard({ project }) {
+function ProjectCard({ project, tagLabels, viewDetailsLabel }) {
   const handleViewDetails = () => {
     window.location.hash = `project/${project.id}`;
   };
@@ -283,7 +203,7 @@ function ProjectCard({ project }) {
             <div className="mt-3 flex flex-wrap gap-2">
               {project.tags.map((tag) => (
                 <Badge key={tag} variant="outline">
-                  {PROJECT_TAG_LABELS[tag]}
+                  {tagLabels[tag]}
                 </Badge>
               ))}
             </div>
@@ -306,7 +226,7 @@ function ProjectCard({ project }) {
           </div>
           <div className="flex flex-wrap gap-2 pt-2">
             <Button onClick={handleViewDetails} className="gap-2">
-              Details ansehen <ChevronRight className="h-4 w-4" />
+              {viewDetailsLabel} <ChevronRight className="h-4 w-4" />
             </Button>
             {project.repo && (
               <Button asChild variant="outline" className="gap-2">
@@ -322,20 +242,25 @@ function ProjectCard({ project }) {
   );
 }
 
-export default function Portfolio() {
+export default function Portfolio({ language, onLanguageChange }) {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [activeTag, setActiveTag] = React.useState("all");
+  const projects = getProjects(language);
+  const projectTagLabels = getProjectTagLabels(language);
+  const text = UI_TEXT[language];
+  const learning = language === "en" ? LEARNING_EN : LEARNING;
+  const experience = language === "en" ? EXPERIENCE_EN : EXPERIENCE;
 
   const filteredProjects =
     activeTag === "all"
-      ? PROJECTS
-      : PROJECTS.filter((project) => project.tags.includes(activeTag));
+      ? projects
+      : projects.filter((project) => project.tags.includes(activeTag));
 
   const navLinks = [
-    { href: "#projects", label: "Projekte" },
-    { href: "#learning", label: "Lernfortschritte" },
-    { href: "#career", label: "Werdegang" },
-    { href: "#contact", label: "Kontakt" },
+    { href: "#projects", label: text.projects },
+    { href: "#learning", label: text.learning },
+    { href: "#career", label: text.career },
+    { href: "#contact", label: text.contact },
   ];
 
   return (
@@ -345,17 +270,30 @@ export default function Portfolio() {
           <a href="#" className="text-lg font-bold">
             {PROFILE.name}
           </a>
-          <nav className="hidden gap-6 text-sm font-medium sm:flex">
+          <nav className="hidden items-center gap-6 text-sm font-medium sm:flex">
             {navLinks.map((link) => (
               <a key={link.href} href={link.href} className="hover:text-slate-600">
                 {link.label}
               </a>
             ))}
           </nav>
+          <div className="ml-auto mr-3 flex rounded-md border border-slate-200 p-0.5 sm:ml-4 sm:mr-0">
+            {["de", "en"].map((option) => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => onLanguageChange(option)}
+                aria-pressed={language === option}
+                className={`rounded px-2 py-1 text-xs font-semibold uppercase ${language === option ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"}`}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
           <button
             className="sm:hidden"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Navigation öffnen"
+            aria-label={text.menuLabel}
           >
             {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
@@ -381,11 +319,11 @@ export default function Portfolio() {
           <motion.div initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} className="max-w-5xl">
             <p className="mb-3 text-sm font-medium text-slate-500">{PROFILE.location}</p>
             <h1 className="text-3xl font-bold tracking-tight leading-tight sm:text-4xl lg:text-5xl">{PROFILE.title}</h1>
-            <p className="mt-4 text-xl text-slate-600">{PROFILE.subtitle}</p>
-            <p className="mt-4 text-slate-600">{PROFILE.tagline}</p>
+            <p className="mt-4 text-xl text-slate-600">{text.subtitle}</p>
+            <p className="mt-4 text-slate-600">{text.tagline}</p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button asChild>
-                <a href="#projects">Projekte ansehen</a>
+                <a href="#projects">{text.viewProjects}</a>
               </Button>
               <Button asChild variant="outline" className="gap-2">
                 <a href={PROFILE.links.github} target="_blank" rel="noreferrer">
@@ -396,8 +334,8 @@ export default function Portfolio() {
           </motion.div>
         </section>
 
-        <Section id="projects" title="Projekte">
-          <div className="mb-6 flex flex-wrap gap-2" aria-label="Projekte nach Kategorie filtern">
+        <Section id="projects" title={text.projects}>
+          <div className="mb-6 flex flex-wrap gap-2" aria-label={text.filterLabel}>
             {PROJECT_TAGS.map((tag) => {
               const isActive = activeTag === tag.id;
 
@@ -410,21 +348,26 @@ export default function Portfolio() {
                   aria-pressed={isActive}
                   onClick={() => setActiveTag(tag.id)}
                 >
-                  {tag.label}
+                  {projectTagLabels[tag.id]}
                 </Button>
               );
             })}
           </div>
           <div className="grid gap-6 md:grid-cols-2">
             {filteredProjects.map((project) => (
-              <ProjectCard key={project.id} project={project} />
+              <ProjectCard
+                key={project.id}
+                project={project}
+                tagLabels={projectTagLabels}
+                viewDetailsLabel={text.viewDetails}
+              />
             ))}
           </div>
         </Section>
 
-        <Section id="learning" title="Lernfortschritte">
+        <Section id="learning" title={text.learning}>
           <ol className="space-y-5 border-l border-slate-200 pl-6">
-            {LEARNING.map((item, i) => (
+            {learning.map((item, i) => (
               <li key={i} className="relative">
                 <span className="absolute -left-[31px] top-1 h-3 w-3 rounded-full bg-slate-900" />
                 <div className="text-sm font-medium text-slate-500">{item.date}</div>
@@ -435,13 +378,13 @@ export default function Portfolio() {
           </ol>
         </Section>
 
-        <Section id="career" title="Werdegang">
+        <Section id="career" title={text.career}>
           <div className="grid gap-8 md:grid-cols-2">
             <Card>
               <CardContent className="p-6">
-                <h3 className="mb-4 text-lg font-semibold">Stationen</h3>
+                <h3 className="mb-4 text-lg font-semibold">{text.stations}</h3>
                 <ul className="space-y-3 text-sm text-slate-700">
-                  {EXPERIENCE.map((item, i) => (
+                  {experience.map((item, i) => (
                     <li key={i}>
                       <span className="font-medium">{item.period}</span> — {item.place} {item.date && <span className="text-slate-500">({item.date})</span>}
                     </li>
@@ -451,40 +394,29 @@ export default function Portfolio() {
             </Card>
             <Card>
               <CardContent className="p-6">
-                <h3 className="mb-4 text-lg font-semibold">Kernkompetenzen</h3>
+                <h3 className="mb-4 text-lg font-semibold">{text.skills}</h3>
                 <div className="flex flex-wrap gap-2">
-                  {[
-                    "Python",
-                    "EDA",
-                    "Datenvisualisierung",
-                    "Feature Engineering",
-                    "Machine Learning Modellselektion",
-                    "ML Modell-Evaluierung",
-                    "Zeitreihenanalyse",
-                    "ETL Pipelines",
-                    "SQL",
-                    "Streamlit",
-                  ].map((item) => (
+                  {text.skillItems.map((item) => (
                     <Badge key={item} variant="secondary">
                       {item}
                     </Badge>
                   ))}
                 </div>
-                <h3 className="mb-4 mt-6 text-lg font-semibold">Aktuell vertiefend</h3>
+                <h3 className="mb-4 mt-6 text-lg font-semibold">{text.learningNow}</h3>
                 <div className="flex flex-wrap gap-2">
                   {["MLOps", "Docker", "GenAI", "Agentic AI"].map((item) => (
                     <Badge key={item}>{item}</Badge>
                   ))}
                 </div>
                 <p className="mt-6 text-sm leading-6 text-slate-600">
-                  Fokus: saubere Datenpipelines, reproduzierbare Experimente, klare Visualisierung und nachvollziehbare Dokumentation.
+                  {text.focus}
                 </p>
               </CardContent>
             </Card>
           </div>
         </Section>
 
-        <Section id="contact" title="Kontakt">
+        <Section id="contact" title={text.contact}>
           <div className="flex flex-wrap gap-3">
             <Button asChild className="gap-2">
               <a href={PROFILE.email}>
