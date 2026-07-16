@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 const PROFILE = {
   name: "Yuchuan",
   title: "Software Engineer | Data Scientist | AI Engineer",
-  subtitle: "Portfolio, Lernreise und Projektübersicht",
+  subtitle: "Ausgewählte Projekte aus Softwareentwicklung, Data Science und Künstlicher Intelligenz",
   tagline: "Von Software-Entwicklung zu Data Science, Machine Learning und KI-gestützten Lösungen.",
   email: "mailto:see.wind@gmx.de",
   location: "Berlin",
@@ -22,7 +22,7 @@ const PROFILE = {
 const PROJECT_TAGS = [
   { id: "all", label: "All" },
   { id: "software", label: "Software" },
-  { id: "machine-learning", label: "Machine Learning" },
+  { id: "data-science", label: "Data Science" },
   { id: "ai", label: "AI" },
 ];
 
@@ -82,7 +82,7 @@ const PROJECTS = [
   },
   {
     id: "energy-price-forecast",
-    tags: ["machine-learning"],
+    tags: ["data-science"],
     title: "Strompreis-Prognose Deutschland",
     date: "2026-06",
     summary:
@@ -100,7 +100,7 @@ const PROJECTS = [
   },
   {
     id: "energy-demand-forecast",
-    tags: ["machine-learning"],
+    tags: ["data-science"],
     title: "Stromverbrauchs-Prognose Deutschland",
     date: "2026-05",
     summary:
@@ -118,7 +118,7 @@ const PROJECTS = [
   },
   {
     id: "turbine-maintenance",
-    tags: ["machine-learning"],
+    tags: ["data-science"],
     title: "Turbofan Predictive Maintenance — RUL Prediction",
     date: "2026-06",
     summary:
@@ -146,7 +146,7 @@ const PROJECTS = [
   },
   {
     id: "telco-customer-churn",
-    tags: ["machine-learning"],
+    tags: ["data-science"],
     title: "Telco Customer Churn — Klassifikation",
     date: "2025-10",
     summary: "Kundenabwanderungsprognose mit Feature Engineering, Modellvergleich und Risiko-Segmentierung.",
