@@ -145,7 +145,142 @@ const PROJECT_DATA = {
       },
     ],
   },
+	"store-finder-platform": {
+	  title: "Store Finder Plattform — standortbasierte Suche und Geschäftsauskunft",
+	  date: "2026-07",
+	  duration: "Laufende Entwicklung",
+	  status: "MVP umgesetzt · Ausbau geplant",
+	  problem: {
+		title: "Problem",
+		content:
+		  "Informationen zu spezialisierten Geschäften, ihrem Leistungsumfang und der Verfügbarkeit gesuchter Waren sind häufig über verschiedene Quellen verteilt oder nicht aktuell. Die Plattform schafft einen zentralen Zugang, über den Endkunden passende Anbieter in ihrer Umgebung finden und strukturierte Geschäftsinformationen abrufen können. Gleichzeitig erhalten Betreiber und Administratoren getrennte Verwaltungsbereiche.",
+		challenges: [
+		  "Freitext-, Adress- und geografische Umkreissuche miteinander verbinden",
+		  "Standortdaten zuverlässig geocodieren und räumlich abfragen",
+		  "Öffentliche Inhalte und geschützte Verwaltungsfunktionen sauber trennen",
+		  "Mehrere Benutzergruppen mit unterschiedlichen Berechtigungen abbilden",
+		  "Eine erweiterbare Grundlage für Inventar-, Anfrage- und Auftragsprozesse schaffen",
+		  "Kommerzielle Geschäftsdetails schützen, ohne die technische Arbeit im Portfolio zu verbergen",
+		],
+	  },
+	  approach: {
+		title: "Architektur & Vorgehen",
+		dataset:
+		  "Strukturierte Geschäfts-, Standort- und Benutzerdaten in PostgreSQL. Geografische Koordinaten werden mit PostGIS gespeichert und für Umkreisabfragen verwendet. Artikel- und Community-Funktionen sind im aktuellen MVP teilweise als lokale Demo-Flows umgesetzt.",
+		methodology: [
+		  "Anforderungen und Benutzergruppen in öffentliche und geschützte Anwendungsfälle aufteilen",
+		  "React-Frontend mit wiederverwendbaren Seiten, Komponenten und Service-Layer entwickeln",
+		  "REST-Endpunkte für Suche, Detailansichten und Verwaltungsprozesse bereitstellen",
+		  "Adressen serverseitig geocodieren und Koordinaten als manuellen Fallback unterstützen",
+		  "Textsuche und räumliche Umkreissuche über PostgreSQL und PostGIS umsetzen",
+		  "Rollenbasierte Navigation und serverseitige Autorisierung integrieren",
+		  "Frontend- und Backend-Funktionen mit automatisierten Tests absichern",
+		  "Inventar, Kommunikation, Aufträge und Abrechnung als getrennte Ausbauphasen planen",
+		],
+		tools: [
+		  "React",
+		  "TypeScript",
+		  "Vite",
+		  "Java 21",
+		  "Spring Boot",
+		  "Spring Security",
+		  "PostgreSQL",
+		  "PostGIS",
+		  "Leaflet",
+		  "Docker",
+		  "Flyway",
+		  "Vitest",
+		],
+	  },
+	  solution: {
+		title: "Lösung",
+		content:
+		  "Der aktuelle MVP bildet eine Full-Stack-Plattform für die Suche und Verwaltung spezialisierter Geschäfte. Nutzer können Anbieter per Suchbegriff oder Kartenposition finden, einen Suchradius festlegen und Detailinformationen abrufen. Betreiber und Administratoren erhalten rollenabhängige Verwaltungsansichten. Die Architektur ist darauf vorbereitet, Warenverfügbarkeit, direkte Anfragen, Auftragskommunikation und Abonnementmodelle schrittweise zu ergänzen.",
+		features: [
+		  "Suche nach Name, Ort, Postleitzahl und Suchbegriffen",
+		  "Standort- und Umkreissuche auf einer interaktiven Karte",
+		  "Detailseiten mit Adresse, Kontakt und Beschreibung",
+		  "Geschäfte anlegen, bearbeiten und entfernen",
+		  "Automatische Geocodierung mit manuellem Karten-Fallback",
+		  "Rollenbasierte Anmeldung und geschützte Anwendungsbereiche",
+		  "Administration von Benutzern, Betreibern und Autoren",
+		  "Mehrsprachige Benutzeroberfläche auf Deutsch und Englisch",
+		  "Fachartikel- und Community-Prototyp",
+		  "Strukturierte REST-API mit Fehler- und Request-ID-Konzept",
+		],
+	  },
 
+	  results: {
+		title: "Aktueller Stand",
+		metrics: [
+		  {
+			label: "Anwendung",
+			value: "Full Stack",
+			change: "React + Spring Boot",
+		  },
+		  {
+			label: "Suche",
+			value: "Geo + Text",
+			change: "PostGIS-Abfragen",
+		  },
+		  {
+			label: "Karte",
+			value: "Leaflet",
+			change: "OpenStreetMap",
+		  },
+		  {
+			label: "Zugriff",
+			value: "RBAC",
+			change: "mehrere Benutzerrollen",
+		  },
+		  {
+			label: "Bereitstellung",
+			value: "Docker",
+			change: "reproduzierbare Umgebung",
+		  },
+		],
+		insights: [
+		  "PostGIS ermöglicht performante und nachvollziehbare Umkreissuchen direkt in der Datenbank",
+		  "Die Trennung von öffentlicher Suche und geschützten Verwaltungsbereichen vereinfacht die Weiterentwicklung",
+		  "Ein manueller Koordinaten-Fallback erhöht die Robustheit bei fehlgeschlagener Geocodierung",
+		  "Rollen und Besitzverhältnisse müssen sowohl im Frontend als auch serverseitig geprüft werden",
+		  "Die modulare Architektur bietet eine Grundlage für spätere Inventar-, Anfrage- und Abrechnungsprozesse",
+		],
+	  },
+
+	  learnings: {
+		title: "Learnings & Roadmap",
+		positives: [
+		  "Geografische Suche erfolgreich in eine klassische Full-Stack-Anwendung integriert",
+		  "Frontend, REST-API und räumliche Datenhaltung klar voneinander getrennt",
+		  "Rollenbasierte Navigation und serverseitige Zugriffsregeln gemeinsam modelliert",
+		  "Fehlerfälle bei API-Zugriff und Geocodierung benutzerfreundlich behandelt",
+		  "Automatisierte Tests für zentrale Frontend- und Backend-Flows aufgebaut",
+		],
+		improvements: [
+		  "Favoriten, Bewertungen und persönliche Notizen für angemeldete Endkunden",
+		  "Warenverfügbarkeit mit automatischer Anzeige und expliziten Anfragen",
+		  "Inventarimport über CSV/XLS und externe APIs",
+		  "Kontextbezogene Kommunikation innerhalb von Anfragen und Aufträgen",
+		  "Benachrichtigungen und Statusverfolgung für Beteiligte",
+		  "Registrierung und Verifizierung neuer Geschäfte",
+		  "Basis- und Premium-Abonnements inklusive Zahlungs- und Abrechnungsstatus",
+		  "Bildergalerien und erweiterte Geschäftsinformationen",
+		],
+	  },
+
+	  // Das Repository bleibt wegen der kommerziellen Natur des Projekts privat.
+	  resources: {},
+
+	  visuals: [
+      {
+        title: "Startseite der Store Finder Plattform",
+        type: "Screenshot",
+        src: getImagePath("store-finder-platform/homepage.png"),
+        description: "Startseite der Store Finder Plattform mit Suchfunktion, Navigation und Anmeldebereich.",
+      },
+    ],
+	},  
   "energy-price-forecast": {
     title: "Strompreis-Prognose Deutschland — Day-Ahead Forecasting",
     date: "2026-06",

@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 // ======== DATA: Edit this to update your site ========
 const PROFILE = {
   name: "Yuchuan",
-  title: "Machine Learning Engineer | Software Engineer",
+  title: "Software Engineer | Data Scientist | AI Engineer",
   subtitle: "Portfolio, Lernreise und Projektübersicht",
   tagline: "Von Software-Entwicklung zu Data Science, Machine Learning und KI-gestützten Lösungen.",
   email: "mailto:see.wind@gmx.de",
@@ -19,9 +19,51 @@ const PROFILE = {
   },
 };
 
+const PROJECT_TAGS = [
+  { id: "all", label: "All" },
+  { id: "software", label: "Software" },
+  { id: "machine-learning", label: "Machine Learning" },
+  { id: "ai", label: "AI" },
+];
+
+const PROJECT_TAG_LABELS = Object.fromEntries(
+  PROJECT_TAGS.filter((tag) => tag.id !== "all").map((tag) => [tag.id, tag.label]),
+);
+
 const PROJECTS = [
   {
+    id: "store-finder-platform",
+    tags: ["software"],
+    title: "Store Finder Plattform",
+    date: "2026-07",
+    summary:
+    "Kommerzielle Full-Stack-Plattform zur standortbasierten Suche nach Fachgeschäften und zur Bereitstellung strukturierter Geschäftsinformationen. Das System kombiniert Kartensuche, Detailansichten, Benutzerrollen und administrative Verwaltungsfunktionen.",
+    highlights: [
+      "Text-, Standort- und Umkreissuche mit interaktiver Kartenansicht",
+      "Geocodierung von Adressen und räumliche Abfragen mit PostGIS",
+      "Rollenbasierte Bereiche für Endkunden, Betreiber, Autoren und Administration",
+      "Verwaltung von Geschäften, Benutzern und Zugriffsrechten",
+      "Mehrsprachiges React-Frontend mit Spring-Boot-REST-API",
+      "Roadmap für Warenverfügbarkeit, Anfragen, Aufträge und Abonnements",
+    ],
+    stack: [
+      "React",
+      "TypeScript",
+      "Spring Boot",
+      "Java",
+      "PostgreSQL",
+      "PostGIS",
+      "Leaflet",
+      "Docker",
+      "REST API",
+    ],
+    repo: null,
+    live: null,
+    video: null,
+  },
+  {
     id: "ai-rag-local",
+    tags: ["software", "ai"],
     title: "Lokales AI-RAG-System",
     date: "2026-06",
     summary:
@@ -40,6 +82,7 @@ const PROJECTS = [
   },
   {
     id: "energy-price-forecast",
+    tags: ["machine-learning"],
     title: "Strompreis-Prognose Deutschland",
     date: "2026-06",
     summary:
@@ -57,6 +100,7 @@ const PROJECTS = [
   },
   {
     id: "energy-demand-forecast",
+    tags: ["machine-learning"],
     title: "Stromverbrauchs-Prognose Deutschland",
     date: "2026-05",
     summary:
@@ -74,6 +118,7 @@ const PROJECTS = [
   },
   {
     id: "turbine-maintenance",
+    tags: ["machine-learning"],
     title: "Turbofan Predictive Maintenance — RUL Prediction",
     date: "2026-06",
     summary:
@@ -101,6 +146,7 @@ const PROJECTS = [
   },
   {
     id: "telco-customer-churn",
+    tags: ["machine-learning"],
     title: "Telco Customer Churn — Klassifikation",
     date: "2025-10",
     summary: "Kundenabwanderungsprognose mit Feature Engineering, Modellvergleich und Risiko-Segmentierung.",
@@ -118,7 +164,13 @@ const PROJECTS = [
 ];
 
 const LEARNING = [
-    {
+  {
+    date: "2026-07",
+    title: "Store Finder Plattform — Full-Stack-Projekt Prototype",
+    details:
+      "Full-Stack-Projekt zur Entwicklung einer Store Finder Plattform mit React, TypeScript, Vite, Java 21, Spring Boot, PostgreSQL und Leaflet. Funktionen umfassen Suche nach Geschäften, interaktive Karten, rollenbasierte Verwaltung und mehrsprachige Benutzeroberfläche.",
+  },
+  {
     date: "2026-06",
     title: "AI RAG-System mit lokalen LLMs und OCR",
     details:
@@ -228,6 +280,13 @@ function ProjectCard({ project }) {
           <div>
             <div className="mb-2 text-sm text-slate-500">{project.date}</div>
             <h3 className="text-xl font-semibold text-slate-900">{project.title}</h3>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <Badge key={tag} variant="outline">
+                  {PROJECT_TAG_LABELS[tag]}
+                </Badge>
+              ))}
+            </div>
           </div>
           <p className="text-sm leading-6 text-slate-600">{project.summary}</p>
           <ul className="space-y-2 text-sm text-slate-700">
@@ -265,6 +324,12 @@ function ProjectCard({ project }) {
 
 export default function Portfolio() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [activeTag, setActiveTag] = React.useState("all");
+
+  const filteredProjects =
+    activeTag === "all"
+      ? PROJECTS
+      : PROJECTS.filter((project) => project.tags.includes(activeTag));
 
   const navLinks = [
     { href: "#projects", label: "Projekte" },
@@ -332,8 +397,26 @@ export default function Portfolio() {
         </section>
 
         <Section id="projects" title="Projekte">
+          <div className="mb-6 flex flex-wrap gap-2" aria-label="Projekte nach Kategorie filtern">
+            {PROJECT_TAGS.map((tag) => {
+              const isActive = activeTag === tag.id;
+
+              return (
+                <Button
+                  key={tag.id}
+                  type="button"
+                  variant={isActive ? "default" : "outline"}
+                  size="sm"
+                  aria-pressed={isActive}
+                  onClick={() => setActiveTag(tag.id)}
+                >
+                  {tag.label}
+                </Button>
+              );
+            })}
+          </div>
           <div className="grid gap-6 md:grid-cols-2">
-            {PROJECTS.map((project) => (
+            {filteredProjects.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>
