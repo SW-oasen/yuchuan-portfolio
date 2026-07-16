@@ -42,7 +42,7 @@ Eine vollständige Vorlage und Pflegehinweise stehen in [PROJECT_DETAILS_GUIDE.m
 
 ## Sprachvorbereitung
 
-Die Website kann über den Umschalter in Kopfzeile und Detailansicht zwischen Deutsch und Englisch wechseln. Die Auswahl wird in `localStorage` gespeichert und beim nächsten Besuch wiederhergestellt. Deutsch ist die Standardsprache. Der Projektkatalog trennt sprachneutrale Felder von übersetzbaren Inhalten:
+Die Website kann über den Umschalter in Kopfzeile und Detailansicht zwischen Deutsch und Englisch wechseln. Beim ersten Besuch wird eine unterstützte Browsersprache automatisch übernommen; bei anderen Sprachen dient Deutsch als Fallback. Eine manuelle Auswahl wird in `localStorage` gespeichert und hat bei späteren Besuchen Vorrang. Der Projektkatalog trennt sprachneutrale Felder von übersetzbaren Inhalten:
 
 ```js
 translations: {

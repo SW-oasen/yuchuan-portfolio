@@ -2,12 +2,14 @@ import React from "react";
 import Portfolio from "./yuchuan_portfolio_static_site_starter.jsx";
 import ProjectDetail from "./ProjectDetail.jsx";
 import { getProjectById } from "@/data/projects";
-import { DEFAULT_LANGUAGE, normalizeLanguage } from "@/i18n/config";
+import { detectBrowserLanguage, normalizeLanguage } from "@/i18n/config";
 
 // Simple router based on URL hash
 export default function App() {
   const [language, setLanguage] = React.useState(() =>
-    normalizeLanguage(window.localStorage.getItem("portfolio-language") ?? DEFAULT_LANGUAGE),
+    window.localStorage.getItem("portfolio-language")
+      ? normalizeLanguage(window.localStorage.getItem("portfolio-language"))
+      : detectBrowserLanguage(),
   );
   const [currentView, setCurrentView] = React.useState('home');
   const [selectedProject, setSelectedProject] = React.useState(null);
