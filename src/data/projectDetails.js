@@ -5,6 +5,128 @@ const getImagePath = (path) => {
 
 // ======== PROJECT DATA ========
 export const PROJECT_DETAILS = {
+  "ai-job-application-assistant": {
+    title: "AI Job Application Assistant — lokale Bewerbungsverwaltung mit evidenzbasiertem Matching",
+    date: "2026-07",
+    duration: "Fortlaufend erweitert",
+    status: "Aktiv weiterentwickelt",
+    problem: {
+      title: "Problem",
+      content:
+        "Stellenanzeigen, Profildaten, Bewerbungsunterlagen und Rückmeldungen liegen im Bewerbungsprozess häufig in getrennten Dateien und Portalen. Gleichzeitig können rein generative KI-Lösungen Qualifikationen zu großzügig interpretieren oder sensible Daten unkontrolliert verarbeiten. Der Application Assistant bündelt den Prozess deshalb in einer lokal betriebenen Anwendung mit kanonischer Datenhaltung, prüfbaren Importen und nachvollziehbarem Matching.",
+      challenges: [
+        "Heterogene Stellenanzeigen aus URLs, PDFs und gespeicherten HTML-Seiten zuverlässig importieren",
+        "CV-Inhalte strukturiert extrahieren, ohne das freigegebene Profil automatisch zu überschreiben",
+        "Anforderungen nur mit tatsächlich belegten Fähigkeiten und Erfahrungen abgleichen",
+        "Personenbezogene Daten und lokale Dokumente von öffentlichen Diensten fernhalten",
+        "Regelbasierte Verarbeitung, LLM-Workflows und OCR-Fallbacks robust orchestrieren",
+        "Bewerbungsstatus, Kommunikationswege und versendete Unterlagen konsistent historisieren",
+      ],
+    },
+    approach: {
+      title: "Daten & Ansatz",
+      dataset:
+        "Eigene Profildaten, Lebensläufe und Stellenanzeigen aus öffentlichen URLs, PDF-Dokumenten oder lokal gespeicherten HTML-Seiten. Personenbezogene Laufzeitdaten bleiben außerhalb des Repositorys in einer lokalen PostgreSQL-Datenbank und in geschützten Docker-Volumes.",
+      methodology: [
+        "Kanonisches, zweisprachiges Datenmodell für Profile, Skills, Erfahrung, Ausbildung und Zertifikate entwickeln",
+        "Stellenanzeigen nativ aus URL, PDF oder HTML extrahieren und vor der Persistenz validieren",
+        "MinerU bei unzureichenden PDF-Textschichten als OCR- und Layout-Fallback einsetzen",
+        "Regelbasierte Metadatenextraktion mit einem optionalen semantischen Dify-Fallback kombinieren",
+        "CV-Importe als prüfbare Vorschläge mit Konflikt- und Duplikaterkennung behandeln",
+        "Stellenanforderungen gegen belegte Profilevidenz matchen und Lücken sichtbar ausweisen",
+        "Bewerbungsereignisse, Statuswechsel und versendete Dokumente nachvollziehbar archivieren",
+        "API-, Integrations- und Unit-Tests in einer reproduzierbaren Docker-Testumgebung ausführen",
+      ],
+      tools: ["Python", "FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic", "Dify", "MinerU", "Playwright", "Docker", "pytest"],
+    },
+    solution: {
+      title: "Lösung",
+      content:
+        "Die FastAPI-Anwendung stellt eine lokale Weboberfläche für den gesamten Bewerbungsablauf bereit. PostgreSQL hält Profile, Stellen, Matchings und Bewerbungsereignisse kanonisch vor. Dify übernimmt ausgewählte KI-Workflows für CV-Extraktion, semantische Metadaten und Matching; MinerU verarbeitet schwierige PDFs. Jeder Import bleibt kontrollierbar, gefundene Evidenz wird getrennt von Lücken dargestellt und sensible Dokumente werden nicht in das öffentliche Repository übernommen.",
+      features: [
+        "Bewerbungsdashboard mit Statuskennzahlen, Filtern und Stichwortsuche",
+        "Zweisprachige Profilverwaltung mit Revisionsständen",
+        "Kontrollierter CV-Import mit Vorschlägen, Konflikt- und Duplikatprüfung",
+        "Jobimport per URL, PDF und HTML/SingleFile",
+        "PDF-Reimport unter Beibehaltung von Job-ID und Bewerbungsdaten",
+        "Editierbare Metadaten mit Fundstellen und Importhinweisen",
+        "Profilspezifisches Matching mit Evidenzklassen und sichtbaren Lücken",
+        "Bearbeitbarer Bewerbungsverlauf mit archivierten Versanddokumenten",
+        "Lokale Docker-Bereitstellung mit auf 127.0.0.1 begrenztem Webzugriff",
+        "Schutz vor privaten, lokalen und reservierten Zielen beim URL-Import",
+      ],
+    },
+    results: {
+      title: "Ergebnisse",
+      metrics: [
+        { label: "Anwendungstyp", value: "Local-first", change: "private Webanwendung" },
+        { label: "Importwege", value: "3", change: "URL / PDF / HTML" },
+        { label: "Kernbereiche", value: "4", change: "Profil / Jobs / Matching / Verlauf" },
+        { label: "Datenhaltung", value: "PostgreSQL", change: "kanonisch & versioniert" },
+        { label: "Bereitstellung", value: "Docker", change: "nur localhost" },
+      ],
+      insights: [
+        "Prüfbare KI-Vorschläge sind bei Profildaten verlässlicher als automatische Überschreibungen",
+        "Regelbasierte Extraktion und semantische Fallbacks ergänzen sich bei stark variierenden Stellenanzeigen",
+        "Ein expliziter MinerU-Fallback verbessert die Verarbeitung gescannter oder layoutintensiver PDFs",
+        "Die Trennung von Evidenz, unklaren Treffern und echten Lücken macht Matching-Ergebnisse nachvollziehbarer",
+        "Kanonische Datenmodelle und Revisionsstände schaffen eine belastbare Grundlage für spätere CV-Generierung",
+        "Lokale Netzwerkgrenzen sind wesentlich, da die Anwendung bewusst keine Benutzeranmeldung besitzt",
+      ],
+    },
+    learnings: {
+      title: "Learnings & Reflexion",
+      positives: [
+        "FastAPI, SQLAlchemy und Alembic bilden eine klare Grundlage für fachlich komplexe Workflows",
+        "Dify lässt sich gezielt als Workflow-Orchestrator einsetzen, ohne die Kerndatenhaltung zu übernehmen",
+        "Quellfundstellen und explizite Evidenztypen erhöhen die Transparenz KI-gestützter Auswertungen",
+        "Ein kontrollierter Importprozess schützt kanonische Profildaten vor unbeabsichtigten Änderungen",
+        "Docker-basierte Tests und Readiness-Prüfungen erleichtern den reproduzierbaren lokalen Betrieb",
+      ],
+      improvements: [
+        "Extraktion von Anforderungen, Tätigkeiten und Rahmenbedingungen noch klarer trennen",
+        "Doppelte oder unnötig fragmentierte Anforderungen weiter reduzieren",
+        "Portfolio-Projekte als zusätzliche, getrennt erkennbare Evidenzquelle integrieren",
+        "Qualifikations-Fit und persönlichen Ziel-Fit separat bewerten",
+        "Matching-Qualität mit mehreren Referenzstellen systematisch evaluieren",
+      ],
+    },
+    resources: {
+      repo: "https://github.com/SW-oasen/ai-job-application-assistant",
+    },
+    visuals: [
+      {
+        title: "Bewerbungsdashboard",
+        type: "Dashboard",
+        src: getImagePath("ai-job-application-assistant/dashboard.png"),
+        description: "Übersicht über Statuskennzahlen, aktuelle Bewerbungen und offene Stellen.",
+      },
+      {
+        title: "Zentralverwaltung und Jobimport",
+        type: "Workflow",
+        src: getImagePath("ai-job-application-assistant/zentralverwaltung.png"),
+        description: "Zentraler Einstieg in Profilpflege, Stellenimport, Matching und Bewerbungsunterlagen.",
+      },
+      {
+        title: "Evidenzbasierte Matching-Auswertung",
+        type: "AI Matching",
+        src: getImagePath("ai-job-application-assistant/matching.png"),
+        description: "Nachvollziehbarer Abgleich einzelner Stellenanforderungen mit belegten Profildaten.",
+      },
+      {
+        title: "Kanonische Profilverwaltung",
+        type: "Profile",
+        src: getImagePath("ai-job-application-assistant/profilverwaltung.png"),
+        description: "Zweisprachige und revisionsfähige Verwaltung von Skills, Erfahrung und Ausbildung.",
+      },
+      {
+        title: "Jobdetails und Bewerbungsverlauf",
+        type: "Tracking",
+        src: getImagePath("ai-job-application-assistant/job-detail.png"),
+        description: "Strukturierte Job-Metadaten, Importhinweise und bearbeitbare Bewerbungshistorie.",
+      },
+    ],
+  },
   "ai-rag-local": {
     title: "Lokaler RAG-Assistent — private Dokumentenanalyse mit Ollama",
     date: "2026-07",

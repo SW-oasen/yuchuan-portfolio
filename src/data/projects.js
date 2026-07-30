@@ -11,6 +11,37 @@ export const PROJECT_TAGS = [
 
 const PROJECTS = [
   {
+    id: "ai-job-application-assistant",
+    tags: ["software", "ai"],
+    date: "2026-07",
+    stack: ["Python", "FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic", "Dify", "MinerU", "Playwright", "Docker", "pytest"],
+    resources: { repo: "https://github.com/SW-oasen/ai-job-application-assistant", live: null, video: null },
+    translations: {
+      de: {
+        title: "AI Job Application Assistant",
+        summary: "Lokal betriebene Webanwendung zur strukturierten Verwaltung von Profilen, Stellenanzeigen, Matchings und Bewerbungsverläufen mit kontrollierten KI-Workflows.",
+        highlights: [
+          "Kanonische zweisprachige Profile mit kontrolliertem CV-Import",
+          "Jobimport per URL, PDF oder HTML mit MinerU-Fallback",
+          "Evidenzbasiertes Matching von Stellenanforderungen und Profildaten",
+          "Dashboard für Bewerbungsstatus, Suche und offene Stellen",
+          "FastAPI-Backend mit PostgreSQL, Alembic und lokaler Docker-Infrastruktur",
+        ],
+      },
+      en: {
+        title: "AI Job Application Assistant",
+        summary: "Locally hosted web application for structured management of profiles, job postings, matching results and application histories with controlled AI workflows.",
+        highlights: [
+          "Canonical bilingual profiles with controlled CV import",
+          "Job import from URLs, PDFs or HTML with a MinerU fallback",
+          "Evidence-based matching of job requirements against profile data",
+          "Dashboard for application status, search and open positions",
+          "FastAPI backend with PostgreSQL, Alembic and local Docker infrastructure",
+        ],
+      },
+    },
+  },
+  {
     id: "store-finder-platform",
     tags: ["software"],
     date: "2026-07",
