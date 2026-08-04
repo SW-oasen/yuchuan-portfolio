@@ -23,6 +23,7 @@ const PROJECTS = [
         highlights: [
           "Kanonische zweisprachige Profile mit kontrolliertem CV-Import",
           "Jobimport per URL, PDF oder HTML mit MinerU-Fallback",
+          "Ein-Klick-Jobimport per Browser-Lesezeichen für komplexe Portale wie Indeed",
           "Evidenzbasiertes Matching von Stellenanforderungen und Profildaten",
           "Dashboard für Bewerbungsstatus, Suche und offene Stellen",
           "FastAPI-Backend mit PostgreSQL, Alembic und lokaler Docker-Infrastruktur",
@@ -34,6 +35,7 @@ const PROJECTS = [
         highlights: [
           "Canonical bilingual profiles with controlled CV import",
           "Job import from URLs, PDFs or HTML with a MinerU fallback",
+          "One-click job import via browser bookmarklet for complex portals like Indeed",
           "Evidence-based matching of job requirements against profile data",
           "Dashboard for application status, search and open positions",
           "FastAPI backend with PostgreSQL, Alembic and local Docker infrastructure",

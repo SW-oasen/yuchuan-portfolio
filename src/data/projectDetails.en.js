@@ -39,6 +39,7 @@ export const PROJECT_DETAILS_EN = {
         "Bilingual profile management with revision history",
         "Controlled CV import with suggestions, conflict and duplicate checks",
         "Job import from URLs, PDFs and HTML/SingleFile",
+        "One-click job import via browser bookmarklet for complex portals like Indeed",
         "PDF re-import while retaining job IDs and application data",
         "Editable metadata with source locations and import warnings",
         "Profile-specific matching with evidence classes and visible gaps",
@@ -83,11 +84,10 @@ export const PROJECT_DETAILS_EN = {
       ],
     },
     visuals: [
-      { title: "Application dashboard", description: "Overview of status metrics, recent applications and open positions." },
-      { title: "Central management and job import", description: "Central entry point for profile management, job import, matching and application documents." },
-      { title: "Evidence-based matching analysis", description: "Traceable comparison of individual job requirements against supported profile data." },
-      { title: "Canonical profile management", description: "Bilingual, revision-aware management of skills, experience and education." },
-      { title: "Job details and application history", description: "Structured job metadata, import notes and editable application history." },
+      { title: "Jobs and applications", description: "Main page with current status overview, filters by profile, status and matching, and keyword search." },
+      { title: "Management — import jobs", description: "Central management with browser import, URL import and data maintenance for existing job postings." },
+      { title: "Management — edit profile", description: "Central management of core profile data, goals, experience, skills, education and projects." },
+      { title: "Job details and application history", description: "Job metadata, matching result, application status and documents at a glance." },
     ],
   },
   "store-finder-platform": {
