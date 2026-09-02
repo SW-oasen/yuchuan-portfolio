@@ -1,7 +1,7 @@
 export const PROJECT_DETAILS_EN = {
   "ai-job-application-assistant": {
     title: "AI Job Application Assistant — local application management with evidence-based matching",
-    date: "2026-07",
+    date: "2026-09",
     duration: "Continuously extended",
     status: "Actively developed",
     problem: {
@@ -29,7 +29,7 @@ export const PROJECT_DETAILS_EN = {
         "Archive application events, status changes and submitted documents with traceable history",
         "Run API, integration and unit tests in a reproducible Docker test environment",
       ],
-      tools: ["Python", "FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic", "Dify", "MinerU", "Playwright", "Docker", "pytest"],
+      tools: ["Python", "FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic", "ChromaDB", "Dify", "Ollama", "MinerU", "Playwright", "Docker", "pytest"],
     },
     solution: {
       title: "Solution",
@@ -42,8 +42,9 @@ export const PROJECT_DETAILS_EN = {
         "One-click job import via browser bookmarklet for complex portals like Indeed",
         "PDF re-import while retaining job IDs and application data",
         "Editable metadata with source locations and import warnings",
-        "Profile-specific matching with evidence classes and visible gaps",
-        "Editable application history with archived submitted documents",
+        "Profile-specific matching with evidence classes, hybrid search and visible gaps",
+        "Separate qualification and target fit, with portfolio projects as a distinct evidence source",
+        "Editable application history with archived submitted documents and a CV recommender",
         "Local Docker deployment with web access restricted to 127.0.0.1",
         "Protection against private, local and reserved targets during URL import",
       ],
@@ -84,10 +85,11 @@ export const PROJECT_DETAILS_EN = {
       ],
     },
     visuals: [
-      { title: "Jobs and applications", description: "Main page with current status overview, filters by profile, status and matching, and keyword search." },
-      { title: "Management — import jobs", description: "Central management with browser import, URL import and data maintenance for existing job postings." },
-      { title: "Management — edit profile", description: "Central management of core profile data, goals, experience, skills, education and projects." },
-      { title: "Job details and application history", description: "Job metadata, matching result, application status and documents at a glance." },
+      { title: "Jobs and applications", description: "Main page with a status overview, action recommendations, status filters, sorting and keyword search." },
+      { title: "Management — job import and data maintenance", description: "Central management with browser and URL import, plus search, filters and maintenance for existing job postings." },
+      { title: "Management — edit profile", description: "Profile and target management with work model, employment types, exclusion criteria and prioritised target roles." },
+      { title: "Management — experience & qualifications", description: "Management of experience, projects, education, certificates and references as separate evidence sources." },
+      { title: "Job details, matching and application", description: "Job metadata, matching, review history, application status and documents, plus the CV recommender, at a glance." },
     ],
   },
   "store-finder-platform": {
