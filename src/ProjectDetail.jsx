@@ -47,11 +47,14 @@ function MetricCard({ label, value, change }) {
   );
 }
 
-function VisualCard({ visual, onOpen, text }) {
+function VisualCard({ visual, aspectRatio, onOpen, text }) {
   return (
     <button onClick={() => onOpen(visual)} className="block w-full text-left" aria-label={`${visual.title} vergroessern`}>
       <Card className="overflow-hidden border-slate-200 transition hover:shadow-md">
-        <div className="aspect-[16/9] bg-white flex items-center justify-center rounded-t-xl overflow-hidden">
+        <div
+          className="bg-white flex items-center justify-center rounded-t-xl overflow-hidden"
+          style={{ aspectRatio }}
+        >
           <img
             src={visual.src}
             alt={visual.title}
@@ -209,7 +212,13 @@ export default function ProjectDetail({ project, language, onLanguageChange }) {
           <ProjectSection icon={BarChart3} title={text.visuals}>
             <div className="grid gap-6 md:grid-cols-2">
               {project.visuals.map((visual, i) => (
-                <VisualCard key={i} visual={visual} onOpen={setSelectedVisual} text={text} />
+                <VisualCard
+                  key={i}
+                  visual={visual}
+                  aspectRatio={project.visualAspectRatio ?? "16 / 9"}
+                  onOpen={setSelectedVisual}
+                  text={text}
+                />
               ))}
             </div>
           </ProjectSection>

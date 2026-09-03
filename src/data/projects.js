@@ -18,7 +18,7 @@ const PROJECTS = [
     resources: { repo: "https://github.com/SW-oasen/ai-job-application-assistant", live: null, video: null },
     translations: {
       de: {
-        title: "AI Job Application Assistant",
+        title: "AI Bewerbungsassistent",
         summary: "Lokal betriebene Webanwendung für Profile, Stellenanzeigen, evidenzbasiertes Matching und Bewerbungsverläufe mit kontrollierten KI-Workflows und optionaler Hybrid Search.",
         highlights: [
           "Kanonische zweisprachige Profile mit kontrolliertem CV-Import",
@@ -26,8 +26,9 @@ const PROJECTS = [
           "Ein-Klick-Jobimport per Browser-Lesezeichen für komplexe Portale wie Indeed",
           "Evidenzbasiertes Matching mit getrenntem Qualifikations- und Ziel-Fit",
           "Portfolio-Projekte als eigenständige Evidenzquelle und CV-Recommender",
-          "Dashboard für Bewerbungsstatus, Empfehlungen, Filter und Suche",
+          "Dashboard für Bewerbungsstatus, Empfehlungen, Filter, Suche und Statistiken",
           "FastAPI-Backend mit PostgreSQL, Alembic und lokaler Docker-Infrastruktur",
+
         ],
       },
       en: {
@@ -39,7 +40,7 @@ const PROJECTS = [
           "One-click job import via browser bookmarklet for complex portals like Indeed",
           "Evidence-based matching with separate qualification and target fit",
           "Portfolio projects as a distinct evidence source and CV recommender",
-          "Dashboard for application status, recommendations, filters and search",
+          "Dashboard for application status, recommendations, filters, search and statistics",
           "FastAPI backend with PostgreSQL, Alembic and local Docker infrastructure",
         ],
       },

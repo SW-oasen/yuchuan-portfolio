@@ -114,7 +114,7 @@ const EXPERIENCE = [
 ];
 
 const LEARNING_EN = [
-  ["AI Bewerbungsassistent", "Developed a web application to support application processes and document management with local LLMs."],
+  ["AI Job Application Assistant", "Developed a web application to support application processes and document management with local LLMs."],
   ["Store Finder Platform — Full-Stack Prototype", "Built a full-stack store finder with React, TypeScript, Java 21, Spring Boot, PostgreSQL and Leaflet, including search, maps, role-based administration and a multilingual interface."],
   ["AI RAG System with Local LLMs and OCR", "Developed a local document-analysis system with Ollama, ChromaDB, Sentence Transformers and Tesseract OCR, including upload, analysis and semantic search."],
   ["Modernised Predictive Maintenance and Customer Churn Projects", "Reworked earlier projects with a focus on clean ETL pipelines, feature engineering and Streamlit dashboard visualisation."],

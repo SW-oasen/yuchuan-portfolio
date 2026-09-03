@@ -8,25 +8,27 @@ export const PROJECT_DETAILS = {
   "ai-job-application-assistant": {
     title: "AI Job Application Assistant — lokale Bewerbungsverwaltung mit evidenzbasiertem Matching",
     date: "2026-09",
+    visualAspectRatio: "2550 / 1232",
     duration: "Fortlaufend erweitert",
     status: "Aktiv weiterentwickelt",
     problem: {
       title: "Problem",
       content:
-        "Stellenanzeigen, Profildaten, Bewerbungsunterlagen und Rückmeldungen liegen im Bewerbungsprozess häufig in getrennten Dateien und Portalen. Gleichzeitig können rein generative KI-Lösungen Qualifikationen zu großzügig interpretieren oder sensible Daten unkontrolliert verarbeiten. Der Application Assistant bündelt den Prozess deshalb in einer lokal betriebenen Anwendung mit kanonischer Datenhaltung, prüfbaren Importen und nachvollziehbarem Matching.",
+        "Stellenanzeigen, Profildaten, Bewerbungsunterlagen und Rückmeldungen liegen im Bewerbungsprozess häufig in getrennten Dateien und Portalen. Gleichzeitig können rein generative KI-Lösungen Qualifikationen zu großzügig interpretieren oder sensible Daten unkontrolliert verarbeiten. Der Bewerbungsassistent bündelt den Prozess deshalb in einer lokal betriebenen Anwendung mit kanonischer Datenhaltung, prüfbaren Importen und nachvollziehbarem Matching.",
       challenges: [
         "Heterogene Stellenanzeigen aus URLs, PDFs und gespeicherten HTML-Seiten zuverlässig importieren",
         "CV-Inhalte strukturiert extrahieren, ohne das freigegebene Profil automatisch zu überschreiben",
         "Anforderungen nur mit tatsächlich belegten Fähigkeiten und Erfahrungen abgleichen",
         "Personenbezogene Daten und lokale Dokumente von öffentlichen Diensten fernhalten",
         "Regelbasierte Verarbeitung, LLM-Workflows und OCR-Fallbacks robust orchestrieren",
-        "Bewerbungsstatus, Kommunikationswege und versendete Unterlagen konsistent historisieren",
+        "Bewerbungsstatus, Kommunikationswege und versendete Unterlagen konsistent protokollieren",
+        "Demonstration der Anwendung ohne persönliche Daten offenzulegen",
       ],
     },
     approach: {
       title: "Daten & Ansatz",
       dataset:
-        "Eigene Profildaten, Lebensläufe und Stellenanzeigen aus öffentlichen URLs, PDF-Dokumenten oder lokal gespeicherten HTML-Seiten. Personenbezogene Laufzeitdaten bleiben außerhalb des Repositorys in einer lokalen PostgreSQL-Datenbank und in geschützten Docker-Volumes.",
+        "Eigene Profildaten, Lebensläufe und Stellenanzeigen aus öffentlichen URLs, PDF-und Markdown-Dokumenten oder lokal gespeicherten HTML-Seiten. Personenbezogene Laufzeitdaten bleiben außerhalb des Repositorys in einer lokalen PostgreSQL-Datenbank und in geschützten Docker-Volumes.",
       methodology: [
         "Kanonisches, zweisprachiges Datenmodell für Profile, Skills, Erfahrung, Ausbildung und Zertifikate entwickeln",
         "Stellenanzeigen nativ aus URL, PDF oder HTML extrahieren und vor der Persistenz validieren",
@@ -36,6 +38,7 @@ export const PROJECT_DETAILS = {
         "Stellenanforderungen gegen belegte Profilevidenz matchen und Lücken sichtbar ausweisen",
         "Bewerbungsereignisse, Statuswechsel und versendete Dokumente nachvollziehbar archivieren",
         "API-, Integrations- und Unit-Tests in einer reproduzierbaren Docker-Testumgebung ausführen",
+        "Separate Demo Dockerkontainer und Datenbank mit fiktiven Daten für Präsentationen ohne persönliche Daten bereitstellen"
       ],
       tools: ["Python", "FastAPI", "PostgreSQL", "SQLAlchemy", "Alembic", "ChromaDB", "Dify", "Ollama", "MinerU", "Playwright", "Docker", "pytest"],
     },
@@ -68,11 +71,15 @@ export const PROJECT_DETAILS = {
         { label: "Bereitstellung", value: "Docker", change: "nur localhost" },
       ],
       insights: [
-        "Prüfbare KI-Vorschläge sind bei Profildaten verlässlicher als automatische Überschreibungen",
+        "Wohl überlegte Skill-Evidenz Relation vereinfacht die Datenstruktur und die Web UI Layout",
         "Regelbasierte Extraktion und semantische Fallbacks ergänzen sich bei stark variierenden Stellenanzeigen",
+        "Bei unbekannten Importquelle muss das Extraktionsergebnis manuell überprüft und ergänzt werden",
+        "Reviewer und Parser Zuständigkeit muss nach der manuellen Prüfung angepasst werden",
+        "Fiktive Daten in separaten Demo-Containern ermöglichen Präsentationen ohne Risiko für persönliche Daten",
         "Ein expliziter MinerU-Fallback verbessert die Verarbeitung gescannter oder layoutintensiver PDFs",
         "Die Trennung von Evidenz, unklaren Treffern und echten Lücken macht Matching-Ergebnisse nachvollziehbarer",
         "Kanonische Datenmodelle und Revisionsstände schaffen eine belastbare Grundlage für spätere CV-Generierung",
+        "Bewusst erst CV basiert auf Masterprofildaten generiert um die möglichen Konflikte mit eingetragenen Profildaten noch nicht behandeln zu müssen",
         "Lokale Netzwerkgrenzen sind wesentlich, da die Anwendung bewusst keine Benutzeranmeldung besitzt",
       ],
     },
@@ -84,13 +91,18 @@ export const PROJECT_DETAILS = {
         "Quellfundstellen und explizite Evidenztypen erhöhen die Transparenz KI-gestützter Auswertungen",
         "Ein kontrollierter Importprozess schützt kanonische Profildaten vor unbeabsichtigten Änderungen",
         "Docker-basierte Tests und Readiness-Prüfungen erleichtern den reproduzierbaren lokalen Betrieb",
-      ],
-      improvements: [
-        "Extraktion von Anforderungen, Tätigkeiten und Rahmenbedingungen noch klarer trennen",
-        "Doppelte oder unnötig fragmentierte Anforderungen weiter reduzieren",
         "Portfolio-Projekte als zusätzliche, getrennt erkennbare Evidenzquelle integrieren",
         "Qualifikations-Fit und persönlichen Ziel-Fit separat bewerten",
         "Matching-Qualität mit mehreren Referenzstellen systematisch evaluieren",
+      ],
+      improvements: [
+        "Extraktion von Anforderungen, Tätigkeiten und Rahmenbedingungen iterativ verbessern",
+        "Doppelte oder unnötig fragmentierte Anforderungen weiter reduzieren",
+        "CV Generierung und Empfehlungen weiter verbessern",
+        "Zweisprachige UI erweitern",
+        "Automatischer Scan bekannten Jobportalen, um neue Stellenanzeigen automatisch zu matchen und zu erfassen",
+        "Automatische Benachrichtigungen bei neuen passenden Stellenanzeigen",
+        "Dateninsights, Analysen und Empfehlungen basierend auf die Stellenanzeigen und Bewerbungen in der lokalen Datenbank",
       ],
     },
     resources: {
