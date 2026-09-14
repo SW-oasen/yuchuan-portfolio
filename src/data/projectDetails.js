@@ -5,6 +5,91 @@ const getImagePath = (path) => {
 
 // ======== PROJECT DATA ========
 export const PROJECT_DETAILS = {
+  "ai-document-service": {
+    title: "AI Document Service — lokale Dokumentverarbeitung mit sicherer KI-Integration",
+    date: "2026-09",
+    visualAspectRatio: "2550 / 1232",
+    duration: "Fortlaufend entwickelt",
+    status: "Prototyp für Kundenprojekte",
+    problem: {
+      title: "Problem",
+      content: "Organisationen benötigen eine zuverlässige Verarbeitung von PDF-Dokumenten, ohne Inhalte oder Zugangsdaten an externe KI-Dienste weiterzugeben. Besonders gescannte oder layoutintensive Dateien erfordern robuste Extraktion; Such- und KI-Antworten müssen dabei nachvollziehbar auf konkrete Dokumentstellen zurückführbar bleiben.",
+      challenges: [
+        "Heterogene PDFs, Scans und komplexe Layouts zuverlässig extrahieren",
+        "Dokumentinhalte, API-Schlüssel und interne Service-Endpunkte schützen",
+        "Suchergebnisse auf relevante Abschnitte und Seiten statt auf ganze Dokumente begrenzen",
+        "Lokale KI-Antworten strikt an die gefundenen Quellen binden",
+        "Wiederholte Uploads und neue Dokumentfassungen konsistent behandeln",
+      ],
+    },
+    approach: {
+      title: "Daten & Ansatz",
+      dataset: "Kundeneigene PDF-Dokumente werden ausschließlich lokal verarbeitet. Inhalte werden nicht protokolliert; Laufzeitdaten, Konfigurationen, Schlüssel und Zertifikate bleiben außerhalb des öffentlichen Repositorys.",
+      methodology: [
+        "Versionierten REST-Vertrag für Upload, Extraktion, Suche und Antworten definieren",
+        "PDFs synchron oder optional asynchron verarbeiten und über Idempotency Keys absichern",
+        "MinerU für Text-, OCR- und Layout-Extraktion einsetzen; bei Bedarf als vorgewärmten lokalen Dienst betreiben",
+        "Extrahierte Inhalte in abschnittsbezogene Chunks mit Überschriften- und Seitenkontext zerlegen",
+        "Lokale Embeddings in ChromaDB indexieren und semantische Treffer mit Quellenangaben ausgeben",
+        "Lokales Ollama-Modell ausschließlich mit abgerufenen Quellen für zitierbare Antworten versorgen",
+        "Demo-Client über WildFly serverseitig per HTTPS anbinden, damit Browser keine Service-Credentials erhalten",
+      ],
+      tools: ["Python", "FastAPI", "MinerU", "Ollama", "ChromaDB", "Java 21", "Jakarta EE", "WildFly", "HTTPS/TLS", "Docker", "pytest"],
+    },
+    solution: {
+      title: "Lösung",
+      content: "Der AI Document Service stellt eine lokale REST-Schnittstelle für die Verarbeitung und Recherche in PDF-Dokumenten bereit. Ein separater Jakarta-EE-Demo-Client nimmt Dateien im Browser entgegen und leitet sie serverseitig über TLS an den geschützten Service weiter. Extraktion, OCR, Indexierung und lokale RAG-Antworten bleiben innerhalb der kontrollierten Infrastruktur; jede Antwort verweist auf die tatsächlich verwendeten Quellen.",
+      features: [
+        "PDF-Upload mit stabiler Dokument-ID, Idempotency Key und Duplikatschutz",
+        "Text- und OCR-Extraktion für gescannte sowie layoutintensive PDFs",
+        "Optionale asynchrone Verarbeitung mit abrufbarem Jobstatus",
+        "Semantische Suche über abschnittsbezogene Chunks mit Dokument-ID und Seitenangabe",
+        "Lokale, quellengebundene Antworten und Streaming über Server-Sent Events",
+        "Gezielte Re-Indexierung bei neuer Dokumentfassung",
+        "API-Key-Schutz, TLS mit expliziter Zertifikatsprüfung und keine Inhaltsprotokollierung",
+        "Entkoppelter Demo-Client: Service-URL und Credentials bleiben serverseitig",
+      ],
+    },
+    results: {
+      title: "Ergebnisse",
+      metrics: [
+        { label: "Betriebsmodell", value: "Local-first", change: "keine Cloud-API erforderlich" },
+        { label: "Dokumentformate", value: "PDF", change: "Text, Scan & komplexes Layout" },
+        { label: "Recherche", value: "Semantisch", change: "Abschnitt & Seite als Quelle" },
+        { label: "KI-Antworten", value: "Lokal", change: "quellengebunden mit Ollama" },
+        { label: "Integration", value: "HTTPS", change: "Credentials nur serverseitig" },
+      ],
+      insights: [
+        "Abschnittsbezogene Chunks liefern für die Recherche präzisere und besser prüfbare Treffer als ganze Seiten oder Dokumente.",
+        "Quellenbindung reduziert das Risiko unbelegter KI-Aussagen und macht Ergebnisse fachlich überprüfbar.",
+        "Die Trennung von Browser, Demo-Client und Document Service schützt interne URLs und Zugangsdaten.",
+        "Vorgewärmte lokale Modelle können die Wartezeit bei wiederkehrenden Dokumentprozessen deutlich senken.",
+      ],
+    },
+    learnings: {
+      title: "Learnings & Reflexion",
+      positives: [
+        "Ein klarer API-Vertrag entkoppelt die Dokumentverarbeitung von Kundenanwendungen.",
+        "Lokale Verarbeitung ist für vertrauliche Dokumente technisch praktikabel und gut integrierbar.",
+        "Idempotenz und Versionsbehandlung erhöhen die Betriebssicherheit bei wiederholten Uploads.",
+        "TLS, API-Key-Schutz und fehlende Inhaltslogs sind von Anfang an Teil des Systemdesigns.",
+      ],
+      improvements: [
+        "Qualität und Latenz mit repräsentativen Kundendokumenten systematisch evaluieren.",
+        "Mehrmandantenfähigkeit, Rollenmodell und Audit-Anforderungen je Kundenumgebung konkretisieren.",
+        "Betriebsmonitoring und kontrollierte Schlüsselrotation für produktive Installationen erweitern.",
+      ],
+    },
+    resources: {},
+    visuals: [
+      {
+        title: "AI Document Service Demo",
+        type: "Screenshot",
+        src: getImagePath("ai_document_serivce/demo-client-startseite.jpg"),
+        description: "Demo-Client mit serverseitiger HTTPS-Weiterleitung, Dokument-Upload, semantischer Suche, quellengebundenen Antworten und Dokumentverwaltung.",
+      },
+    ],
+  },
   "ai-job-application-assistant": {
     title: "AI Job Application Assistant — lokale Bewerbungsverwaltung mit evidenzbasiertem Matching",
     date: "2026-09",

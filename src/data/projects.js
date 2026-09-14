@@ -11,6 +11,37 @@ export const PROJECT_TAGS = [
 
 const PROJECTS = [
   {
+    id: "ai-document-service",
+    tags: ["software", "ai"],
+    date: "2026-09",
+    stack: ["Python", "FastAPI", "MinerU", "Ollama", "ChromaDB", "Java", "Jakarta EE", "WildFly", "Docker", "TLS"],
+    resources: { repo: null, live: null, video: null },
+    translations: {
+      de: {
+        title: "AI Document Service",
+        summary: "Lokaler, sicher integrierbarer Dokumentendienst für PDF-Extraktion, OCR, semantische Suche und quellengebundene KI-Antworten.",
+        highlights: [
+          "Serverseitige HTTPS-Integration: Browser kennt weder Service-URL noch API-Key",
+          "PDF-Extraktion und OCR mit MinerU für gescannte und layoutintensive Dokumente",
+          "Semantische Suche mit abschnittsgenauen Quellen und Seitenangaben",
+          "Lokale, quellengebundene RAG-Antworten über Ollama",
+          "Idempotente Uploads, Versionsbehandlung und optionale asynchrone Verarbeitung",
+        ],
+      },
+      en: {
+        title: "AI Document Service",
+        summary: "Local, securely integrable document service for PDF extraction, OCR, semantic search and source-grounded AI answers.",
+        highlights: [
+          "Server-side HTTPS integration: the browser never receives the service URL or API key",
+          "PDF extraction and OCR with MinerU for scanned and layout-heavy documents",
+          "Semantic search with section-level citations and page references",
+          "Local, source-grounded RAG answers through Ollama",
+          "Idempotent uploads, version handling and optional asynchronous processing",
+        ],
+      },
+    },
+  },
+  {
     id: "ai-job-application-assistant",
     tags: ["software", "ai"],
     date: "2026-09",

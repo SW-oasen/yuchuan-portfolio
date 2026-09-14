@@ -1,4 +1,81 @@
 export const PROJECT_DETAILS_EN = {
+  "ai-document-service": {
+    title: "AI Document Service — local document processing with secure AI integration",
+    duration: "Continuously developed",
+    status: "Prototype for client projects",
+    problem: {
+      title: "Problem",
+      content: "Organisations need reliable PDF processing without sending content or credentials to external AI services. Scanned and layout-heavy files in particular require robust extraction, while search and AI answers must remain traceable to specific document passages.",
+      challenges: [
+        "Reliably extracting heterogeneous PDFs, scans and complex layouts",
+        "Protecting document content, API keys and internal service endpoints",
+        "Restricting search results to relevant passages and pages rather than whole documents",
+        "Strictly grounding local AI answers in retrieved sources",
+        "Handling repeated uploads and new document versions consistently",
+      ],
+    },
+    approach: {
+      title: "Data & approach",
+      dataset: "Client-owned PDF documents are processed locally only. Content is not logged; runtime data, configuration, keys and certificates remain outside the public repository.",
+      methodology: [
+        "Define a versioned REST contract for uploads, extraction, search and answers",
+        "Process PDFs synchronously or optionally asynchronously and protect requests with idempotency keys",
+        "Use MinerU for text, OCR and layout extraction, optionally as a warmed local service",
+        "Split extracted content into section-level chunks with heading and page context",
+        "Index local embeddings in ChromaDB and return semantic matches with citations",
+        "Provide a local Ollama model only with retrieved sources for citable answers",
+        "Connect the demo client server-side through WildFly and HTTPS so browsers never receive service credentials",
+      ],
+      tools: ["Python", "FastAPI", "MinerU", "Ollama", "ChromaDB", "Java 21", "Jakarta EE", "WildFly", "HTTPS/TLS", "Docker", "pytest"],
+    },
+    solution: {
+      title: "Solution",
+      content: "The AI Document Service provides a local REST interface for processing and researching PDF documents. A separate Jakarta EE demo client accepts files in the browser and forwards them server-side over TLS to the protected service. Extraction, OCR, indexing and local RAG answers remain inside the controlled infrastructure; every answer references the sources actually used.",
+      features: [
+        "PDF upload with stable document ID, idempotency key and duplicate protection",
+        "Text and OCR extraction for scanned and layout-heavy PDFs",
+        "Optional asynchronous processing with retrievable job status",
+        "Semantic search over section-level chunks with document ID and page reference",
+        "Local, source-grounded answers and Server-Sent Events streaming",
+        "Targeted re-indexing when a document version changes",
+        "API-key protection, TLS with explicit certificate validation and no content logging",
+        "Decoupled demo client: service URL and credentials remain server-side",
+      ],
+    },
+    results: {
+      title: "Results",
+      metrics: [
+        { label: "Operating model", value: "Local-first", change: "no cloud API required" },
+        { label: "Document format", value: "PDF", change: "text, scans & complex layouts" },
+        { label: "Retrieval", value: "Semantic", change: "section & page as citation" },
+        { label: "AI answers", value: "Local", change: "source-grounded with Ollama" },
+        { label: "Integration", value: "HTTPS", change: "credentials remain server-side" },
+      ],
+      insights: [
+        "Section-level chunks provide more precise, more reviewable retrieval results than whole pages or documents.",
+        "Source grounding reduces the risk of unsupported AI claims and keeps results professionally reviewable.",
+        "Separating browser, demo client and Document Service protects internal URLs and credentials.",
+        "Warmed local models can noticeably reduce waiting time for recurring document workflows.",
+      ],
+    },
+    learnings: {
+      title: "Learnings & reflection",
+      positives: [
+        "A clear API contract decouples document processing from client applications.",
+        "Local processing is technically practical and readily integrated for confidential documents.",
+        "Idempotency and version handling improve operational reliability for repeated uploads.",
+        "TLS, API-key protection and the absence of content logs are part of the system design from the start.",
+      ],
+      improvements: [
+        "Systematically evaluate quality and latency with representative client documents.",
+        "Define multitenancy, roles and audit requirements for each client environment.",
+        "Extend operations monitoring and controlled key rotation for production installations.",
+      ],
+    },
+    visuals: [
+      { title: "AI Document Service demo", description: "Demo client with server-side HTTPS forwarding, document upload, semantic search, source-grounded answers and document administration." },
+    ],
+  },
   "ai-job-application-assistant": {
     title: "AI Job Application Assistant — local application management with evidence-based matching",
     date: "2026-09",
