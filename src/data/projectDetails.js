@@ -5,6 +5,85 @@ const getImagePath = (path) => {
 
 // ======== PROJECT DATA ========
 export const PROJECT_DETAILS = {
+  "ai-agent-platform": {
+    title: "AI Agent Platform \u2014 lokale, serviceorientierte KI-Agentenplattform",
+    date: "2026-09",
+    duration: "Fortlaufend entwickelt",
+    status: "Aktiv weiterentwickelt",
+    problem: {
+      title: "Problem",
+      content: "Viele KI-Assistenten binden Oberfl\u00e4che, Sprachmodell, Recherche und Datenspeicherung eng zusammen oder verlagern sensible Konversationen in externe Dienste. Die Plattform zeigt einen lokal betreibbaren Agentenpfad, der diese Verantwortlichkeiten trennt, externe Informationen kontrolliert einbindet und schreibende Aktionen nachvollziehbar absichert.",
+      challenges: [
+        "Lokale Konversationen, Erinnerungen, Kalenderdaten und Dokumentkontext unter eigener Kontrolle halten",
+        "Browser, Orchestrierung, Agentenlogik, Memory und RAG \u00fcber stabile HTTP-Vertr\u00e4ge entkoppeln",
+        "Externe Webseiten als unzuverl\u00e4ssige Datenquelle behandeln und gegen Prompt Injection sowie SSRF absichern",
+        "Abbr\u00fcche, Fortschritt und persistente Gespr\u00e4chsdaten konsistent behandeln",
+        "Schreibende Kalenderaktionen erst nach sichtbarer Best\u00e4tigung ausf\u00fchren",
+      ],
+    },
+    approach: {
+      title: "Daten & Ansatz",
+      dataset: "Lokale Nutzereingaben, Sitzungen, explizite Langzeitinformationen, Kalenderdaten und eigene Dokumente. Der aktive Agentenpfad kann mit einem lokalen, Ollama-kompatiblen Modell betrieben werden; Webzugriff ist ein explizites, begrenztes Werkzeug.",
+      methodology: [
+        "Browser-Chat \u00fcber einen Same-Origin-Proxy an einen kanalneutralen Conversation Orchestrator anbinden",
+        "Kontext im separaten Memory-Service aus Sitzungen, abgeschlossenen Turns und expliziten Langzeitinformationen aufbereiten",
+        "Agent Core mit lokalem LLM und einer Policy f\u00fcr Tool-Auswahl, Quellen und Aktualit\u00e4t ausstatten",
+        "RAG Local als getrennte Verantwortung f\u00fcr Dokumentindizierung und semantische Suche integrieren",
+        "Web-Recherche \u00fcber lokales SearXNG und einen begrenzten Scraper mit Redirect-, Gr\u00f6\u00dfen- und SSRF-Schutz ausf\u00fchren",
+        "Cancellation kooperativ \u00fcber den Turn-Lifecycle weitergeben und nur erfolgreich abgeschlossene Turns persistieren",
+        "Kalenderaktionen als Vorschlag darstellen und erst nach UI-Best\u00e4tigung lokal schreiben",
+      ],
+      tools: ["Python", "FastAPI", "React", "Ollama", "SQLite", "ChromaDB", "SearXNG", "Docker", "pytest"],
+    },
+    solution: {
+      title: "L\u00f6sung",
+      content: "Die AI Agent Platform verbindet eine Browser-Oberfl\u00e4che mit einem lokalen LLM und klar abgegrenzten Diensten f\u00fcr Orchestrierung, Memory und RAG. Der Orchestrator reichert Anfragen mit Kontext an und koordiniert die Ausf\u00fchrung; der Agent Core verwendet nur kontrollierte Werkzeuge. Historie, Erinnerungen, Kalender und Dokumentkontext bleiben lokal, w\u00e4hrend zeitkritische Informationen \u00fcber eine abgesicherte Recherchekette belegt werden k\u00f6nnen.",
+      features: [
+        "Browser-Chat mit Sitzungen, Historie, Einstellungen, Fortschrittsanzeige und Abbruch",
+        "Lokaler LLM-Agent mit kontrollierter Tool-Auswahl und Quellen- beziehungsweise Aktualit\u00e4tspolitik",
+        "Sitzungsbezogenes Memory und explizite Langzeitinformationen in SQLite",
+        "Lokale RAG-Suche f\u00fcr eigene Dokumente \u00fcber einen separaten Adapter",
+        "Web-Recherche mit lokalem SearXNG sowie sicher begrenztem Webseitenabruf",
+        "Lokaler SQLite-Kalender mit Erinnerungen und Human-in-the-Loop-Best\u00e4tigung",
+        "Diagnose-IDs, sichere HTML-Ausgabe und kooperative Cancellation",
+      ],
+    },
+    results: {
+      title: "Ergebnisse",
+      metrics: [
+        { label: "Betriebsmodell", value: "Local-first", change: "lokales, Ollama-kompatibles LLM" },
+        { label: "Architektur", value: "5+ Dienste", change: "\u00fcber HTTP-Vertr\u00e4ge entkoppelt" },
+        { label: "Memory", value: "SQLite", change: "Sitzungen, Turns & Langzeitinfos" },
+        { label: "Dokumente", value: "RAG", change: "lokale semantische Suche" },
+        { label: "Recherche", value: "SearXNG", change: "kontrollierter Webzugriff" },
+        { label: "Kalender", value: "Human in the loop", change: "Best\u00e4tigung vor Schreibzugriff" },
+      ],
+      insights: [
+        "Ein Orchestrator entkoppelt die Benutzeroberfl\u00e4che vom Agentenpfad und macht weitere Kan\u00e4le wie Voice wiederverwendbar.",
+        "Die klare Trennung von Memory und RAG vereinfacht Tests, Weiterentwicklung und Austauschbarkeit der Komponenten.",
+        "Externe Inhalte brauchen technische Grenzen und eine klare Policy, damit sie keine Steueranweisungen f\u00fcr den Agenten werden.",
+        "Persistierung nur abgeschlossener Turns h\u00e4lt Gespr\u00e4chshistorien bei Abbr\u00fcchen konsistent.",
+      ],
+    },
+    learnings: {
+      title: "Learnings & Reflexion",
+      positives: [
+        "Servicegrenzen und HTTP-Vertr\u00e4ge schaffen eine nachvollziehbare, erweiterbare Architektur.",
+        "Ein lokaler Standardpfad verbindet Datenschutz mit einer praktisch nutzbaren Agentenerfahrung.",
+        "Sichtbare Best\u00e4tigungen machen schreibende Aktionen kontrollierbar und nachvollziehbar.",
+        "Security-Ma\u00dfnahmen wie Prompt-Injection-Abwehr und SSRF-Schutz m\u00fcssen Teil der Agentenarchitektur sein.",
+      ],
+      improvements: [
+        "Voice Runtime in den gemeinsamen Orchestrator- und Turn-Lifecycle integrieren.",
+        "Authentifizierung, Mehrbenutzerbetrieb sowie Backup- und Restore-Strategie erg\u00e4nzen.",
+        "End-to-End- und Failure-Mode-Tests \u00fcber weitere Dienstgrenzen ausbauen.",
+      ],
+    },
+    resources: {
+      repo: "https://github.com/SW-oasen/ai_agent_platform",
+    },
+    visuals: [],
+  },
   "ai-document-service": {
     title: "AI Document Service — lokale Dokumentverarbeitung mit sicherer KI-Integration",
     date: "2026-09",

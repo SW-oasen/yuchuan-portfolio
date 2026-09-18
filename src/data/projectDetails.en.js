@@ -1,4 +1,78 @@
 export const PROJECT_DETAILS_EN = {
+  "ai-agent-platform": {
+    title: "AI Agent Platform \u2014 local, service-oriented AI agent platform",
+    duration: "Continuously developed",
+    status: "Actively developed",
+    problem: {
+      title: "Problem",
+      content: "Many AI assistants tightly couple the interface, language model, research and data storage, or move sensitive conversations to external services. This platform demonstrates a locally deployable agent path that separates these responsibilities, integrates external information in a controlled way and safeguards write actions transparently.",
+      challenges: [
+        "Keeping conversations, memories, calendar data and document context under local control",
+        "Decoupling browser, orchestration, agent logic, memory and RAG through stable HTTP contracts",
+        "Treating external web pages as untrusted data and defending against prompt injection and SSRF",
+        "Handling cancellation, progress and persisted conversation data consistently",
+        "Executing calendar writes only after visible confirmation",
+      ],
+    },
+    approach: {
+      title: "Data & approach",
+      dataset: "Local user input, sessions, explicit long-term information, calendar data and user-owned documents. The active agent path can run on a local Ollama-compatible model; web access is an explicit, bounded tool.",
+      methodology: [
+        "Connect browser chat through a same-origin proxy to a channel-neutral conversation orchestrator",
+        "Prepare context in a separate memory service from sessions, completed turns and explicit long-term information",
+        "Equip the agent core with a local LLM and a policy for tool selection, sources and freshness",
+        "Integrate RAG Local as a separate responsibility for document indexing and semantic search",
+        "Run web research through local SearXNG and a bounded scraper with redirect, size and SSRF protections",
+        "Propagate cancellation cooperatively through the turn lifecycle and persist only successfully completed turns",
+        "Present calendar writes as proposals and perform them locally only after UI confirmation",
+      ],
+      tools: ["Python", "FastAPI", "React", "Ollama", "SQLite", "ChromaDB", "SearXNG", "Docker", "pytest"],
+    },
+    solution: {
+      title: "Solution",
+      content: "The AI Agent Platform connects a browser interface to a local LLM and clearly separated services for orchestration, memory and RAG. The orchestrator enriches requests with context and coordinates execution; the agent core uses controlled tools only. History, reminders, calendars and document context remain local, while time-sensitive information can be supported through a protected research chain.",
+      features: [
+        "Browser chat with sessions, history, settings, progress indication and cancellation",
+        "Local LLM agent with controlled tool selection and source and freshness policy",
+        "Session memory and explicit long-term information in SQLite",
+        "Local RAG search for user-owned documents through a separate adapter",
+        "Web research with local SearXNG and safely bounded web-page retrieval",
+        "Local SQLite calendar with reminders and human-in-the-loop confirmation",
+        "Diagnostic IDs, safe HTML output and cooperative cancellation",
+      ],
+    },
+    results: {
+      title: "Results",
+      metrics: [
+        { label: "Operating model", value: "Local-first", change: "local Ollama-compatible LLM" },
+        { label: "Architecture", value: "5+ services", change: "decoupled through HTTP contracts" },
+        { label: "Memory", value: "SQLite", change: "sessions, turns & long-term information" },
+        { label: "Documents", value: "RAG", change: "local semantic search" },
+        { label: "Research", value: "SearXNG", change: "controlled web access" },
+        { label: "Calendar", value: "Human in the loop", change: "confirmation before writes" },
+      ],
+      insights: [
+        "An orchestrator decouples the user interface from the agent path and makes additional channels such as voice reusable.",
+        "A clear separation of memory and RAG simplifies testing, iteration and component replacement.",
+        "External content needs technical boundaries and a clear policy so it cannot become instructions for the agent.",
+        "Persisting only completed turns keeps conversation histories consistent after cancellations.",
+      ],
+    },
+    learnings: {
+      title: "Learnings & reflection",
+      positives: [
+        "Service boundaries and HTTP contracts create a traceable, extensible architecture.",
+        "A local default path combines privacy with a practically useful agent experience.",
+        "Visible confirmations make write actions controllable and reviewable.",
+        "Security measures such as prompt-injection defences and SSRF protection must be part of agent architecture.",
+      ],
+      improvements: [
+        "Integrate the voice runtime with the shared orchestrator and turn lifecycle.",
+        "Add authentication, multi-user operation and a backup-and-restore strategy.",
+        "Extend end-to-end and failure-mode tests across additional service boundaries.",
+      ],
+    },
+  },
   "ai-document-service": {
     title: "AI Document Service — local document processing with secure AI integration",
     duration: "Continuously developed",

@@ -11,6 +11,37 @@ export const PROJECT_TAGS = [
 
 const PROJECTS = [
   {
+    id: "ai-agent-platform",
+    tags: ["software", "ai"],
+    date: "2026-09",
+    stack: ["Python", "FastAPI", "React", "Ollama", "SQLite", "ChromaDB", "SearXNG", "Docker", "pytest"],
+    resources: { repo: "https://github.com/SW-oasen/ai_agent_platform", live: null, video: null },
+    translations: {
+      de: {
+        title: "AI Agent Platform",
+        summary: "Local-first Agentenplattform mit Browser-Chat, lokalem LLM, RAG, Memory, kontrollierter Web-Recherche und Kalenderverwaltung.",
+        highlights: [
+          "Serviceorientierte Architektur mit Web UI, Orchestrator, Agent Core, Memory und RAG",
+          "Lokales, Ollama-kompatibles LLM sowie lokale SQLite- und ChromaDB-Datenhaltung",
+          "Kontrollierte Tools f\u00fcr Web-Recherche, Wetter, Dokumente und lokale Kalenderaktionen",
+          "Security by Design: Prompt-Injection-Abwehr, SSRF-Grenzen und sichere HTML-Darstellung",
+          "Sichtbare Best\u00e4tigung vor schreibenden Kalenderaktionen und kooperative Cancellation",
+        ],
+      },
+      en: {
+        title: "AI Agent Platform",
+        summary: "Local-first agent platform with browser chat, a local LLM, RAG, memory, controlled web research and calendar management.",
+        highlights: [
+          "Service-oriented architecture with Web UI, orchestrator, agent core, memory and RAG",
+          "Ollama-compatible local LLM plus local SQLite and ChromaDB storage",
+          "Controlled tools for web research, weather, documents and local calendar actions",
+          "Security by design: prompt-injection defences, SSRF limits and safe HTML rendering",
+          "Visible confirmation for calendar writes and cooperative cancellation",
+        ],
+      },
+    },
+  },
+  {
     id: "ai-document-service",
     tags: ["software", "ai"],
     date: "2026-09",
