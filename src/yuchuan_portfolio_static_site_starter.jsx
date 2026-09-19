@@ -22,6 +22,11 @@ const PROFILE = {
 
 const LEARNING = [
   {
+    date: "2026-09",
+    title: "AI Agent Platform und Local AI Agent Core",
+    details: "Local-first Agentenarchitektur mit dem eigenst\u00e4ndigen Local AI Agent Core sowie Web UI, Conversation Orchestrator, Memory Context Service, RAG Local, Document Service und optionaler Voice Runtime entwickelt. HTTP-Vertr\u00e4ge, kontrollierte Tool-Nutzung, sichere Web-Recherche und lokale Datenhaltung stehen dabei im Mittelpunkt.",
+  },
+  {
     date: "2026-08",
     title: "AI Bewerbungsassistent",
     details: "Webanwendung zur Unterstützung von Bewerbungsprozessen und Unterlagenverwaltung mit lokalen LLMs",
@@ -114,6 +119,7 @@ const EXPERIENCE = [
 ];
 
 const LEARNING_EN = [
+  ["AI Agent Platform and Local AI Agent Core", "Developed a local-first agent architecture with the standalone Local AI Agent Core plus Web UI, Conversation Orchestrator, Memory Context Service, RAG Local, Document Service and optional voice runtime. The work focuses on HTTP contracts, controlled tool use, secure web research and local data storage."],
   ["AI Job Application Assistant", "Developed a web application to support application processes and document management with local LLMs."],
   ["Store Finder Platform — Full-Stack Prototype", "Built a full-stack store finder with React, TypeScript, Java 21, Spring Boot, PostgreSQL and Leaflet, including search, maps, role-based administration and a multilingual interface."],
   ["AI RAG System with Local LLMs and OCR", "Developed a local document-analysis system with Ollama, ChromaDB, Sentence Transformers and Tesseract OCR, including upload, analysis and semantic search."],

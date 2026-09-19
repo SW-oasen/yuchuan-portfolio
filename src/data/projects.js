@@ -42,6 +42,37 @@ const PROJECTS = [
     },
   },
   {
+    id: "ai-agent-core",
+    tags: ["software", "ai"],
+    date: "2026-09",
+    stack: ["Python", "FastAPI", "Ollama", "SQLite", "SearXNG", "HTTP/SSE", "pytest"],
+    resources: { repo: "https://github.com/SW-oasen/ai_agent_core", live: null, video: null },
+    translations: {
+      de: {
+        title: "Local AI Agent Core",
+        summary: "Eigenst\u00e4ndiger lokaler Agentendienst f\u00fcr Ollama-kompatible LLMs mit kontrolliertem Tool-Calling, Streaming, Quellenregeln und Sicherheitsgrenzen.",
+        highlights: [
+          "HTTP- und SSE-API f\u00fcr Chat, Streaming, Health-Checks und Run-Cancellation",
+          "Mehrstufiges Tool-Calling f\u00fcr RAG, Websuche, Web-Scraping, Wetter, Kalender sowie Datei- und Repository-Zugriff",
+          "Lokale LLM-Endpunkte wie Ollama, llama.cpp oder vLLM",
+          "Prompt-Injection-Abwehr f\u00fcr Tool-Inhalte sowie Freshness- und Quellenregeln",
+          "Standalone lauff\u00e4hig oder optional in die AI Agent Platform integrierbar",
+        ],
+      },
+      en: {
+        title: "Local AI Agent Core",
+        summary: "Standalone local agent service for Ollama-compatible LLMs with controlled tool calling, streaming, source rules and security boundaries.",
+        highlights: [
+          "HTTP and SSE API for chat, streaming, health checks and run cancellation",
+          "Multi-step tool calling for RAG, web search, web scraping, weather, calendar, file and repository access",
+          "Local LLM endpoints such as Ollama, llama.cpp or vLLM",
+          "Prompt-injection defences for tool content plus freshness and source rules",
+          "Runs standalone or integrates optionally with the AI Agent Platform",
+        ],
+      },
+    },
+  },
+  {
     id: "ai-document-service",
     tags: ["software", "ai"],
     date: "2026-09",
